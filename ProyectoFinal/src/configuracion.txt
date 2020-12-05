@@ -1,0 +1,14 @@
+<Localizaciones> //Adyacencia entre paréntesis
+Jardín(Comedor, Dormitorio)
+Comedor(Jardín, Cocina, Dormitorio)
+Cocina(Comedor)
+Dormitorio(Comedor, Jardín)
+<Personajes> //Entre paréntesis la localización inicial
+Jorge(Comedor)
+Esther(Dormitorio)
+María(Jardín)
+<Objetos> //Entre paréntesis la localización inicial o quién lo posee inicialmente
+Llave(Cocina)
+Ordenador(Comedor)
+Cartera(Jardín)
+Pan(Jorge)
