@@ -1,6 +1,22 @@
 public class Localizacion {
     String Nombre;
-    String ObjetosPresentes;
-    String ObjetosDePersonajes;
-    String Conexiones;
+    Objeto ObjetosPresentes;
+    Objeto ObjetosDePersonajes;
+    Objeto Conexiones;
+    public Localizacion(String newName) {
+		nombre = newName;
+	}
+    public Personaje personajesPresentes() {
+    	return x[];
+    }
+    public Objeto objetosPresentes() {
+    	return x[];
+    }
+    public Objeto objetosDePersonajes() {
+    	return x[];
+    }
+    public Conexiones habitacionesContiguas() {
+    	return x[];
+    }
+    
 }
