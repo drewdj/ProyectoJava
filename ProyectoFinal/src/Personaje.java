@@ -5,5 +5,4 @@ public class Personaje {
     String objetoObjetivo;
     String localizacionActual;
     String localizacionObjetivo;
-
 }
