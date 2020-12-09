@@ -6,20 +6,52 @@ public class Personaje {
     String localizacionActual;
     String localizacionObjetivo;
 
-    public void setNombre(String c){
-        this.nombre = c;
+    String[] localizacionesAlcanzables;
+    String[] objetosPresentes;
+    String[] personajesObjetos;
+
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
-    public void setObjetoActual(String c){
-        this.objetoActual = c;
+
+    public void setObjetoActual(String objetoActual) {
+        this.objetoActual = objetoActual;
     }
-    public void setObjetoObjetivo(String c){
-        this.objetoObjetivo = c;
+
+    public void setObjetoObjetivo(String objetoObjetivo) {
+        this.objetoObjetivo = objetoObjetivo;
     }
-    public void setLocalizacionActual(String c){
-        this.localizacionActual = c;
+
+    public void setLocalizacionActual(String localizacionActual) {
+        this.localizacionActual = localizacionActual;
     }
-    public void setLocalizacionObjetivo(String c){
-        this.localizacionObjetivo = c;
+
+    public void setLocalizacionObjetivo(String localizacionObjetivo) {
+        this.localizacionObjetivo = localizacionObjetivo;
+    }
+
+    public void setLocalizacionesAlcanzables(String[] localizacionesAlcanzables) {
+        this.localizacionesAlcanzables = localizacionesAlcanzables;
+    }
+
+    public void setObjetosPresentes(String[] objetosPresentes) {
+        this.objetosPresentes = objetosPresentes;
+    }
+
+    public void setPersonajesObjetos(String[] personajesObjetos) {
+        this.personajesObjetos = personajesObjetos;
+    }
+
+    public void actualizacion(String[] localizacionesAlcanzables,String[] objetosPresentes,String[] personajesObjetos){
+    //recibir localizaciones alcanzables, objetos presentes, perrsonajes presentes, objetos de los personajes
+        this.localizacionesAlcanzables= localizacionesAlcanzables;
+        this.objetosPresentes=objetosPresentes;
+        this.personajesObjetos=personajesObjetos;
+
+    }
+    static void decision(){
+    //En funcion de la informacion recibida tomar una accion correspondiente
     }
 
 

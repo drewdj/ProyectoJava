@@ -7,5 +7,8 @@ public class GestorPrueba {
         personaje1.setLocalizacionObjetivo("Jardin");
         personaje1.setObjetoActual("Pan");
         personaje1.setObjetoObjetivo("Cartera");
+
+        personaje1.actualizacion(new String[]{"Salon","Jardin"},new String[]{"Cuchillo","Tenedor"},new String[]{"Patata"});
+
     }
 }
