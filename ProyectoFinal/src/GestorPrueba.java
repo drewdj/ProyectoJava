@@ -1,14 +1,34 @@
 public class GestorPrueba {
     public static void main(String[] args) {
-        Personaje personaje1 = new Personaje();
 
-        personaje1.setNombre("Jorge");
-        personaje1.setLocalizacionActual("Comedor");
-        personaje1.setLocalizacionObjetivo("Jardin");
-        personaje1.setObjetoActual("Pan");
-        personaje1.setObjetoObjetivo("Cartera");
+        int numPersonajes = 4;
+    String[] personajesString = new String[numPersonajes];
 
-        personaje1.actualizacion(new String[]{"Salon","Jardin"},new String[]{"Cuchillo","Tenedor"},new String[]{"Patata"});
+    personajesString[0]="Pedro(cocina)";
+
+
+
+    /* leer personajes contar numero de personajes
+    bucle i=numero de personajes para crear la clase Personaje y asignar nombre y localizacion
+     */
+
+    /*
+    mismo bucle para localizaciones y objetos
+     */
+
+     /*
+        bucle para asignar objetivos ObjetoObjetivo y LocalizacionObjetivo
+     */
+
+    //definir turno
+
+     /*
+        Comprobar objetivos
+        Comprobar entorno
+        Realizar accion(coger objeto,pedir objeto, moverse)
+        siguiente turno
+     */
+
 
     }
 }

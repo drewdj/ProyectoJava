@@ -1,22 +1,39 @@
 public class Localizacion {
-    String Nombre;
-    Objeto ObjetosPresentes;
-    Objeto ObjetosDePersonajes;
-    Objeto Conexiones;
-    public Localizacion(String newName) {
-		nombre = newName;
-	}
-    public Personaje personajesPresentes() {
-    	return x[];
+    private String nombre;
+    private Personaje personajePresente[];
+    private Objeto objetoPresente;
+    private String conexiones;
+
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
-    public Objeto objetosPresentes() {
-    	return x[];
+
+    public void setObjetoPresente(Objeto objetoPresente) {
+        this.objetoPresente = objetoPresente;
     }
-    public Objeto objetosDePersonajes() {
-    	return x[];
+
+    public void setPersonajePresente(Personaje[] personajePresente) {
+        this.personajePresente = personajePresente;
     }
-    public Conexiones habitacionesContiguas() {
-    	return x[];
+
+    public void setConexiones(String conexiones) {
+        this.conexiones = conexiones;
     }
-    
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public Personaje[] getPersonajePresente() {
+        return personajePresente;
+    }
+
+    public Objeto getObjetoPresente() {
+        return objetoPresente;
+    }
+
+    public String getConexiones() {
+        return conexiones;
+    }
 }
