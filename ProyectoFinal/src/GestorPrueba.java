@@ -4,16 +4,16 @@ public class GestorPrueba {
     //Dentro de la función de Leer fichero sacar atributo tamaño	
     
     LeerFichero f = new LeerFichero();
-    String[] personajesString = f.getPersonajes();
-    String[] localizacionesString = f.getLocalizaciones();
-    String[] objetosString = f.getObjetos();
+    String[] personajesString = f.getPersonajesString();
+    String[] localizacionesString = f.getLocalizaString();
+    String[] objetosString = f.getObjetosString();
     
 
     // leer personajes contar numero de personajes
     
-    int numPersonajes = personajesString.lenght;
-    int numLocalizaciones = localizacionesString.lenght;
-    int numObjetos = objetosString.lenght;
+    int numPersonajes = personajesString.length;
+    int numLocalizaciones = localizacionesString.length;
+    int numObjetos = objetosString.length;
     
     //bucle i=numero de personajes para crear la clase Personaje y asignar nombre y localizacion
   
@@ -22,21 +22,21 @@ public class GestorPrueba {
     Objeto[] arrayObjetos = new Objeto[numObjetos];
     
     for(int i = 0; i < numPersonajes; i++) {
-    	String name = "";
-    	String localizacionObjetivo = "";
-    	for(int c = 0; c < personajesString[i].lenght; c++) {
-    		if(personajesString[i][c] != '(') {
-    			name = personajesString[i][c];	
+    	StringBuilder name = new StringBuilder("                    ");
+    	StringBuilder localizacionObjetivo = new StringBuilder("                    ");
+    	for(int c = 0; c < personajesString[i].length(); c++) {
+    		if(personajesString[i].charAt(c) != '(') {
+    			name.setCharAt(c, personajesString[i].charAt(c));	
     		}	
     		else {
     			break;
     		}
     	}
-    	for(int c = 0; c < personajesString[i].lenght; c++) {
-    		if(personajesString[i][c] == '(') {
-    			for(int j = c + 1;; j < personajesString[i].lenght; j++){
-    				if(personajesString[i][j] != ')') {
-    					localizacionObjetivo = personajesString[i][j];		
+    	for(int c = 0; c < personajesString[i].length(); c++) {
+    		if(personajesString[i].charAt(c) == '(') {
+    			for(int j = c + 1; j < personajesString[i].length(); j++){
+    				if(personajesString[i].charAt(j) != ')') {
+    					localizacionObjetivo.setCharAt(j, personajesString[i].charAt(j));		
     				}
     				else {
     					break;
@@ -45,28 +45,28 @@ public class GestorPrueba {
     			break;
     		}	
     	}
-    	arrayPersonajes[i].setNombre(name);
-    	arrayPersonajes[i].setLocalizacionObjetivo(localizacionObjetivo);
+    	arrayPersonajes[i].setNombre(name.toString());
+    	arrayPersonajes[i].setLocalizacionObjetivo(localizacionObjetivo.toString());
     }
     
     //mismo bucle para localizaciones
 
     for(int i = 0; i < numLocalizaciones; i++) {
-    	String name = "";
-    	String conexiones = "";
-    	for(int c = 0; c < localizacionesString[i].lenght; c++) {
-    		if(localizacionesString[i][c] != '(') {
-    			name = localizacionesString[i][c];	
+    	StringBuilder name = new StringBuilder("                    ");
+    	StringBuilder conexiones = new StringBuilder("                    ");
+    	for(int c = 0; c < localizacionesString[i].length(); c++) {
+    		if(localizacionesString[i].charAt(c) != '(') {
+    			name.setCharAt(c, localizacionesString[i].charAt(c));
     		}	
     		else {
     			break;
     		}
     	}
-    	for(int c = 0; c < localizacionesString[i].lenght; c++) {
-    		if(localizacionesString[i][c] == '(') {
-    			for(int j = c + 1;; j < localizacionesString[i].lenght; j++){
-    				if(localizacionesString[i][j] != ')') {
-    					conexiones = localizacionesString[i][j];		
+    	for(int c = 0; c < localizacionesString[i].length(); c++) {
+    		if(localizacionesString[i].charAt(c) == '(') {
+    			for(int j = c + 1; j < localizacionesString[i].length(); j++){
+    				if(localizacionesString[i].charAt(j) != ')') {
+    					conexiones.setCharAt(j, localizacionesString[i].charAt(j));	
     				}
     				else {
     					break;
@@ -75,24 +75,26 @@ public class GestorPrueba {
     			break;
     		}	
     	}
-    	arrayLocalizaciones[i].setNombre(name);
-    	arrayLocalizaciones[i].setConexiones(conexiones);
+    	arrayLocalizaciones[i].setNombre(name.toString());
+    	arrayLocalizaciones[i].setConexiones(conexiones.toString());
     }
     
     //y objetos
     
     for(int i = 0; i < numLocalizaciones; i++) {
-    	String name = "";
-    	for(int c = 0; c < objetosString[i].lenght; c++) {
-    		if(objetosString[i][c] != '(') {
-    			name = objetosString[i][c];	
+    	StringBuilder name = new StringBuilder("                    ");
+    	for(int c = 0; c < objetosString[i].length(); c++) {
+    		if(objetosString[i].charAt(c) != '(') {
+    			name.setCharAt(c, objetosString[i].charAt(c));	
     		}	
     		else {
     			break;
     		}
     	}
-    	arrayObjetos[i].setNombre(name);
+    	arrayObjetos[i].setNombre(name.toString());
     }
+    
+    //System.out.printf("%s", arrayPersonajes[1].getNombre());
     
     //Falta establecer la localizacion de los objetos
     

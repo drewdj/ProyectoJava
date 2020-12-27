@@ -11,16 +11,15 @@ public class LeerFichero {
   String objetosString[];
   
 
-  public void main(String[] args) {
+  public LeerFichero() {
 
     //leer fichero de configuracion 
     String datas="";
-    String[] Localizaciones,Personajes,Objetos;
     
 
     try {
       
-      File myObj = new File("ProyectoFinal\\src\\configuracion.txt");
+      File myObj = new File(".\\src\\configuracion.txt");
       Scanner myReader = new Scanner(myObj);
 
       while (myReader.hasNextLine()) {
