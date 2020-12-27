@@ -9,9 +9,9 @@ public class LeerFichero {
   String localizacionesString[];
   String personajesString[];
   String objetosString[];
+  
 
-
-  public static void main(String[] args) {
+  public void main(String[] args) {
 
     //leer fichero de configuracion 
     String datas="";
@@ -90,11 +90,12 @@ public class LeerFichero {
       
       flag=0;
     }
-
-    Localizaciones = datos[0];
-    Personajes = datos[1];
-    Objetos = datos[2];
     
+    localizacionesString = datos[0];
+    personajesString = datos[1];
+    objetosString = datos[2];
+    
+      
     //leer fichero de objetivos
     /*
     datas="";
@@ -120,17 +121,11 @@ public class LeerFichero {
     */
   }
 
-  public void setLocalizaString(String[] localizaString) {
-    this.localizacionesString = localizaString;
-  }
 
-  public void setObjetosString(String[] objetosString) {
-    this.objetosString = objetosString;
-  }
 
-  public void setPersonajesString(String[] personajesString) {
-    this.personajesString = personajesString;
-  }
+ 
+
+
 
   public String[] getLocalizaString() {
     return localizacionesString;
@@ -143,5 +138,10 @@ public class LeerFichero {
   public String[] getPersonajesString() {
     return personajesString;
   }
+
+
+
+
+
 
 }
