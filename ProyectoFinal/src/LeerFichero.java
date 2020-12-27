@@ -7,14 +7,13 @@ import java.util.Scanner; // Import the Scanner class to read text files
 public class LeerFichero {
 
   public static void main(String[] args) {
-    
+	String Localizaciones="",Personajes="",Objetos="";
     String datas="";
-    String Localizaciones="",Personajes="",Objetos="";
-    
+
 
     try {
 
-      File myObj = new File("E:\\ProyectoJava\\ProyectoFinal\\src\\configuracion.txt");
+      File myObj = new File(".\\src\\configuracion.txt");
       Scanner myReader = new Scanner(myObj);
 
       while (myReader.hasNextLine()) {
@@ -24,8 +23,8 @@ public class LeerFichero {
 
       myReader.close();
 
-    } 
-    
+    }
+
     catch (FileNotFoundException e) {
       System.out.println("An error occurred.");
       e.printStackTrace();
@@ -40,6 +39,6 @@ public class LeerFichero {
     System.out.println(Personajes);
     System.out.println(Objetos);
   }
-    
+
 
 }
