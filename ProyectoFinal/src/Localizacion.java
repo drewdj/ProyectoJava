@@ -1,8 +1,8 @@
 public class Localizacion {
     private String nombre;
-    private Personaje personajePresente[];
+    private Personaje[] personajePresente;
     private Objeto objetoPresente;
-    private String conexiones;
+    private Localizacion[] conexiones;
 
 
     public void setNombre(String nombre) {
@@ -17,7 +17,7 @@ public class Localizacion {
         this.personajePresente = personajePresente;
     }
 
-    public void setConexiones(String conexiones) {
+    public void setConexiones(Localizacion[] conexiones) {
         this.conexiones = conexiones;
     }
 
@@ -33,7 +33,9 @@ public class Localizacion {
         return objetoPresente;
     }
 
-    public String getConexiones() {
+    public Localizacion[] getConexiones() {
         return conexiones;
     }
+
+
 }
