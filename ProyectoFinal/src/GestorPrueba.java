@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class GestorPrueba {
     public static void main(String[] args) {
 
@@ -6,6 +8,7 @@ public class GestorPrueba {
 
     personajesString[0]="Pedro(cocina)";
 
+     /*     PRUEBAS
             Localizacion comedor = new Localizacion();
             comedor.setNombre("Comedor");
 
@@ -36,8 +39,21 @@ public class GestorPrueba {
             jorge.setLocalizacionActual(comedor);
 
 
+        System.out.println(cartera.getNombre());
+        System.out.println(jorge.getObjetoObjetivo().getNombre());*/
+    Personaje pedro = new Personaje();
+    Personaje[] NPC = new Personaje[3];
 
 
+            String[] prueba = {"Jorge","Esther","Maria"};
+
+        for (int i = 0; i < 3; i++) {
+            NPC[i] = new Personaje();
+            NPC[i].setNombre(prueba[i]);
+            System.out.println(NPC[i].getNombre());
+        }
+
+        ArrayList<Personaje> listaPersonajes = new ArrayList<Personaje>();
 
 
     /* leer personajes contar numero de personajes
@@ -60,7 +76,8 @@ public class GestorPrueba {
         Realizar accion(coger objeto,pedir objeto, moverse)
         siguiente turno
      */
-        if (jorge.getObjetoObjetivo().getNombre()==jorge.getObjetoActual().getNombre()){
+
+        /*if (jorge.getObjetoObjetivo().getNombre()==jorge.getObjetoActual().getNombre()){
             System.out.println("Jorge tiene su objeto");
         }else if (jorge.getObjetoObjetivo().getNombre()!=jorge.getObjetoActual().getNombre()){
             System.out.println("Jorge no tiene su objeto");
@@ -70,7 +87,7 @@ public class GestorPrueba {
             System.out.println("Jorge esta en la posicion deseada");
         }else if (jorge.getLocalizacionActual().getNombre()!=jorge.getLocalizacionObjetivo().getNombre()){
             System.out.println("Jorge no esta en la posicion deseada");
-        }
+        }*/
 
 
 
