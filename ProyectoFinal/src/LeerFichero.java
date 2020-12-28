@@ -43,7 +43,7 @@ public class LeerFichero {
     tamanios[1]=partes[2].length();
     tamanios[2]=partes[3].length();
 
-    String[][] datos = new String[3][10];
+    String[][] datos = new String[3][5];
 
     int flag=0;
     int flag2=0;

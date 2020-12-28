@@ -15,6 +15,11 @@ public class GestorPrueba {
     int numLocalizaciones = localizacionesString.length;
     int numObjetos = objetosString.length;
     
+    for(int p = 0; p < numObjetos; p++) {
+    	System.out.printf("%d, %s\n", numObjetos, personajesString[p]);
+    	System.out.printf("%d, %s\n", numLocalizaciones, localizacionesString[p]);
+    	System.out.printf("%d, %s\n", numPersonajes, personajesString[p]);
+    	}
     //bucle i=numero de personajes para crear la clase Personaje y asignar nombre y localizacion
   
     Personaje[] arrayPersonajes = new Personaje[numPersonajes];
@@ -47,6 +52,7 @@ public class GestorPrueba {
     	}
     	arrayPersonajes[i].setNombre(name.toString());
     	arrayPersonajes[i].setLocalizacionObjetivo(localizacionObjetivo.toString());
+    	System.out.printf("%s", arrayPersonajes[1].getNombre());
     }
     
     //mismo bucle para localizaciones
