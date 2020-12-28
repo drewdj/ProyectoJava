@@ -1,69 +1,110 @@
-import java.util.ArrayList;
-
 public class GestorPrueba {
     public static void main(String[] args) {
+    
+    //Dentro de la función de Leer fichero sacar atributo tamaño	
+    
+    LeerFichero f = new LeerFichero();
+    String[] personajesString = f.getPersonajesString();
+    String[] localizacionesString = f.getLocalizaString();
+    String[] objetosString = f.getObjetosString();
+    
 
-        int numPersonajes = 4;
-    String[] personajesString = new String[numPersonajes];
+    // leer personajes contar numero de personajes
+    
+    int numPersonajes = personajesString.length;
+    int numLocalizaciones = localizacionesString.length;
+    int numObjetos = objetosString.length;
+    
+    for(int p = 0; p < numObjetos; p++) {
+    	System.out.printf("%d, %s\n", numObjetos, personajesString[p]);
+    	System.out.printf("%d, %s\n", numLocalizaciones, localizacionesString[p]);
+    	System.out.printf("%d, %s\n", numPersonajes, personajesString[p]);
+    	}
+    //bucle i=numero de personajes para crear la clase Personaje y asignar nombre y localizacion
+  
+    Personaje[] arrayPersonajes = new Personaje[numPersonajes];
+    Localizacion[] arrayLocalizaciones = new Localizacion[numLocalizaciones];
+    Objeto[] arrayObjetos = new Objeto[numObjetos];
+    
+    for(int i = 0; i < numPersonajes; i++) {
+    	StringBuilder name = new StringBuilder("                    ");
+    	StringBuilder localizacionObjetivo = new StringBuilder("                    ");
+    	for(int c = 0; c < personajesString[i].length(); c++) {
+    		if(personajesString[i].charAt(c) != '(') {
+    			name.setCharAt(c, personajesString[i].charAt(c));	
+    		}	
+    		else {
+    			break;
+    		}
+    	}
+    	for(int c = 0; c < personajesString[i].length(); c++) {
+    		if(personajesString[i].charAt(c) == '(') {
+    			for(int j = c + 1; j < personajesString[i].length(); j++){
+    				if(personajesString[i].charAt(j) != ')') {
+    					localizacionObjetivo.setCharAt(j, personajesString[i].charAt(j));		
+    				}
+    				else {
+    					break;
+    				}
+    			}
+    			break;
+    		}	
+    	}
+    	arrayPersonajes[i].setNombre(name.toString());
+    	arrayPersonajes[i].setLocalizacionObjetivo(localizacionObjetivo.toString());
+    	System.out.printf("%s", arrayPersonajes[1].getNombre());
+    }
+    
+    //mismo bucle para localizaciones
 
-    personajesString[0]="Pedro(cocina)";
-
-     /*     PRUEBAS
-            Localizacion comedor = new Localizacion();
-            comedor.setNombre("Comedor");
-
-
-            Localizacion jardin = new Localizacion();
-            jardin.setNombre("Jardin");
-
-        Localizacion cocina = new Localizacion();
-        Localizacion dormitorio = new Localizacion();
-
-            Localizacion[] prueba = {jardin,cocina,dormitorio};
-            comedor.setConexiones(prueba);
-
-            prueba[0].getNombre();
-
-            Objeto cartera = new Objeto();
-            cartera.setNombre("Cartera");
-
-            Objeto pan = new Objeto();
-            pan.setNombre("Pan");
-
-            Personaje jorge = new Personaje();
-
-            jorge.setNombre("Jorge");
-            jorge.setObjetoObjetivo(cartera);
-            jorge.setObjetoActual(pan);
-            jorge.setLocalizacionObjetivo(jardin);
-            jorge.setLocalizacionActual(comedor);
-
-
-        System.out.println(cartera.getNombre());
-        System.out.println(jorge.getObjetoObjetivo().getNombre());*/
-    Personaje pedro = new Personaje();
-    Personaje[] NPC = new Personaje[3];
-
-
-            String[] prueba = {"Jorge","Esther","Maria"};
-
-        for (int i = 0; i < 3; i++) {
-            NPC[i] = new Personaje();
-            NPC[i].setNombre(prueba[i]);
-            System.out.println(NPC[i].getNombre());
-        }
-
-        ArrayList<Personaje> listaPersonajes = new ArrayList<Personaje>();
-
-
-    /* leer personajes contar numero de personajes
-    bucle i=numero de personajes para crear la clase Personaje y asignar nombre y localizacion
-     */
-
-    /*
-    mismo bucle para localizaciones y objetos
-     */
-
+    for(int i = 0; i < numLocalizaciones; i++) {
+    	StringBuilder name = new StringBuilder("                    ");
+    	StringBuilder conexiones = new StringBuilder("                    ");
+    	for(int c = 0; c < localizacionesString[i].length(); c++) {
+    		if(localizacionesString[i].charAt(c) != '(') {
+    			name.setCharAt(c, localizacionesString[i].charAt(c));
+    		}	
+    		else {
+    			break;
+    		}
+    	}
+    	for(int c = 0; c < localizacionesString[i].length(); c++) {
+    		if(localizacionesString[i].charAt(c) == '(') {
+    			for(int j = c + 1; j < localizacionesString[i].length(); j++){
+    				if(localizacionesString[i].charAt(j) != ')') {
+    					conexiones.setCharAt(j, localizacionesString[i].charAt(j));	
+    				}
+    				else {
+    					break;
+    				}
+    			}
+    			break;
+    		}	
+    	}
+    	arrayLocalizaciones[i].setNombre(name.toString());
+    	arrayLocalizaciones[i].setConexiones(conexiones.toString());
+    }
+    
+    //y objetos
+    
+    for(int i = 0; i < numLocalizaciones; i++) {
+    	StringBuilder name = new StringBuilder("                    ");
+    	for(int c = 0; c < objetosString[i].length(); c++) {
+    		if(objetosString[i].charAt(c) != '(') {
+    			name.setCharAt(c, objetosString[i].charAt(c));	
+    		}	
+    		else {
+    			break;
+    		}
+    	}
+    	arrayObjetos[i].setNombre(name.toString());
+    }
+    
+    //System.out.printf("%s", arrayPersonajes[1].getNombre());
+    
+    //Falta establecer la localizacion de los objetos
+    
+    
      /*
         bucle para asignar objetivos ObjetoObjetivo y LocalizacionObjetivo
      */
@@ -76,19 +117,6 @@ public class GestorPrueba {
         Realizar accion(coger objeto,pedir objeto, moverse)
         siguiente turno
      */
-
-        /*if (jorge.getObjetoObjetivo().getNombre()==jorge.getObjetoActual().getNombre()){
-            System.out.println("Jorge tiene su objeto");
-        }else if (jorge.getObjetoObjetivo().getNombre()!=jorge.getObjetoActual().getNombre()){
-            System.out.println("Jorge no tiene su objeto");
-        }
-
-        if (jorge.getLocalizacionActual().getNombre()==jorge.getLocalizacionObjetivo().getNombre()){
-            System.out.println("Jorge esta en la posicion deseada");
-        }else if (jorge.getLocalizacionActual().getNombre()!=jorge.getLocalizacionObjetivo().getNombre()){
-            System.out.println("Jorge no esta en la posicion deseada");
-        }*/
-
 
 
     }
