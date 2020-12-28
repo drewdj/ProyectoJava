@@ -1,7 +1,7 @@
 public class GestorPrueba {
     public static void main(String[] args) {
     
-    //Dentro de la función de Leer fichero sacar atributo tamaño	
+    //Dentro de la funciÃ³n de Leer fichero sacar atributo tamaÃ±o
     
     LeerFichero f = new LeerFichero();
     String[] personajesString = f.getPersonajesString();
@@ -87,7 +87,7 @@ public class GestorPrueba {
     
     //y objetos
     
-    for(int i = 0; i < numLocalizaciones; i++) {
+    for(int i = 0; i < numObjetos; i++) {
     	StringBuilder name = new StringBuilder("                    ");
     	for(int c = 0; c < objetosString[i].length(); c++) {
     		if(objetosString[i].charAt(c) != '(') {

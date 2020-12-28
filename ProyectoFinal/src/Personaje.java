@@ -3,7 +3,7 @@ public class Personaje {
     private String nombre;
     private Objeto objetoActual;
     private Objeto objetoObjetivo;
-    private Localizacion localizacionObjetivo;
+    private String localizacionObjetivo;
     private Localizacion localizacionActual;
     private int turno;
 
@@ -21,7 +21,7 @@ public class Personaje {
         this.objetoObjetivo = objetoObjetivo;
     }
 
-    public void setLocalizacionObjetivo(Localizacion localizacionObjetivo) {
+    public void setLocalizacionObjetivo(String localizacionObjetivo) {
         this.localizacionObjetivo = localizacionObjetivo;
     }
 
@@ -45,7 +45,7 @@ public class Personaje {
         return objetoActual;
     }
 
-    public Localizacion getLocalizacionObjetivo() {
+    public String getLocalizacionObjetivo() {
         return localizacionObjetivo;
     }
 

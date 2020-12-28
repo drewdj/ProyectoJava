@@ -2,7 +2,7 @@ public class Localizacion {
     private String nombre;
     private Personaje[] personajePresente;
     private Objeto objetoPresente;
-    private Localizacion[] conexiones;
+    private String conexiones;
 
 
     public void setNombre(String nombre) {
@@ -17,7 +17,7 @@ public class Localizacion {
         this.personajePresente = personajePresente;
     }
 
-    public void setConexiones(Localizacion[] conexiones) {
+    public void setConexiones(String conexiones) {
         this.conexiones = conexiones;
     }
 
@@ -33,7 +33,7 @@ public class Localizacion {
         return objetoPresente;
     }
 
-    public Localizacion[] getConexiones() {
+    public String getConexiones() {
         return conexiones;
     }
 
