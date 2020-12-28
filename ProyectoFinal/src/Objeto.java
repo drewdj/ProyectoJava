@@ -8,4 +8,6 @@ public class Objeto {
     public String getNombre() {
         return nombre;
     }
+
+
 }

@@ -1,6 +1,9 @@
+import java.util.ArrayList;
+
 public class Localizacion {
     private String nombre;
-    private Personaje[] personajePresente;
+    private ArrayList<Personaje> personajesPresentes;
+    private int numPersonajePresente;
     private Objeto objetoPresente;
     private String conexiones;
 
@@ -13,20 +16,21 @@ public class Localizacion {
         this.objetoPresente = objetoPresente;
     }
 
-    public void setPersonajePresente(Personaje[] personajePresente) {
-        this.personajePresente = personajePresente;
-    }
 
     public void setConexiones(String conexiones) {
         this.conexiones = conexiones;
     }
 
-    public String getNombre() {
-        return nombre;
+    public void setNumPersonajePresente(int numPersonajePresente) {
+        this.numPersonajePresente = numPersonajePresente;
     }
 
-    public Personaje[] getPersonajePresente() {
-        return personajePresente;
+    public void setPersonajesPresentes(ArrayList<Personaje> personajesPresentes) {
+        this.personajesPresentes = personajesPresentes;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 
     public Objeto getObjetoPresente() {
@@ -37,5 +41,11 @@ public class Localizacion {
         return conexiones;
     }
 
+    public ArrayList<Personaje> getPersonajesPresentes() {
+        return personajesPresentes;
+    }
 
+    public int getNumPersonajePresente() {
+        return numPersonajePresente;
+    }
 }

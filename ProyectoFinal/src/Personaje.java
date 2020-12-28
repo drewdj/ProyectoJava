@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Personaje {
     private String nombre;
@@ -5,6 +6,7 @@ public class Personaje {
     private Objeto objetoObjetivo;
     private String localizacionObjetivo;
     private Localizacion localizacionActual;
+    private Creencias creencias;
     private int turno;
 
 
@@ -23,6 +25,10 @@ public class Personaje {
 
     public void setLocalizacionObjetivo(String localizacionObjetivo) {
         this.localizacionObjetivo = localizacionObjetivo;
+    }
+
+    public void setCreencias(Creencias creencias) {
+        this.creencias = creencias;
     }
 
     public void setLocalizacionActual(Localizacion localizacionActual) {
@@ -55,5 +61,9 @@ public class Personaje {
 
     public Localizacion getLocalizacionActual() {
         return localizacionActual;
+    }
+
+    public Creencias getCreencias() {
+        return creencias;
     }
 }
