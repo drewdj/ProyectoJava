@@ -21,7 +21,7 @@ public class LeerFichero {
 
     try {
       
-      File myObj = new File("E:\\ProyectoJava\\ProyectoFinal\\src\\configuracion.txt");
+      File myObj = new File(".\\src\\configuracion.txt");
       Scanner myReader = new Scanner(myObj);
 
       while (myReader.hasNextLine()) {
