@@ -10,10 +10,8 @@ public class GestorPrueba {
     String[] personajesString = f.getPersonajesString();
     String[] localizacionesString = f.getLocalizaString();
     String[] objetosString = f.getObjetosString();
-
-
-
-
+    String[] localizObjetivoString = f.getLocalizacionesObjetivoString();
+    String[] objetosObjetivoString = f.getObjetosObjetivoString();
 
     // leer personajes contar numero de personajes
     
@@ -60,8 +58,8 @@ public class GestorPrueba {
     for(int i = 0; i < numPersonajes; i++) {
     	String name = new String();
     	name = "";
-    	String localizObjetivo = new String();
-    	localizObjetivo = "";
+    	String localizActual = new String();
+    	localizActual = "";
     	Personaje personajeFill = new Personaje();
     	int flag = 0;
     	for(int c = 0; c < personajesString[i].length(); c++) {
@@ -75,15 +73,13 @@ public class GestorPrueba {
     			break;
     		}
     		else if(personajesString[i].charAt(c) != '(' && flag == 1){
-    			localizObjetivo = localizObjetivo + personajesString[i].charAt(c);
+    			localizActual = localizActual + personajesString[i].charAt(c);
     		}
     	}
 		personajeFill.setNombre(name);
-		personajeFill.setLocalizacionObjetivo(localizObjetivo);
+		personajeFill.setLocalizacionObjetivo(localizActual);
 		arrayPersonajes[i] = personajeFill;
     }
-    
-    /*FALTA RELLENAR LOS OBJETOS*/
     for(int i = 0; i < numObjetos; i++) {
     	String name = new String();
     	name = "";
@@ -125,6 +121,69 @@ public class GestorPrueba {
     		}
     	}
     }
+    for(int i = 0; i < numPersonajes; i++) {
+    	String name = new String();
+    	name = "";
+    	String localizObjetivo = new String();
+    	localizObjetivo = "";
+    	int flag = 0;
+    	for(int c = 0; c < localizObjetivoString[i].length(); c++) {
+    		if(localizObjetivoString[i].charAt(c) != '(' && flag == 0) {
+    			name = name + localizObjetivoString[i].charAt(c);
+    		}
+    		else if(localizObjetivoString[i].charAt(c) == '(' && flag == 0) {
+    			flag = 1;
+    		}
+    		else if(localizObjetivoString[i].charAt(c) == ')' && flag == 1) {
+    			break;
+    		}
+    		else if(localizObjetivoString[i].charAt(c) != '(' && flag == 1){
+    			localizObjetivo = localizObjetivo + localizObjetivoString[i].charAt(c);
+    		}
+    	}
+    	for(int c = 0; c < numPersonajes; c++) {
+    		if(name.equals(arrayPersonajes[c].getNombre())) {
+    			arrayPersonajes[c].setLocalizacionObjetivo(localizObjetivo);
+    			System.out.printf("%s - %s\n", arrayPersonajes[c].getNombre(), arrayPersonajes[c].getLocalizacionObjetivo());
+    		}
+    		else {
+    			continue;
+    		}
+    	}
+    }
+    for(int i = 0; i < numPersonajes; i++) {
+    	String name = new String();
+    	name = "";
+    	String objetoObjetivo = new String();
+    	objetoObjetivo = "";
+    	Objeto objetoFill = new Objeto();
+    	int flag = 0;
+    	for(int c = 0; c < objetosObjetivoString[i].length(); c++) {
+    		if(objetosObjetivoString[i].charAt(c) != '(' && flag == 0) {
+    			objetoObjetivo = objetoObjetivo + objetosObjetivoString[i].charAt(c);
+    		}
+    		else if(objetosObjetivoString[i].charAt(c) == '(' && flag == 0) {
+    			flag = 1;
+    		}
+    		else if(objetosObjetivoString[i].charAt(c) == ')' && flag == 1) {
+    			break;
+    		}
+    		else if(objetosObjetivoString[i].charAt(c) != '(' && flag == 1){
+    			name = name + objetosObjetivoString[i].charAt(c);
+    		}
+    	}
+    	objetoFill.setNombre(objetoObjetivo);
+    	for(int c = 0; c < numPersonajes; c++) {
+    		if(name.equals(arrayPersonajes[c].getNombre())) {
+    			arrayPersonajes[c].setObjetoObjetivo(objetoFill);
+    			System.out.printf("%s - %s\n", arrayPersonajes[c].getNombre(), arrayPersonajes[c].getObjetoObjetivo().getNombre());
+    		}
+    		else {
+    			continue;
+    		}
+    	}
+    }
+    /*
 		// generar turnos
 
 		for (int i = 0; i < turno; i++) {
@@ -168,6 +227,7 @@ public class GestorPrueba {
 			if (end == 1)
 				break;
 		}
+		*/
     }
 
 
