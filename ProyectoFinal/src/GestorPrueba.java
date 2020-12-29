@@ -25,7 +25,7 @@ public class GestorPrueba {
   
     Personaje[] arrayPersonajes = new Personaje[numPersonajes];
     Localizacion[] arrayLocalizaciones = new Localizacion[numLocalizaciones];
-    //Objeto[] arrayObjetos = new Objeto[numObjetos];
+    Objeto[] arrayObjetos = new Objeto[numObjetos];
     
     //Rellenar los objetos Localizaciones
     
@@ -60,8 +60,8 @@ public class GestorPrueba {
     for(int i = 0; i < numPersonajes; i++) {
     	String name = new String();
     	name = "";
-    	String localizObj = new String();
-    	localizObj = "";
+    	String localizObjetivo = new String();
+    	localizObjetivo = "";
     	Personaje personajeFill = new Personaje();
     	int flag = 0;
     	for(int c = 0; c < personajesString[i].length(); c++) {
@@ -75,18 +75,39 @@ public class GestorPrueba {
     			break;
     		}
     		else if(personajesString[i].charAt(c) != '(' && flag == 1){
-    			localizObj = localizObj + personajesString[i].charAt(c);
+    			localizObjetivo = localizObjetivo + personajesString[i].charAt(c);
     		}
     	}
 		personajeFill.setNombre(name);
-		personajeFill.setLocalizacionObjetivo(localizObj);
+		personajeFill.setLocalizacionObjetivo(localizObjetivo);
 		arrayPersonajes[i] = personajeFill;
     	System.out.printf("\n%s\n", arrayPersonajes[i].getNombre());
     	System.out.printf("%s\n", arrayPersonajes[i].getLocalizacionObjetivo());
     }
     
     /*FALTA RELLENAR LOS OBJETOS*/
-   
+    for(int i = 0; i < numObjetos; i++) {
+    	String name = new String();
+    	name = "";
+    	String localizObjeto = new String();
+    	localizObjeto = "";
+    	Objeto objetoFill = new Objeto();
+    	int flag = 0;
+    	for(int c = 0; c < objetosString[i].length(); c++) {
+    		if(objetosString[i].charAt(c) != '(' && flag == 0) {
+    			name = name + objetosString[i].charAt(c);
+    		}
+    		else if(objetosString[i].charAt(c) == '(' && flag == 0) {
+    			flag = 1;
+    		}
+    		else if(objetosString[i].charAt(c) == ')' && flag == 1) {
+    			break;
+    		}
+    		else if(objetosString[i].charAt(c) != '(' && flag == 1){
+    			//Doble if, en función de si el objeto esta en alguien o en alguna localizacion (comparadores de string nombre)
+    		}
+    	}
+    }
 		// generar turnos
 
 
