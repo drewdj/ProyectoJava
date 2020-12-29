@@ -81,8 +81,6 @@ public class GestorPrueba {
 		personajeFill.setNombre(name);
 		personajeFill.setLocalizacionObjetivo(localizObjetivo);
 		arrayPersonajes[i] = personajeFill;
-    	System.out.printf("\n%s\n", arrayPersonajes[i].getNombre());
-    	System.out.printf("%s\n", arrayPersonajes[i].getLocalizacionObjetivo());
     }
     
     /*FALTA RELLENAR LOS OBJETOS*/
@@ -104,12 +102,30 @@ public class GestorPrueba {
     			break;
     		}
     		else if(objetosString[i].charAt(c) != '(' && flag == 1){
-    			//Doble if, en función de si el objeto esta en alguien o en alguna localizacion (comparadores de string nombre)
+    			localizObjeto = localizObjeto + objetosString[i].charAt(c);
+    		}
+    	}
+    	objetoFill.setNombre(name);
+    	arrayObjetos[i] = objetoFill;
+    	System.out.printf("%s\n", arrayObjetos[i].getNombre());
+    	for(int c = 0; c < numLocalizaciones; c++) {
+    		if(localizObjeto.equals(arrayLocalizaciones[c].getNombre())) {
+    			arrayLocalizaciones[c].setObjetoPresente(objetoFill);
+    		}
+    		else {
+    			continue;
+    		}
+    	}
+    	for(int c = 0; c < numPersonajes; c++) {
+    		if(localizObjeto.equals(arrayPersonajes[c].getNombre())) {
+    			arrayPersonajes[c].setObjetoActual(objetoFill);
+    		}
+    		else {
+    			continue;
     		}
     	}
     }
 		// generar turnos
-
 
 		for (int i = 0; i < turno; i++) {
 			//actualizacion de creencias
@@ -152,7 +168,6 @@ public class GestorPrueba {
 			if (end == 1)
 				break;
 		}
-
     }
 
 
