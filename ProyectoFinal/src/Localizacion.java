@@ -5,7 +5,7 @@ public class Localizacion {
     private ArrayList<Personaje> personajesPresentes;
     private int numPersonajePresente;
     private Objeto objetoPresente;
-    private String conexiones;
+    private String[] conexiones;
 
 
     public void setNombre(String nombre) {
@@ -18,7 +18,32 @@ public class Localizacion {
 
 
     public void setConexiones(String conexiones) {
-        this.conexiones = conexiones;
+        int numConexiones = 1;
+    	
+        //Contar numero de conexiones
+        for(int i = 0; i < conexiones.length(); i++) {
+        	if(conexiones.charAt(i) == ',') {
+        		numConexiones++;
+        	}
+        }
+        
+        String[] conexionesString = new String[numConexiones];
+        
+        for(int i = 0; i < numConexiones; i++) {
+        	conexionesString[i] = "";
+        }
+        int i = 0;
+        for(int c = 0; c < conexiones.length(); c++) {
+        	if(conexiones.charAt(c) == ',') {
+        		i++;
+        	}
+        	else {
+        		conexionesString[i] = conexionesString[i] + conexiones.charAt(c);
+        	}
+        }
+    	
+    	
+    	this.conexiones = conexionesString;
     }
 
     public void setNumPersonajePresente(int numPersonajePresente) {
@@ -37,8 +62,8 @@ public class Localizacion {
         return objetoPresente;
     }
 
-    public String getConexiones() {
-        return conexiones;
+    public String getConexiones(int i) {
+        return conexiones[i];
     }
 
     public ArrayList<Personaje> getPersonajesPresentes() {

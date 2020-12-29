@@ -8,8 +8,7 @@ public class Personaje {
     private Localizacion localizacionActual;
     private Creencias creencias;
     private int turno;
-
-
+    
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
