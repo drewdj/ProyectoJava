@@ -183,7 +183,7 @@ public class GestorPrueba {
     		}
     	}
     }
-    /*
+    
 		// generar turnos
 
 		for (int i = 0; i < turno; i++) {
@@ -227,7 +227,6 @@ public class GestorPrueba {
 			if (end == 1)
 				break;
 		}
-		*/
     }
 
 
