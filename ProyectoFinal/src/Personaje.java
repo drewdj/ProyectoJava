@@ -65,4 +65,16 @@ public class Personaje {
     public Creencias getCreencias() {
         return creencias;
     }
+
+    public void CogerObjeto(){
+        Objeto cambio;
+        cambio=this.getObjetoActual();
+        this.setObjetoActual(this.getLocalizacionActual().getObjetoPresente());
+        this.getLocalizacionActual().setObjetoPresente(cambio);
+    }
+    public void inicializarCreencias(ArrayList<Objeto> objeto, ArrayList<Localizacion> localizacion, ArrayList<Personaje> personaje){
+        this.creencias.setObjetosConocidos(objeto);
+        this.creencias.setPersonajesConocidos(personaje);
+        this.creencias.setLocalizacionesConocidas(localizacion);
+    }
 }

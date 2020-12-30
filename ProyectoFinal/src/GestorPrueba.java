@@ -2,9 +2,8 @@ import java.util.ArrayList;
 
 public class GestorPrueba {
     public static void main(String[] args) {
-    	
-	int end = 0;
-	int turno = 3;
+	int	maxTurnos = 3;
+	int turno = 0;
     
     //Dentro de la función de Leer fichero sacar atributo tamaño
     LeerFichero f = new LeerFichero();
@@ -81,9 +80,9 @@ public class GestorPrueba {
 		personajeFill.setNombre(name);
 		personajeFill.setLocalizacionObjetivo(localizActual);
 		arrayPersonajes[i] = personajeFill;
-		arrayPersonajes[i].getCreencias().setObjetosConocidos(new ArrayList<Objeto>());
-		arrayPersonajes[i].getCreencias().setLocalizacionesConocidas(new ArrayList<Localizacion>());
-		arrayPersonajes[i].getCreencias().setPersonajesConocidos(new ArrayList<Personaje>());
+		arrayPersonajes[i].setCreencias(new Creencias());
+		arrayPersonajes[i].inicializarCreencias(new ArrayList<Objeto>(),new ArrayList<Localizacion>(),new ArrayList<Personaje>());
+
     }
     for(int i = 0; i < numObjetos; i++) {
     	String name = new String();
@@ -191,62 +190,44 @@ public class GestorPrueba {
 
 		// FALTA GENERAR TURNO
 
-		for (int i = 0; i < turno; i++) {
+ 		for (; turno < maxTurnos; turno++) {
 			//actualizacion de creencias(objetos)  MOVER A ENTRADA EN SALA
 			int comprobador = 0;
 			for (int j = 0; j < arrayPersonajes[turno].getCreencias().getObjetosConocidos().size(); j++) {
 				if (arrayPersonajes[turno].getCreencias().getObjetosConocidos().get(j).getNombre() != arrayPersonajes[turno].getLocalizacionActual().getObjetoPresente().getNombre())
 					comprobador++;
 				if (comprobador == arrayPersonajes[turno].getCreencias().getObjetosConocidos().size()) {
-					Objeto objetoConocido = new Objeto();
-					arrayPersonajes[turno].getCreencias().getObjetosConocidos().add(objetoConocido);
+					Objeto objetoConocido = new Objeto(arrayPersonajes[turno].getLocalizacionActual().getObjetoPresente());
+					arrayPersonajes[turno].getCreencias().addObjeto(objetoConocido);
 				}
 			}
 
 
 
 			//buscar objeto
-			// si esta cogerlo/ pedirlo
-			if (arrayPersonajes[turno].getObjetoObjetivo().getNombre()==arrayPersonajes[turno].getNombre()){
-				System.out.println(arrayPersonajes[turno].getNombre() + " tiene su objeto");
 
-			}else if (arrayPersonajes[turno].getObjetoObjetivo().getNombre()!=arrayPersonajes[turno].getObjetoActual().getNombre()){
-				System.out.println(arrayPersonajes[turno].getNombre() + " no tiene su objeto");
+			//si el objeto actual no es null entra en el if
+			if (arrayPersonajes[turno].getObjetoActual()!=null){
+				//si el objeto es el deseado entra en el if
+				if (arrayPersonajes[turno].getObjetoObjetivo().getNombre()==arrayPersonajes[turno].getObjetoActual().getNombre()){
+					System.out.println(arrayPersonajes[turno].getNombre() + " tiene el objeto objetivo.");
+				}
+			}
 
+			//si es null o no tiene el objeto deseado entra en el if
+			if (arrayPersonajes[turno].getObjetoActual()==null||arrayPersonajes[turno].getObjetoObjetivo().getNombre()!=arrayPersonajes[turno].getObjetoActual().getNombre()){
+				System.out.println(arrayPersonajes[turno].getNombre() + " no tiene el objeto objetivo.");
 				if (arrayPersonajes[turno].getObjetoObjetivo().getNombre()==arrayPersonajes[turno].getLocalizacionActual().getObjetoPresente().getNombre()){
-					//coger objeto
+					System.out.println(arrayPersonajes[turno].getLocalizacionActual().getNombre() + " tiene el objeto que quiere " + arrayPersonajes[turno].getNombre());
+				}else {
+					System.out.println(arrayPersonajes[turno].getLocalizacionActual().getNombre() + " no tiene el objeto que quiere " + arrayPersonajes[turno].getNombre());
+
 				}
-				for (int j = 0; j < arrayPersonajes[turno].getLocalizacionActual().getNumPersonajePresente(); j++) {
-					if (arrayPersonajes[turno].getObjetoObjetivo().getNombre()== arrayPersonajes[turno].getLocalizacionActual().getPersonajesPresentes().get(j).getObjetoActual().getNombre()){
-						//pedir objeto
-					}
-				}
-				//si se se sabe donde esta pero no se puede alcanzar moverse a la posicion deseada (por hacer)
-
-				//terminada la busqueda moverse
-
-
 			}
 
-
-
-			//movimiento cuando se tenga el objeto
-			if (arrayPersonajes[turno].getLocalizacionActual().getNombre()==arrayPersonajes[turno].getLocalizacionObjetivo()){
-				System.out.println(arrayPersonajes[turno].getNombre() + " esta en la posicion deseada");
-			}else if (arrayPersonajes[turno].getLocalizacionActual().getNombre()!=arrayPersonajes[turno].getLocalizacionObjetivo()){
-				System.out.println(arrayPersonajes[turno].getNombre() + " no esta en la posicion deseada");
-				//Moverse a la posicion deseada(si se conoce)
-			}
-
-
-
-
-			if (end == 1)
-				break;
 		}
-		System.out.printf(arrayPersonajes[0].getNombre());
-		System.out.printf(arrayPersonajes[1].getNombre());
-		System.out.printf(arrayPersonajes[2].getNombre());
+
+
     }
 
 
