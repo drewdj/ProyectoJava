@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class GestorPrueba {
     public static void main(String[] args) {
     	
@@ -79,6 +81,9 @@ public class GestorPrueba {
 		personajeFill.setNombre(name);
 		personajeFill.setLocalizacionObjetivo(localizActual);
 		arrayPersonajes[i] = personajeFill;
+		arrayPersonajes[i].getCreencias().setObjetosConocidos(new ArrayList<Objeto>());
+		arrayPersonajes[i].getCreencias().setLocalizacionesConocidas(new ArrayList<Localizacion>());
+		arrayPersonajes[i].getCreencias().setPersonajesConocidos(new ArrayList<Personaje>());
     }
     for(int i = 0; i < numObjetos; i++) {
     	String name = new String();
@@ -183,16 +188,28 @@ public class GestorPrueba {
     		}
     	}
     }
-    
-		// generar turnos
+
+		// FALTA GENERAR TURNO
 
 		for (int i = 0; i < turno; i++) {
-			//actualizacion de creencias
+			//actualizacion de creencias(objetos)  MOVER A ENTRADA EN SALA
+			int comprobador = 0;
+			for (int j = 0; j < arrayPersonajes[turno].getCreencias().getObjetosConocidos().size(); j++) {
+				if (arrayPersonajes[turno].getCreencias().getObjetosConocidos().get(j).getNombre() != arrayPersonajes[turno].getLocalizacionActual().getObjetoPresente().getNombre())
+					comprobador++;
+				if (comprobador == arrayPersonajes[turno].getCreencias().getObjetosConocidos().size()) {
+					Objeto objetoConocido = new Objeto();
+					arrayPersonajes[turno].getCreencias().getObjetosConocidos().add(objetoConocido);
+				}
+			}
+
+
 
 			//buscar objeto
 			// si esta cogerlo/ pedirlo
-			if (arrayPersonajes[turno].getObjetoObjetivo().getNombre()==arrayPersonajes[turno].getObjetoActual().getNombre()){
+			if (arrayPersonajes[turno].getObjetoObjetivo().getNombre()==arrayPersonajes[turno].getNombre()){
 				System.out.println(arrayPersonajes[turno].getNombre() + " tiene su objeto");
+
 			}else if (arrayPersonajes[turno].getObjetoObjetivo().getNombre()!=arrayPersonajes[turno].getObjetoActual().getNombre()){
 				System.out.println(arrayPersonajes[turno].getNombre() + " no tiene su objeto");
 
@@ -227,6 +244,9 @@ public class GestorPrueba {
 			if (end == 1)
 				break;
 		}
+		System.out.printf(arrayPersonajes[0].getNombre());
+		System.out.printf(arrayPersonajes[1].getNombre());
+		System.out.printf(arrayPersonajes[2].getNombre());
     }
 
 

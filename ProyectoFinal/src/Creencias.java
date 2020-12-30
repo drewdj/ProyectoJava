@@ -29,4 +29,13 @@ public class Creencias {
     public ArrayList<Personaje> getPersonajesConocidos() {
         return personajesConocidos;
     }
+    public void addObjeto(Objeto objeto){
+        this.objetosConocidos.add(objeto);
+    }
+    public void addPersonaje(Personaje personaje){
+        this.personajesConocidos.add(personaje);
+    }
+    public void addLocalizacion(Localizacion localizacion){
+        this.localizacionesConocidas.add(localizacion);
+    }
 }
