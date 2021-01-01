@@ -45,6 +45,14 @@ public class Localizacion {
     	
     	this.conexiones = conexionesString;
     }
+    
+    public int contarConexiones() {
+    	int i = 0;
+    	while(conexiones[i] != null) {
+    		i++;
+    	}
+    	return i;
+    }
 
     public void setNumPersonajePresente(int numPersonajePresente) {
         this.numPersonajePresente = numPersonajePresente;
