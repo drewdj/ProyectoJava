@@ -7,6 +7,7 @@ public class Personaje {
     private String localizacionObjetivo;
     private Localizacion localizacionActual;
     private Creencias creencias;
+    private int flagPedir;
     private int turno;
     
     public void setNombre(String nombre) {
@@ -45,9 +46,20 @@ public class Personaje {
     public int getTurno() {
         return turno;
     }
-
+   
     public Objeto getObjetoActual() {
         return objetoActual;
+    }
+    
+    public void pedirObjeto(Personaje personaje) {
+    	if(personaje.getLocalizacionActual().getNombre().equals(this.getLocalizacionActual().getNombre())) {
+    		personaje.flagPedir = 1;
+    		//Cuando se coge el objeto se debe de restaurar a 0 (¿Es necesario que el flag se unico?, es decir, si hay 4 
+    		//personas en la misma sala y se piden objetos los cuatro como saben con quien tienen que intercambiar si el
+    		//flag de los cuatro es 1), en el caso de que se quiera cambiar, es crear una variable int donde se guarde 
+    		//un numero aleatorio y asignarlo a los dos flags, pero habría que crear otro flag mas para indicar cual es
+    		//el personaje que pide y cual es el que recibe la peticion.
+    	}
     }
 
     public String getLocalizacionObjetivo() {
