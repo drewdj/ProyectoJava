@@ -53,7 +53,7 @@ public class Personaje {
     
     public void pedirObjeto(Personaje personaje) {
     	if(personaje.getLocalizacionActual().getNombre().equals(this.getLocalizacionActual().getNombre())) {
-    		quienPide = personaje.getNombre();
+    		this.quienPide = personaje.getNombre();
     	}
     }
 
