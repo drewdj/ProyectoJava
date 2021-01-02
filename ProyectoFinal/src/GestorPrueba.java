@@ -14,6 +14,7 @@ public class GestorPrueba {
     String[] localizObjetivoString = f.getLocalizacionesObjetivoString();
     String[] objetosObjetivoString = f.getObjetosObjetivoString();
 
+
     // leer personajes contar numero de personajes
     
     int numPersonajes = personajesString.length;
@@ -78,12 +79,17 @@ public class GestorPrueba {
     		}
     	}
 		personajeFill.setNombre(name);
-		personajeFill.setLocalizacionObjetivo(localizActual);
+		for (int j = 0; j < numLocalizaciones; j++) {//bucle de busqueda y asignacion de localizacion
+			if (arrayLocalizaciones[j].getNombre().equals(localizActual)){
+				personajeFill.setLocalizacionActual(arrayLocalizaciones[j]);
+			}
+		}
 		arrayPersonajes[i] = personajeFill;
 		arrayPersonajes[i].setCreencias(new Creencias());
 		arrayPersonajes[i].inicializarCreencias(new ArrayList<Objeto>(),new ArrayList<Localizacion>(),new ArrayList<Personaje>());
 
     }
+		//Rellenar los objetos objeto
     for(int i = 0; i < numObjetos; i++) {
     	String name = new String();
     	name = "";
@@ -107,7 +113,13 @@ public class GestorPrueba {
     	}
     	objetoFill.setNombre(name);
     	arrayObjetos[i] = objetoFill;
-    	System.out.printf("%s\n", arrayObjetos[i].getNombre());
+    	//meter el objeto en su localizacion
+		for (int j = 0; j < numLocalizaciones; j++) {
+			if (arrayLocalizaciones[j].getNombre()==localizObjeto){//
+				arrayLocalizaciones[j].setObjetoPresente(arrayObjetos[i]);
+			}
+		}
+
     	for(int c = 0; c < numLocalizaciones; c++) {
     		if(localizObjeto.equals(arrayLocalizaciones[c].getNombre())) {
     			arrayLocalizaciones[c].setObjetoPresente(objetoFill);
@@ -148,7 +160,7 @@ public class GestorPrueba {
     	for(int c = 0; c < numPersonajes; c++) {
     		if(name.equals(arrayPersonajes[c].getNombre())) {
     			arrayPersonajes[c].setLocalizacionObjetivo(localizObjetivo);
-    			System.out.printf("%s - %s\n", arrayPersonajes[c].getNombre(), arrayPersonajes[c].getLocalizacionObjetivo());
+
     		}
     		else {
     			continue;
@@ -180,7 +192,7 @@ public class GestorPrueba {
     	for(int c = 0; c < numPersonajes; c++) {
     		if(name.equals(arrayPersonajes[c].getNombre())) {
     			arrayPersonajes[c].setObjetoObjetivo(objetoFill);
-    			System.out.printf("%s - %s\n", arrayPersonajes[c].getNombre(), arrayPersonajes[c].getObjetoObjetivo().getNombre());
+
     		}
     		else {
     			continue;
@@ -191,43 +203,45 @@ public class GestorPrueba {
 		// FALTA GENERAR TURNO
 
  		for (; turno < maxTurnos; turno++) {
+			//FALTA ACTIALIZAR LOCALIZACIONES
+
 			//actualizacion de creencias(objetos)  MOVER A ENTRADA EN SALA
-			int comprobador = 0;
-			for (int j = 0; j < arrayPersonajes[turno].getCreencias().getObjetosConocidos().size(); j++) {
-				if (arrayPersonajes[turno].getCreencias().getObjetosConocidos().get(j).getNombre() != arrayPersonajes[turno].getLocalizacionActual().getObjetoPresente().getNombre())
-					comprobador++;
-				if (comprobador == arrayPersonajes[turno].getCreencias().getObjetosConocidos().size()) {
-					Objeto objetoConocido = new Objeto(arrayPersonajes[turno].getLocalizacionActual().getObjetoPresente());
-					arrayPersonajes[turno].getCreencias().addObjeto(objetoConocido);
+			arrayPersonajes[turno].actualizarObjetosConocidos();
+			//actualizador de creencias(personajes
+			arrayPersonajes[turno].actualizarPersonajesConocidos();
+			//actualizadpr de creencias(localizaciones)
+			arrayPersonajes[turno].actualizarLocalizacionesConocidas();
+
+			//comprobar si se tiene el objeto
+				try {
+					if (arrayPersonajes[turno].getObjetoObjetivo().getNombre().equals(arrayPersonajes[turno].getObjetoActual().getNombre())) {
+						System.out.println(arrayPersonajes[turno].getNombre() + " tiene su objeto objetivo");//CUANDO TODOS TENGAN SU OBJETO FIN DE LA PARTIDA
+					} else {
+						System.out.println(arrayPersonajes[turno].getNombre() + " no tiene su objeto objetivo");
+
+						arrayPersonajes[turno].buscarObjetoEnLocalizacion();
+						if (arrayPersonajes[turno].getAccion()==0){
+							arrayPersonajes[turno].buscarObjetoEnPersonajes();
+						}
+						if (arrayPersonajes[turno].getAccion()==0){
+							arrayPersonajes[turno].moverseHaciaObjeto();
+						}
+					}
+				}catch (Exception e){
+					System.out.println(arrayPersonajes[turno].getNombre() + " no tiene objeto");
+					arrayPersonajes[turno].buscarObjetoEnLocalizacion();
+					if (arrayPersonajes[turno].getAccion()==0){
+						arrayPersonajes[turno].buscarObjetoEnPersonajes();
+					}
+					if (arrayPersonajes[turno].getAccion()==0){
+						arrayPersonajes[turno].moverseHaciaObjeto();
+					}
 				}
-			}
 
 
 
-			//buscar objeto
-
-			//si el objeto actual no es null entra en el if
-			if (arrayPersonajes[turno].getObjetoActual()!=null){
-				//si el objeto es el deseado entra en el if
-				if (arrayPersonajes[turno].getObjetoObjetivo().getNombre()==arrayPersonajes[turno].getObjetoActual().getNombre()){
-					System.out.println(arrayPersonajes[turno].getNombre() + " tiene el objeto objetivo.");
-				}
-			}
-
-			//si es null o no tiene el objeto deseado entra en el if
-			if (arrayPersonajes[turno].getObjetoActual()==null||arrayPersonajes[turno].getObjetoObjetivo().getNombre()!=arrayPersonajes[turno].getObjetoActual().getNombre()){
-				System.out.println(arrayPersonajes[turno].getNombre() + " no tiene el objeto objetivo.");
-				if (arrayPersonajes[turno].getObjetoObjetivo().getNombre()==arrayPersonajes[turno].getLocalizacionActual().getObjetoPresente().getNombre()){
-					System.out.println(arrayPersonajes[turno].getLocalizacionActual().getNombre() + " tiene el objeto que quiere " + arrayPersonajes[turno].getNombre());
-				}else {
-					System.out.println(arrayPersonajes[turno].getLocalizacionActual().getNombre() + " no tiene el objeto que quiere " + arrayPersonajes[turno].getNombre());
-
-				}
-			}
 
 		}
-
-
     }
 
 

@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class Localizacion {
     private String nombre;
     private ArrayList<Personaje> personajesPresentes;
-    private int numPersonajePresente;
     private Objeto objetoPresente;
     private String[] conexiones;
 
@@ -46,10 +45,6 @@ public class Localizacion {
     	this.conexiones = conexionesString;
     }
 
-    public void setNumPersonajePresente(int numPersonajePresente) {
-        this.numPersonajePresente = numPersonajePresente;
-    }
-
     public void setPersonajesPresentes(ArrayList<Personaje> personajesPresentes) {
         this.personajesPresentes = personajesPresentes;
     }
@@ -70,7 +65,4 @@ public class Localizacion {
         return personajesPresentes;
     }
 
-    public int getNumPersonajePresente() {
-        return numPersonajePresente;
-    }
 }
