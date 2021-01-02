@@ -93,6 +93,7 @@ public class Personaje {
         try {
             if (this.getObjetoObjetivo().getNombre().equals(this.getLocalizacionActual().getObjetoPresente().getNombre())){
                 //coger objeto
+
                 System.out.println("cogiendo el objeto de " + this.getLocalizacionActual().getNombre());
                 this.accion++;
             }else {
