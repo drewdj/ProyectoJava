@@ -1,10 +1,10 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GestorPrueba {
     public static void main(String[] args) {
-	int	maxTurnos = 3;
 	int turno = 0;
-    
+
     //Dentro de la función de Leer fichero sacar atributo tamaño
     LeerFichero f = new LeerFichero();
     f.main(args);
@@ -16,19 +16,19 @@ public class GestorPrueba {
 
 
     // leer personajes contar numero de personajes
-    
+
     int numPersonajes = personajesString.length;
     int numLocalizaciones = localizacionesString.length;
     int numObjetos = objetosString.length;
-    
+
     //bucle i=numero de personajes para crear la clase Personaje y asignar nombre y localizacion
-  
+
     Personaje[] arrayPersonajes = new Personaje[numPersonajes];
     Localizacion[] arrayLocalizaciones = new Localizacion[numLocalizaciones];
     Objeto[] arrayObjetos = new Objeto[numObjetos];
-    
+
     //Rellenar los objetos Localizaciones
-    
+
     for(int i = 0; i < numLocalizaciones; i++) {
     	String locationName = "";
     	String conexiones = "";
@@ -48,15 +48,15 @@ public class GestorPrueba {
     			conexiones = conexiones + localizacionesString[i].charAt(c);
     		}
     	}
-    	
-    	
+
+
     	fillLocation.setNombre(locationName);
     	fillLocation.setConexiones(conexiones);
     	arrayLocalizaciones[i] = fillLocation;
     }
-    
+
     //Rellenar los objetos presonajes
-    
+
     for(int i = 0; i < numPersonajes; i++) {
     	String name = new String();
     	name = "";
@@ -199,48 +199,100 @@ public class GestorPrueba {
     		}
     	}
     }
+		//ORDENACION DE TURNOS
+		int[] array = new int [numPersonajes];
+		for (int i = 0; i < numPersonajes; i++) {
+			array[i]= i;
+		}
 
-		// FALTA GENERAR TURNO
+		Random rand = new Random();
 
- 		for (; turno < maxTurnos; turno++) {
+		for (int i = 0; i < array.length; i++) {
+			int randomIndexToSwap = rand.nextInt(array.length);
+			int temp = array[randomIndexToSwap];
+			array[randomIndexToSwap] = array[i];
+			array[i] = temp;
+		}
+
+		//System.out.println(array[0]);
+
+
+		
+		for (int i = 0; i < numPersonajes; i++) {
+			arrayPersonajes[i].setTurno(array[i]);
+		}
+
+		//System.out.println(arrayPersonajes[0].getTurno());
+
+
+		Personaje[] arrayPersonajesOrdenado = new Personaje[numPersonajes];
+
+		for (int i = 0; i < numPersonajes; i++) {
+
+			for (int j = 0; j < numPersonajes; j++) {
+
+				if(arrayPersonajes[j].getTurno()==i){
+
+					arrayPersonajesOrdenado[i]=arrayPersonajes[j];
+
+				}
+
+			}
+
+		}
+
+		for (int i = 0; i < numPersonajes; i++) {
+			System.out.println(arrayPersonajesOrdenado[i].getTurno());
+		}
+
+
+
+
+
+
+	// FALTA GENERAR TURNO
+
+
+ 		for (; turno < numPersonajes; turno++) {
 			//FALTA ACTIALIZAR LOCALIZACIONES
 
 			//actualizacion de creencias(objetos)  MOVER A ENTRADA EN SALA
-			arrayPersonajes[turno].actualizarObjetosConocidos();
+			arrayPersonajesOrdenado[turno].actualizarObjetosConocidos();
 			//actualizador de creencias(personajes
-			arrayPersonajes[turno].actualizarPersonajesConocidos();
+			arrayPersonajesOrdenado[turno].actualizarPersonajesConocidos();
 			//actualizadpr de creencias(localizaciones)
-			arrayPersonajes[turno].actualizarLocalizacionesConocidas();
+			arrayPersonajesOrdenado[turno].actualizarLocalizacionesConocidas();
 
 			//comprobar si se tiene el objeto
 				try {
-					if (arrayPersonajes[turno].getObjetoObjetivo().getNombre().equals(arrayPersonajes[turno].getObjetoActual().getNombre())) {
-						System.out.println(arrayPersonajes[turno].getNombre() + " tiene su objeto objetivo");//CUANDO TODOS TENGAN SU OBJETO FIN DE LA PARTIDA
+					if (arrayPersonajesOrdenado[turno].getObjetoObjetivo().getNombre().equals(arrayPersonajesOrdenado[turno].getObjetoActual().getNombre())) {
+						System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " tiene su objeto objetivo");//CUANDO TODOS TENGAN SU OBJETO FIN DE LA PARTIDA
 					} else {
-						System.out.println(arrayPersonajes[turno].getNombre() + " no tiene su objeto objetivo");
+						System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene su objeto objetivo");
 
-						arrayPersonajes[turno].buscarObjetoEnLocalizacion();
-						if (arrayPersonajes[turno].getAccion()==0){
-							arrayPersonajes[turno].buscarObjetoEnPersonajes();
+						arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();
+						if (arrayPersonajesOrdenado[turno].getAccion()==0){
+							arrayPersonajesOrdenado[turno].buscarObjetoEnPersonajes();
 						}
-						if (arrayPersonajes[turno].getAccion()==0){
-							arrayPersonajes[turno].moverseHaciaObjeto();
+						if (arrayPersonajesOrdenado[turno].getAccion()==0){
+							arrayPersonajesOrdenado[turno].moverseHaciaObjeto();
 						}
 					}
 				}catch (Exception e){
-					System.out.println(arrayPersonajes[turno].getNombre() + " no tiene objeto");
-					arrayPersonajes[turno].buscarObjetoEnLocalizacion();
-					if (arrayPersonajes[turno].getAccion()==0){
-						arrayPersonajes[turno].buscarObjetoEnPersonajes();
+					System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene objeto");
+					arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();
+					if (arrayPersonajesOrdenado[turno].getAccion()==0){
+						arrayPersonajesOrdenado[turno].buscarObjetoEnPersonajes();
 					}
-					if (arrayPersonajes[turno].getAccion()==0){
-						arrayPersonajes[turno].moverseHaciaObjeto();
+					if (arrayPersonajesOrdenado[turno].getAccion()==0){
+						arrayPersonajesOrdenado[turno].moverseHaciaObjeto();
 					}
 				}
 
 
 
-
+			if (turno == numPersonajes-1)
+				turno=0;
 		}
     }
 
