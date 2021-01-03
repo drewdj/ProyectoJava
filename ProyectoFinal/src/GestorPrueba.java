@@ -113,6 +113,7 @@ public class GestorPrueba {
     	}
     	objetoFill.setNombre(name);
     	arrayObjetos[i] = objetoFill;
+
     	//meter el objeto en su localizacion
 		for (int j = 0; j < numLocalizaciones; j++) {
 			if (arrayLocalizaciones[j].getNombre()==localizObjeto){//
@@ -250,7 +251,7 @@ public class GestorPrueba {
 
 
 
-	// FALTA GENERAR TURNO
+
 
 
  		for (; turno < numPersonajes; turno++) {
@@ -258,8 +259,8 @@ public class GestorPrueba {
 
 			//actualizacion de creencias(objetos)  MOVER A ENTRADA EN SALA
 			arrayPersonajesOrdenado[turno].actualizarObjetosConocidos();
-			//actualizador de creencias(personajes
-			arrayPersonajesOrdenado[turno].actualizarPersonajesConocidos();
+			//actualizador de creencias(personajes) en caso de tener la accion pedir
+			//arrayPersonajesOrdenado[turno].actualizarPersonajesConocidos();
 			//actualizadpr de creencias(localizaciones)
 			arrayPersonajesOrdenado[turno].actualizarLocalizacionesConocidas();
 

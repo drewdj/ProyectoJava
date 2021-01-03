@@ -9,6 +9,6 @@ Esther(Dormitorio)
 María(Jardín)
 <Objetos> 
 Llave(Cocina)
-Ordenador(Comedor)
-Cartera(Jardín)
+Ordenador(Jardin)
+Cartera(Comedor)
 Pan(Jorge)
