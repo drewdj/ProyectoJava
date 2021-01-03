@@ -94,6 +94,7 @@ public class Localizacion {
     }
 
     public int getNumPersonajePresente() {
-        return numPersonajePresente;
+        int numPersonajePresente = personajesPresentes.size();
+    	return numPersonajePresente;
     }
 }
