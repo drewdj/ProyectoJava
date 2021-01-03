@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 public class Personaje {
     private String nombre;
@@ -53,7 +53,7 @@ public class Personaje {
     
     public void pedirObjeto(Personaje personaje) {
     	if(personaje.getLocalizacionActual().getNombre().equals(this.getLocalizacionActual().getNombre())) {
-    		this.quienPide = personaje.getNombre();
+    		personaje.quienPide = this.getNombre();
     	}
     }
 
@@ -71,5 +71,28 @@ public class Personaje {
 
     public Creencias getCreencias() {
         return creencias;
+    }
+    
+    public void darObjeto(Personaje personaje) {
+    	if(personaje.getLocalizacionActual().getNombre().equals(this.getObjetoActual().getNombre())) {
+    		if(personaje.getNombre().equals(this.quienPide)) {
+    			personaje.setObjetoActual(this.getObjetoActual());
+    			this.setObjetoActual(null);
+    		}
+    	}
+    }
+    
+    public void mover(Localizacion localizacionMover) {
+    	for(int i = 0; i < localizacionActual.contarConexiones(); i++) {
+    		if(localizacionMover.getNombre().equals(localizacionActual.getConexiones(i))) {
+    			for(int c = 0; c < localizacionActual.getPersonajesPresentes().size(); c++) {
+    				if(localizacionActual.getPersonajesPresentes().get(c).getNombre().equals(this.getNombre())) {
+    					localizacionActual.removePersonajePresente(c);
+    					this.localizacionActual = localizacionMover;
+    					localizacionActual.addPersonajePresente(this);
+    				}
+    			}
+    		}
+    	}
     }
 }
