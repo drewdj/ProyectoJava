@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class Localizacion {
     private String nombre;
     private ArrayList<Personaje> personajesPresentes;
-    private int numPersonajePresente;
     private Objeto objetoPresente;
     private String[] conexiones;
 
@@ -19,16 +18,16 @@ public class Localizacion {
 
     public void setConexiones(String conexiones) {
         int numConexiones = 1;
-    	
+
         //Contar numero de conexiones
         for(int i = 0; i < conexiones.length(); i++) {
         	if(conexiones.charAt(i) == ',') {
         		numConexiones++;
         	}
         }
-        
+
         String[] conexionesString = new String[numConexiones];
-        
+
         for(int i = 0; i < numConexiones; i++) {
         	conexionesString[i] = "";
         }
@@ -41,21 +40,9 @@ public class Localizacion {
         		conexionesString[i] = conexionesString[i] + conexiones.charAt(c);
         	}
         }
-    	
-    	
-    	this.conexiones = conexionesString;
-    }
-    
-    public int contarConexiones() {
-    	int i = 0;
-    	while(conexiones[i] != null) {
-    		i++;
-    	}
-    	return i;
-    }
 
-    public void setNumPersonajePresente(int numPersonajePresente) {
-        this.numPersonajePresente = numPersonajePresente;
+
+    	this.conexiones = conexionesString;
     }
 
     public void setPersonajesPresentes(Personaje[] personajes) {
@@ -69,11 +56,11 @@ public class Localizacion {
     		}
     	}
     }
-    
+
     public void addPersonajePresente(Personaje personaje) {
     	personajesPresentes.add(personaje);
     }
-    
+
     public void removePersonajePresente(int i) {
     	personajesPresentes.remove(i);
     }
