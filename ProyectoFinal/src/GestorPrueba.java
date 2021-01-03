@@ -1,9 +1,11 @@
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class GestorPrueba {
     public static void main(String[] args) {
 	int turno = 0;
+	Jugador jugador = new Jugador();
 
     //Dentro de la función de Leer fichero sacar atributo tamaño
     LeerFichero f = new LeerFichero();
@@ -17,7 +19,7 @@ public class GestorPrueba {
 
     // leer personajes contar numero de personajes
 
-    int numPersonajes = personajesString.length;
+    int numPersonajes = personajesString.length-1;
     int numLocalizaciones = localizacionesString.length;
     int numObjetos = objetosString.length;
 
@@ -57,13 +59,40 @@ public class GestorPrueba {
 
     //Rellenar los objetos presonajes
 
-    for(int i = 0; i < numPersonajes; i++) {
+    for(int i = 0; i <= numPersonajes; i++) {
     	String name = new String();
     	name = "";
     	String localizActual = new String();
     	localizActual = "";
     	Personaje personajeFill = new Personaje();
     	int flag = 0;
+
+    	//Inicializacion de jugador
+		if (i  == numPersonajes){
+
+			for(int c = 0; c < personajesString[i].length(); c++) {
+				if(personajesString[i].charAt(c) != '(' && flag == 0) {
+					name = name + personajesString[i].charAt(c);
+				}
+				else if(personajesString[i].charAt(c) == '(' && flag == 0) {
+					flag = 1;
+				}
+				else if(personajesString[i].charAt(c) == ')' && flag == 1) {
+					break;
+				}
+				else if(personajesString[i].charAt(c) != '(' && flag == 1){
+					localizActual = localizActual + personajesString[i].charAt(c);
+				}
+			}
+			jugador.setNombre(name);
+			for (int j = 0; j < numLocalizaciones; j++) {
+				if (arrayLocalizaciones[j].getNombre().equals(localizActual)){
+					jugador.setLocalizacionActual(arrayLocalizaciones[j]);
+				}
+			}
+			continue;
+
+		}
     	for(int c = 0; c < personajesString[i].length(); c++) {
     		if(personajesString[i].charAt(c) != '(' && flag == 0) {
     			name = name + personajesString[i].charAt(c);
@@ -138,7 +167,7 @@ public class GestorPrueba {
     		}
     	}
     }
-    for(int i = 0; i < numPersonajes; i++) {
+    for(int i = 0; i <= numPersonajes; i++) {
     	String name = new String();
     	name = "";
     	String localizObjetivo = new String();
@@ -158,17 +187,22 @@ public class GestorPrueba {
     			localizObjetivo = localizObjetivo + localizObjetivoString[i].charAt(c);
     		}
     	}
-    	for(int c = 0; c < numPersonajes; c++) {
-    		if(name.equals(arrayPersonajes[c].getNombre())) {
-    			arrayPersonajes[c].setLocalizacionObjetivo(localizObjetivo);
+		if(name.equals(jugador.getNombre())){
+			jugador.setLocalizacionObjetivo(localizObjetivo);                     //primero comprueba si es la localizacion objetivo de jugador
+		}else {
+			for(int c = 0; c < numPersonajes; c++) {
+				if(name.equals(arrayPersonajes[c].getNombre())) {
+					arrayPersonajes[c].setLocalizacionObjetivo(localizObjetivo);
 
-    		}
-    		else {
-    			continue;
-    		}
-    	}
+				}
+				else {
+					continue;
+				}
+			}
+		}
+
     }
-    for(int i = 0; i < numPersonajes; i++) {
+    for(int i = 0; i <= numPersonajes; i++) {
     	String name = new String();
     	name = "";
     	String objetoObjetivo = new String();
@@ -190,15 +224,20 @@ public class GestorPrueba {
     		}
     	}
     	objetoFill.setNombre(objetoObjetivo);
-    	for(int c = 0; c < numPersonajes; c++) {
-    		if(name.equals(arrayPersonajes[c].getNombre())) {
-    			arrayPersonajes[c].setObjetoObjetivo(objetoFill);
+		if(name.equals(jugador.getNombre())){                //igual para objeto objetivo
+			jugador.setObjetoObjetivo(objetoFill);
+		}else {
+			for(int c = 0; c < numPersonajes; c++) {
+				if(name.equals(arrayPersonajes[c].getNombre())) {
+					arrayPersonajes[c].setObjetoObjetivo(objetoFill);
 
-    		}
-    		else {
-    			continue;
-    		}
-    	}
+				}
+				else {
+					continue;
+				}
+			}
+		}
+
     }
 		//ORDENACION DE TURNOS
 		int[] array = new int [numPersonajes];
@@ -291,9 +330,11 @@ public class GestorPrueba {
 				}
 
 
+			if (turno == numPersonajes-1){                                                     //empieza el turno del jugador
 
+			}
 			if (turno == numPersonajes-1)
-				turno=0;
+				turno=-1;
 		}
     }
 
