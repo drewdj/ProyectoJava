@@ -93,7 +93,9 @@ public class Personaje {
         try {
             if (this.getObjetoObjetivo().getNombre().equals(this.getLocalizacionActual().getObjetoPresente().getNombre())){
                 //coger objeto
+
                 System.out.println("cogiendo el objeto de " + this.getLocalizacionActual().getNombre());
+                CogerObjeto();
                 this.accion++;
             }else {
                 System.out.println("No hay ningun objeto interesante en " + this.getLocalizacionActual().getNombre());
@@ -154,16 +156,21 @@ public class Personaje {
         }
     }
 
-    public void actualizarPersonajesConocidos(){
+    /*public void actualizarPersonajesConocidos(){
         int creenciasActuales = this.getCreencias().getPersonajesConocidos().size();
         int comprobador = 0;
 
+        for (int i = 0; i < this.getLocalizacionActual().getPersonajesPresentes().size(); i++) {
+            for (int j = 0; j < creenciasActuales; j++) {
 
+                try{
 
+                }catch (Exception e){
 
-
-
-    }
+                }
+            }
+        }
+    }*/
     public void actualizarLocalizacionesConocidas(){
 
     }
