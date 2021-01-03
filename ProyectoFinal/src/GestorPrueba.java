@@ -1,9 +1,12 @@
+import java.nio.channels.spi.SelectorProvider;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.*;
 
 public class GestorPrueba {
     public static void main(String[] args) {
 	int turno = 0;
+	Jugador jugador = new Jugador();
 
     //Dentro de la función de Leer fichero sacar atributo tamaño
     LeerFichero f = new LeerFichero();
@@ -17,7 +20,7 @@ public class GestorPrueba {
 
     // leer personajes contar numero de personajes
 
-    int numPersonajes = personajesString.length;
+    int numPersonajes = (personajesString.length)-1;          //menos 1 para no leer tambien jugador
     int numLocalizaciones = localizacionesString.length;
     int numObjetos = objetosString.length;
 
@@ -57,13 +60,46 @@ public class GestorPrueba {
 
     //Rellenar los objetos presonajes
 
-    for(int i = 0; i < numPersonajes; i++) {
+    for(int i = 0; i <= numPersonajes; i++) {
     	String name = new String();
     	name = "";
     	String localizActual = new String();
     	localizActual = "";
     	Personaje personajeFill = new Personaje();
-    	int flag = 0;
+		int flag = 0;
+
+
+		//Inicializacion de Jugador
+		if (i  == numPersonajes){
+
+			for(int c = 0; c < personajesString[i].length(); c++) {
+				if(personajesString[i].charAt(c) != '(' && flag == 0) {
+					name = name + personajesString[i].charAt(c);
+				}
+				else if(personajesString[i].charAt(c) == '(' && flag == 0) {
+					flag = 1;
+				}
+				else if(personajesString[i].charAt(c) == ')' && flag == 1) {
+					break;
+				}
+				else if(personajesString[i].charAt(c) != '(' && flag == 1){
+					localizActual = localizActual + personajesString[i].charAt(c);
+				}
+			}
+			jugador.setNombre(name);
+			for (int j = 0; j < numLocalizaciones; j++) {
+				if (arrayLocalizaciones[j].getNombre().equals(localizActual)){
+					jugador.setLocalizacionActual(arrayLocalizaciones[j]);
+				}
+			}
+			jugador.setCreencias(new Creencias());
+			jugador.inicializarCreencias(new ArrayList<Objeto>(),new ArrayList<Localizacion>(),new ArrayList<Personaje>());
+
+			continue;
+
+		}
+
+
     	for(int c = 0; c < personajesString[i].length(); c++) {
     		if(personajesString[i].charAt(c) != '(' && flag == 0) {
     			name = name + personajesString[i].charAt(c);
@@ -88,7 +124,8 @@ public class GestorPrueba {
 		arrayPersonajes[i].setCreencias(new Creencias());
 		arrayPersonajes[i].inicializarCreencias(new ArrayList<Objeto>(),new ArrayList<Localizacion>(),new ArrayList<Personaje>());
 
-    }
+	}
+	
 		//Rellenar los objetos objeto
     for(int i = 0; i < numObjetos; i++) {
     	String name = new String();
@@ -115,7 +152,7 @@ public class GestorPrueba {
     	arrayObjetos[i] = objetoFill;
     	//meter el objeto en su localizacion
 		for (int j = 0; j < numLocalizaciones; j++) {
-			if (arrayLocalizaciones[j].getNombre()==localizObjeto){//
+			if (arrayLocalizaciones[j].getNombre()==localizObjeto){
 				arrayLocalizaciones[j].setObjetoPresente(arrayObjetos[i]);
 			}
 		}
@@ -128,16 +165,19 @@ public class GestorPrueba {
     			continue;
     		}
     	}
-    	for(int c = 0; c < numPersonajes; c++) {
+    	for(int c = 0; c < numPersonajes; c++) {                         //posible  meter objeto inicial en jugador si se cambia < por <=
     		if(localizObjeto.equals(arrayPersonajes[c].getNombre())) {
-    			arrayPersonajes[c].setObjetoActual(objetoFill);
+				arrayPersonajes[c].setObjetoActual(objetoFill);
+				
     		}
     		else {
     			continue;
     		}
     	}
-    }
-    for(int i = 0; i < numPersonajes; i++) {
+	}
+	
+	//settear localizacion objetivo
+    for(int i = 0; i <= numPersonajes; i++) {
     	String name = new String();
     	name = "";
     	String localizObjetivo = new String();
@@ -156,18 +196,26 @@ public class GestorPrueba {
     		else if(localizObjetivoString[i].charAt(c) != '(' && flag == 1){
     			localizObjetivo = localizObjetivo + localizObjetivoString[i].charAt(c);
     		}
-    	}
-    	for(int c = 0; c < numPersonajes; c++) {
-    		if(name.equals(arrayPersonajes[c].getNombre())) {
-    			arrayPersonajes[c].setLocalizacionObjetivo(localizObjetivo);
-
-    		}
-    		else {
-    			continue;
-    		}
-    	}
-    }
-    for(int i = 0; i < numPersonajes; i++) {
+		}
+		
+		if(name.equals(jugador.getNombre())){  
+			jugador.setLocalizacionObjetivo(localizObjetivo);			         //primero comprueba si es la localizacion objetivo de jugador       
+		}	
+		else{
+    		for(int c = 0; c < numPersonajes; c++) {   
+													 
+    			if(name.equals(arrayPersonajes[c].getNombre())) {
+					arrayPersonajes[c].setLocalizacionObjetivo(localizObjetivo);
+    			}
+    			else {
+    				continue;
+    			}
+			}
+		}
+	}
+	
+	//settear objeto objetivo
+    for(int i = 0; i <= numPersonajes; i++) {
     	String name = new String();
     	name = "";
     	String objetoObjetivo = new String();
@@ -187,18 +235,24 @@ public class GestorPrueba {
     		else if(objetosObjetivoString[i].charAt(c) != '(' && flag == 1){
     			name = name + objetosObjetivoString[i].charAt(c);
     		}
-    	}
-    	objetoFill.setNombre(objetoObjetivo);
-    	for(int c = 0; c < numPersonajes; c++) {
-    		if(name.equals(arrayPersonajes[c].getNombre())) {
-    			arrayPersonajes[c].setObjetoObjetivo(objetoFill);
-
-    		}
-    		else {
-    			continue;
-    		}
-    	}
-    }
+		}
+		
+		objetoFill.setNombre(objetoObjetivo);
+		if(name.equals(jugador.getNombre())){				//igual para objeto objetivo
+			jugador.setObjetoObjetivo(objetoFill);
+		}
+		else{
+    		for(int c = 0; c < numPersonajes; c++) {           				
+    			if(name.equals(arrayPersonajes[c].getNombre())) {
+					arrayPersonajes[c].setObjetoObjetivo(objetoFill);
+    			}
+    			else {
+    				continue;
+    			}
+			}
+		}
+	}
+	
 		//ORDENACION DE TURNOS
 		int[] array = new int [numPersonajes];
 		for (int i = 0; i < numPersonajes; i++) {
@@ -242,7 +296,7 @@ public class GestorPrueba {
 		}
 
 		for (int i = 0; i < numPersonajes; i++) {
-			System.out.println(arrayPersonajesOrdenado[i].getTurno());
+			//System.out.println(arrayPersonajesOrdenado[i].getTurno());
 		}
 
 
@@ -252,7 +306,11 @@ public class GestorPrueba {
 
 	// FALTA GENERAR TURNO
 
-
+	/*System.out.println(jugador.getNombre());
+	System.out.println(jugador.getLocalizacionActual().getNombre());
+	System.out.println(jugador.getObjetoObjetivo().getNombre());
+	System.out.println(jugador.getLocalizacionObjetivo());*/
+	
  		for (; turno < numPersonajes; turno++) {
 			//FALTA ACTIALIZAR LOCALIZACIONES
 
@@ -262,7 +320,9 @@ public class GestorPrueba {
 			arrayPersonajesOrdenado[turno].actualizarPersonajesConocidos();
 			//actualizadpr de creencias(localizaciones)
 			arrayPersonajesOrdenado[turno].actualizarLocalizacionesConocidas();
-
+			
+			
+			
 			//comprobar si se tiene el objeto
 				try {
 					if (arrayPersonajesOrdenado[turno].getObjetoObjetivo().getNombre().equals(arrayPersonajesOrdenado[turno].getObjetoActual().getNombre())) {
@@ -290,9 +350,18 @@ public class GestorPrueba {
 				}
 
 
-
-			if (turno == numPersonajes-1)
-				turno=0;
+			if (turno == numPersonajes-1){ 													//empieza el turno del jugador
+				jugador.getCreencias().addLocalizacion(jugador.getLocalizacionActual());
+				Scanner s = new Scanner(System.in);								
+				System.out.println("Opciones: 1-Informacion");
+				int n= s.nextInt();
+				System.out.println(n);
+				jugador.informacion();
+				
+			}
+			if (turno == numPersonajes-1){ 
+				turno= -1;
+			}
 		}
     }
 

@@ -6,7 +6,8 @@ Dormitorio(Comedor, Jardín)
 <Personajes> 
 Jorge(Comedor)
 Esther(Dormitorio)
-María(Jardín)
+Maria(Jardín)
+Jugador(Cocina)
 <Objetos> 
 Llave(Cocina)
 Ordenador(Comedor)
