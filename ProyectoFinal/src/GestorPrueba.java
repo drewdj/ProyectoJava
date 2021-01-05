@@ -55,6 +55,7 @@ public class GestorPrueba {
     	fillLocation.setNombre(locationName);
     	fillLocation.setConexiones(conexiones);
     	arrayLocalizaciones[i] = fillLocation;
+    	arrayLocalizaciones[i].setPersonajesPresentes(new ArrayList<Personaje>());
     }
 
     //Rellenar los objetos presonajes
@@ -115,7 +116,7 @@ public class GestorPrueba {
 		}
 		arrayPersonajes[i] = personajeFill;
 		arrayPersonajes[i].setCreencias(new Creencias());
-		arrayPersonajes[i].inicializarCreencias(new ArrayList<Objeto>(),new ArrayList<Localizacion>(),new ArrayList<Personaje>());
+		arrayPersonajes[i].inicializarCreencias(new ArrayList<Objeto>(),new ArrayList<String>(),new ArrayList<Personaje>());
 
     }
 		//Rellenar los objetos objeto

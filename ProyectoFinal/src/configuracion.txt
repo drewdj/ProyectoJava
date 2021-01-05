@@ -10,6 +10,6 @@ María(Jardín)
 Jugador(Cocina)
 <Objetos> 
 Llave(Cocina)
-Ordenador(Jardin)
+Ordenador(Jardín)
 Cartera(Comedor)
 Pan(Jorge)

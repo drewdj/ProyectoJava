@@ -84,10 +84,10 @@ public class Personaje {
     public void setNombreLocalizacionInicial(String nombreLocalizacion){
         this.localizacionActual.setNombre(nombreLocalizacion);
     }
-    public void inicializarCreencias(ArrayList<Objeto> objeto, ArrayList<Localizacion> localizacion, ArrayList<Personaje> personaje){
+    public void inicializarCreencias(ArrayList<Objeto> objeto, ArrayList<String> string, ArrayList<Personaje> personaje){
         this.creencias.setObjetosConocidos(objeto);
         this.creencias.setPersonajesConocidos(personaje);
-        this.creencias.setLocalizacionesConocidas(localizacion);
+        this.creencias.setLocalizacionesConocidas(string);
     }
     public void buscarObjetoEnLocalizacion(){
         try {
@@ -124,54 +124,97 @@ public class Personaje {
         }
     }
     public void moverseHaciaObjeto(){
-        System.out.println("voy a moverme");
+        int creenciasActuales = this.getCreencias().getLocalizacionesConocidas().size();
+        outer:
+        for (int i = 0; i < this.localizacionActual.getNumConexiones(); i++) {
+            for (int j = 0; j < creenciasActuales; j++) {
+                if (!this.getCreencias().getLocalizacionesConocidas().get(j).equals(this.localizacionActual.getConexiones(i))){
+                    //moverse a esa localizacion
+                    System.out.println("me quiero mover a " + this.localizacionActual.getConexiones(i));
+                    break outer;
+                }
+            }
+        }
     }
 
     public void actualizarObjetosConocidos(){
-        int comprobador = 0;
+        int comprobador1;
+        int comprobador2 = 0;
+        int comprobador3 = 0;
         int creenciasActuales = this.getCreencias().getObjetosConocidos().size();
-        for (int j = 0; j <= creenciasActuales; j++) {
-            if (this.getCreencias().getObjetosConocidos().isEmpty()){//si creencias esta vacio se asigna automaticamente el objeto en sala a no ser que la sala no tenga objeto
-
-                try{
-                    if (this.getLocalizacionActual().getObjetoPresente().equals(null)){
-
-                    }else {
-                        this.getCreencias().addObjeto(this.getLocalizacionActual().getObjetoPresente());//falta cambiar a una copia del objeto
+        if (this.creencias.getObjetosConocidos().isEmpty()){
+            if (this.objetoActual!=null){//comprueba el objeto actual
+                this.creencias.addObjeto(this.objetoActual);
+            }else if (this.localizacionActual.getObjetoPresente()!=null){//comprueba el objeto presente
+                this.creencias.addObjeto(this.localizacionActual.getObjetoPresente());
+            }else if (!this.localizacionActual.getPersonajesPresentes().isEmpty()){//comprueba los objetos de los jugadores presentes
+                for (int i = 0; i < this.localizacionActual.getPersonajesPresentes().size(); i++) {
+                    comprobador1=0;
+                    for (int j = 0; j < creenciasActuales; j++) {
+                        if (!this.creencias.getObjetosConocidos().get(j).getNombre().equals(this.localizacionActual.getPersonajesPresentes().get(i).getObjetoActual().getNombre())){
+                            comprobador1++;
+                        }
                     }
-                }catch (Exception e){
+                    if (comprobador1 == creenciasActuales){
+                        this.creencias.addObjeto(this.localizacionActual.getPersonajesPresentes().get(i).getObjetoActual());
+                    }
+                }
+
+            }
+        }else {
+            for (int i = 0; i < creenciasActuales; i++) {
+                if (this.objetoActual!=null){
+                    if (this.creencias.getObjetosConocidos().get(i).equals(this.objetoActual)){
+                        comprobador2++;
+                    }
+                    if (comprobador2 == creenciasActuales){
+                        this.creencias.addObjeto(this.objetoActual);
+                    }
+                }
+
+                if (this.localizacionActual.getObjetoPresente()!=null){
+                    if ((this.creencias.getObjetosConocidos().get(i).equals(this.localizacionActual.getObjetoPresente()))){
+                        comprobador3++;
+                    }
+                    if (comprobador3 == creenciasActuales){
+                        this.creencias.addObjeto(this.localizacionActual.getObjetoPresente());
+                    }
+                }
+
+                if (!this.localizacionActual.getPersonajesPresentes().isEmpty()){//comprueba los objetos de los jugadores presentes
+                    for (int p = 0; p < this.localizacionActual.getPersonajesPresentes().size(); p++) {
+                        comprobador1=0;
+                        for (int j = 0; j < creenciasActuales; j++) {
+                            if (!this.creencias.getObjetosConocidos().get(j).getNombre().equals(this.localizacionActual.getPersonajesPresentes().get(p).getObjetoActual().getNombre())){
+                                comprobador1++;
+                            }
+                        }
+                        if (comprobador1 == creenciasActuales){
+                            this.creencias.addObjeto(this.localizacionActual.getPersonajesPresentes().get(p).getObjetoActual());
+                        }
+                    }
 
                 }
-            }else {
-                try{
-                    if (!this.getCreencias().getObjetosConocidos().get(j).getNombre().equals(this.getLocalizacionActual().getObjetoPresente().getNombre()))
-                        comprobador++;
-                }catch (Exception e){
-                    comprobador++;
-                }
-                if (comprobador == this.getCreencias().getObjetosConocidos().size()){
-                    this.getCreencias().addObjeto(this.getLocalizacionActual().getObjetoPresente());//falta cambiar a una copia del objeto
-                }
+
             }
         }
     }
 
-    /*public void actualizarPersonajesConocidos(){
-        int creenciasActuales = this.getCreencias().getPersonajesConocidos().size();
+    public void actualizarLocalizacionesConocidas(){//colocar en movimiento para que se actualice al cambiar de sala
         int comprobador = 0;
-
-        for (int i = 0; i < this.getLocalizacionActual().getPersonajesPresentes().size(); i++) {
-            for (int j = 0; j < creenciasActuales; j++) {
-
-                try{
-
-                }catch (Exception e){
-
+        int creenciasActuales = this.getCreencias().getLocalizacionesConocidas().size();
+        if (this.getCreencias().getLocalizacionesConocidas().isEmpty()){
+            this.creencias.addLocalizacion(this.localizacionActual.getNombre());
+        }else {
+            for (int i = 0; i < creenciasActuales; i++) {
+                if (!this.getCreencias().getLocalizacionesConocidas().get(i).equals(this.localizacionActual.getNombre())){
+                    comprobador++;
+                }
+                if (comprobador == creenciasActuales){
+                    this.creencias.addLocalizacion(this.localizacionActual.getNombre());
                 }
             }
         }
-    }*/
-    public void actualizarLocalizacionesConocidas(){
 
     }
 }

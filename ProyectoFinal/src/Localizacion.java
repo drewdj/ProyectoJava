@@ -64,5 +64,7 @@ public class Localizacion {
     public ArrayList<Personaje> getPersonajesPresentes() {
         return personajesPresentes;
     }
-
+    public int getNumConexiones(){
+        return conexiones.length;
+    }
 }
