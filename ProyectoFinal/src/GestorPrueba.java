@@ -307,52 +307,68 @@ public class GestorPrueba {
 			arrayPersonajesOrdenado[turno].actualizarLocalizacionesConocidas();
 			//comprobar si se tiene el objeto
 				try {
-					if (arrayPersonajesOrdenado[turno].getObjetoObjetivo().getNombre().equals(arrayPersonajesOrdenado[turno].getObjetoActual().getNombre())) {
-						System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " tiene su objeto objetivo");//CUANDO TODOS TENGAN SU OBJETO FIN DE LA PARTIDA
-						if (!arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){
-							System.out.println("No estoy en la posicion objetivo");
-							for (int i = 0; i < numLocalizaciones; i++) {
-								if (arrayPersonajesOrdenado[turno].moverseHaciaLocalizacion(arrayLocalizaciones).equals(arrayLocalizaciones[i].getNombre())){
-									arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]);
-									break;
+					if (arrayPersonajesOrdenado[turno].getQuienPide()!=null){
+						for (int i = 0; i < numPersonajes; i++) {
+							if (arrayPersonajesOrdenado[turno].getQuienPide().equals(arrayPersonajes[i].getNombre())){
+								arrayPersonajesOrdenado[turno].darObjeto(arrayPersonajes[i]);
+							}
+						}
+
+					}
+					if (arrayPersonajesOrdenado[turno].getAccion()==0){
+						if (arrayPersonajesOrdenado[turno].getObjetoObjetivo().getNombre().equals(arrayPersonajesOrdenado[turno].getObjetoActual().getNombre())) {
+							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " tiene su objeto objetivo");//CUANDO TODOS TENGAN SU OBJETO FIN DE LA PARTIDA
+							if (!arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){
+								System.out.println("No estoy en la posicion objetivo");
+								for (int i = 0; i < numLocalizaciones; i++) {
+									if (arrayPersonajesOrdenado[turno].moverseHaciaLocalizacion(arrayLocalizaciones).equals(arrayLocalizaciones[i].getNombre())){
+										arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]);
+										break;
+									}
+								}
+							}else if(arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){
+								System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " esta en la posicion objetivo");
+								arrayPersonajesOrdenado[turno].setFin(1);
+							}
+						} else {
+							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene su objeto objetivo");
+
+							arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();
+							if (arrayPersonajesOrdenado[turno].getAccion()==0){
+								arrayPersonajesOrdenado[turno].buscarObjetoEnPersonajes();
+							}
+							if (arrayPersonajesOrdenado[turno].getAccion()==0){
+								System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " se quiere mover");
+								for (int i = 0; i < numLocalizaciones; i++) {
+									System.out.println("quiero ir a " + arrayLocalizaciones[i].getNombre() + "?");
+									if (arrayPersonajesOrdenado[turno].moverseHaciaObjeto().equals(arrayLocalizaciones[i].getNombre())){
+										arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]);
+										break;
+									}
 								}
 							}
-						}else if(arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){
-							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " esta en la posicion objetivo");
-							arrayPersonajesOrdenado[turno].setFin(1);
 						}
-					} else {
-						System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene su objeto objetivo");
-
+					}
+				}catch (Exception e){
+					if (arrayPersonajesOrdenado[turno].getAccion()==0){
+						System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene objeto");
 						arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();
 						if (arrayPersonajesOrdenado[turno].getAccion()==0){
 							arrayPersonajesOrdenado[turno].buscarObjetoEnPersonajes();
 						}
 						if (arrayPersonajesOrdenado[turno].getAccion()==0){
-							for (int i = 0; i < numLocalizaciones; i++) {
-									if (arrayPersonajesOrdenado[turno].moverseHaciaObjeto().equals(arrayLocalizaciones[i].getNombre())){
-										arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]);
-									}
-							}
-						}
-					}
-				}catch (Exception e){
-					System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene objeto");
-					arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();
-					if (arrayPersonajesOrdenado[turno].getAccion()==0){
-						arrayPersonajesOrdenado[turno].buscarObjetoEnPersonajes();
-					}
-					if (arrayPersonajesOrdenado[turno].getAccion()==0){
-						System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " se quiere mover");
+							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " se quiere mover");
 
-						for (int i = 0; i < numLocalizaciones; i++) {
-							System.out.println("quiero ir a " + arrayLocalizaciones[i].getNombre() + "?");
-							if (arrayPersonajesOrdenado[turno].moverseHaciaObjeto().equals(arrayLocalizaciones[i].getNombre())) {
-								arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]);
-								break;
+							for (int i = 0; i < numLocalizaciones; i++) {
+								System.out.println("quiero ir a " + arrayLocalizaciones[i].getNombre() + "?");
+								if (arrayPersonajesOrdenado[turno].moverseHaciaObjeto().equals(arrayLocalizaciones[i].getNombre())) {
+									arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]);
+									break;
+								}
 							}
 						}
 					}
+
 				}
 			int contadorFinal=0;
 			for (int i = 0; i < numPersonajes; i++) {

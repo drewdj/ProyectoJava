@@ -17,6 +17,10 @@ public class Personaje {
         this.fin = fin;
     }
 
+    public void setQuienPide(String quienPide) {
+        this.quienPide = quienPide;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -86,6 +90,10 @@ public class Personaje {
         return fin;
     }
 
+    public String getQuienPide() {
+        return quienPide;
+    }
+
     public void CogerObjeto(){
         Objeto cambio;
         cambio=this.getObjetoActual();
@@ -94,11 +102,22 @@ public class Personaje {
     }
 
     public void darObjeto(Personaje personaje) {
-        if(personaje.getLocalizacionActual().getNombre().equals(this.getObjetoActual().getNombre())) {
+        Objeto temp = new Objeto();
+        if(personaje.getLocalizacionActual().getNombre().equals(this.localizacionActual.getNombre())) {
             if(personaje.getNombre().equals(this.quienPide)) {
+                System.out.println("Le voy a dar "+ this.getObjetoActual().getNombre() + " a " + personaje.getNombre());
+                temp = personaje.objetoActual;
                 personaje.setObjetoActual(this.getObjetoActual());
-                this.setObjetoActual(null);
+                this.setObjetoActual(temp);
+                this.setAccion(1);
+                this.setQuienPide(null);
             }
+        }
+    }
+
+    public void pedirObjeto(Personaje personaje) {
+        if(personaje.getLocalizacionActual().getNombre().equals(this.getLocalizacionActual().getNombre())) {
+            personaje.quienPide = this.getNombre();
         }
     }
 
@@ -133,7 +152,8 @@ public class Personaje {
                 System.out.println(this.getObjetoObjetivo().getNombre() + this.getLocalizacionActual().getPersonajesPresentes().get(i).getObjetoActual().getNombre());
                 if (this.getObjetoObjetivo().getNombre().equals(this.getLocalizacionActual().getPersonajesPresentes().get(i).getObjetoActual().getNombre())){
                     //coger objeto de personaje
-                    System.out.println("quiero el objeto de " + this.getLocalizacionActual().getPersonajesPresentes().get(i).getNombre() + " que es " + this.getLocalizacionActual().getPersonajesPresentes().get(i).getObjetoActual().getNombre());
+                    System.out.println("Le he pedido " + this.getLocalizacionActual().getPersonajesPresentes().get(i).getNombre() + " a " + this.getLocalizacionActual().getPersonajesPresentes().get(i).getObjetoActual().getNombre());
+                    this.pedirObjeto(this.getLocalizacionActual().getPersonajesPresentes().get(i));
                     this.accion++;
                     break;
                 }else {
