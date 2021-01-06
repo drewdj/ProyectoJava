@@ -55,6 +55,7 @@ public class GestorPrueba {
     	fillLocation.setNombre(locationName);
     	fillLocation.setConexiones(conexiones);
     	arrayLocalizaciones[i] = fillLocation;
+    	arrayLocalizaciones[i].setPersonajesPresentes(new ArrayList<Personaje>());
     }
 
     //Rellenar los objetos presonajes
@@ -115,6 +116,7 @@ public class GestorPrueba {
 		}
 		arrayPersonajes[i] = personajeFill;
 		arrayPersonajes[i].setCreencias(new Creencias());
+		arrayPersonajes[i].setFin(0);
 		arrayPersonajes[i].inicializarCreencias(new ArrayList<Objeto>(),new ArrayList<Localizacion>(),new ArrayList<Personaje>());
 
     }
@@ -281,8 +283,8 @@ public class GestorPrueba {
 
 		}
 
-		for (int i = 0; i < numPersonajes; i++) {
-			System.out.println(arrayPersonajesOrdenado[i].getTurno());
+		for (int i = 0; i < numLocalizaciones; i++) {
+			arrayLocalizaciones[i].setPersonajesPresentes(arrayPersonajes);
 		}
 
 
@@ -292,43 +294,90 @@ public class GestorPrueba {
 
 
 
-
  		for (; turno < numPersonajes; turno++) {
-			//FALTA ACTIALIZAR LOCALIZACIONES
+			System.out.println("Turno de " + arrayPersonajesOrdenado[turno].getNombre());
+			arrayPersonajesOrdenado[turno].setAccion(0);
+ 			//FALTA ACTIALIZAR LOCALIZACIONES
 
 			//actualizacion de creencias(objetos)  MOVER A ENTRADA EN SALA
-			arrayPersonajesOrdenado[turno].actualizarObjetosConocidos();
+			//arrayPersonajesOrdenado[turno].actualizarObjetosConocidos();
 			//actualizador de creencias(personajes) en caso de tener la accion pedir
 			//arrayPersonajesOrdenado[turno].actualizarPersonajesConocidos();
 			//actualizadpr de creencias(localizaciones)
 			arrayPersonajesOrdenado[turno].actualizarLocalizacionesConocidas();
-
 			//comprobar si se tiene el objeto
 				try {
-					if (arrayPersonajesOrdenado[turno].getObjetoObjetivo().getNombre().equals(arrayPersonajesOrdenado[turno].getObjetoActual().getNombre())) {
-						System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " tiene su objeto objetivo");//CUANDO TODOS TENGAN SU OBJETO FIN DE LA PARTIDA
-					} else {
-						System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene su objeto objetivo");
+					if (arrayPersonajesOrdenado[turno].getQuienPide()!=null){
+						for (int i = 0; i < numPersonajes; i++) {
+							if (arrayPersonajesOrdenado[turno].getQuienPide().equals(arrayPersonajes[i].getNombre())){
+								arrayPersonajesOrdenado[turno].darObjeto(arrayPersonajes[i]);
+							}
+						}
 
+					}
+					if (arrayPersonajesOrdenado[turno].getAccion()==0){
+						if (arrayPersonajesOrdenado[turno].getObjetoObjetivo().getNombre().equals(arrayPersonajesOrdenado[turno].getObjetoActual().getNombre())) {
+							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " tiene su objeto objetivo");//CUANDO TODOS TENGAN SU OBJETO FIN DE LA PARTIDA
+							if (!arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){
+								System.out.println("No estoy en la posicion objetivo");
+								for (int i = 0; i < numLocalizaciones; i++) {
+									if (arrayPersonajesOrdenado[turno].moverseHaciaLocalizacion(arrayLocalizaciones).equals(arrayLocalizaciones[i].getNombre())){
+										arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]);
+										break;
+									}
+								}
+							}else if(arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){
+								System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " esta en la posicion objetivo");
+								arrayPersonajesOrdenado[turno].setFin(1);
+							}
+						} else {
+							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene su objeto objetivo");
+
+							arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();
+							if (arrayPersonajesOrdenado[turno].getAccion()==0){
+								arrayPersonajesOrdenado[turno].buscarObjetoEnPersonajes();
+							}
+							if (arrayPersonajesOrdenado[turno].getAccion()==0){
+								System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " se quiere mover");
+								for (int i = 0; i < numLocalizaciones; i++) {
+									System.out.println("quiero ir a " + arrayLocalizaciones[i].getNombre() + "?");
+									if (arrayPersonajesOrdenado[turno].moverseHaciaObjeto().equals(arrayLocalizaciones[i].getNombre())){
+										arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]);
+										break;
+									}
+								}
+							}
+						}
+					}
+				}catch (Exception e){
+					if (arrayPersonajesOrdenado[turno].getAccion()==0){
+						System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene objeto");
 						arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();
 						if (arrayPersonajesOrdenado[turno].getAccion()==0){
 							arrayPersonajesOrdenado[turno].buscarObjetoEnPersonajes();
 						}
 						if (arrayPersonajesOrdenado[turno].getAccion()==0){
-							arrayPersonajesOrdenado[turno].moverseHaciaObjeto();
+							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " se quiere mover");
+
+							for (int i = 0; i < numLocalizaciones; i++) {
+								System.out.println("quiero ir a " + arrayLocalizaciones[i].getNombre() + "?");
+								if (arrayPersonajesOrdenado[turno].moverseHaciaObjeto().equals(arrayLocalizaciones[i].getNombre())) {
+									arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]);
+									break;
+								}
+							}
 						}
 					}
-				}catch (Exception e){
-					System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene objeto");
-					arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();
-					if (arrayPersonajesOrdenado[turno].getAccion()==0){
-						arrayPersonajesOrdenado[turno].buscarObjetoEnPersonajes();
-					}
-					if (arrayPersonajesOrdenado[turno].getAccion()==0){
-						arrayPersonajesOrdenado[turno].moverseHaciaObjeto();
-					}
-				}
 
+				}
+			int contadorFinal=0;
+			for (int i = 0; i < numPersonajes; i++) {
+				if (arrayPersonajes[i].getFin()==1){
+					contadorFinal++;
+				}
+			}
+			if (contadorFinal==numPersonajes)
+				return;
 
 			if (turno == numPersonajes-1){                                                     //empieza el turno del jugador
 
