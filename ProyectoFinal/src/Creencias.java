@@ -3,10 +3,10 @@ import java.util.ArrayList;
 public class Creencias {
     private int numObjetosConocidos;
     private ArrayList<Objeto> objetosConocidos;
-    private ArrayList<String> localizacionesConocidas;
+    private ArrayList<Localizacion> localizacionesConocidas;
     private ArrayList<Personaje>    personajesConocidos;
 
-    public void setLocalizacionesConocidas(ArrayList<String> localizacionesConocidas) {
+    public void setLocalizacionesConocidas(ArrayList<Localizacion> localizacionesConocidas) {
         this.localizacionesConocidas = localizacionesConocidas;
     }
 
@@ -18,7 +18,7 @@ public class Creencias {
         this.personajesConocidos = personajesConocidos;
     }
 
-    public ArrayList<String> getLocalizacionesConocidas() {
+    public ArrayList<Localizacion> getLocalizacionesConocidas() {
         return localizacionesConocidas;
     }
 
@@ -35,7 +35,10 @@ public class Creencias {
     public void addPersonaje(Personaje personaje){
         this.personajesConocidos.add(personaje);
     }
-    public void addLocalizacion(String string){
-        this.localizacionesConocidas.add(string);
+    public void addLocalizacion(Localizacion localizacion){
+        this.localizacionesConocidas.add(localizacion);
+    }
+    public void borrarLocalizaciones(){
+        localizacionesConocidas.removeAll(localizacionesConocidas);
     }
 }

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Personaje {
     private int accion;
@@ -7,9 +8,15 @@ public class Personaje {
     private Objeto objetoObjetivo;
     private String localizacionObjetivo;
     private Localizacion localizacionActual;
+    private String quienPide;
     private Creencias creencias;
+    private int fin;
     private int turno;
-    
+
+    public void setFin(int fin) {
+        this.fin = fin;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -75,19 +82,33 @@ public class Personaje {
         return creencias;
     }
 
+    public int getFin() {
+        return fin;
+    }
+
     public void CogerObjeto(){
         Objeto cambio;
         cambio=this.getObjetoActual();
         this.setObjetoActual(this.getLocalizacionActual().getObjetoPresente());
         this.getLocalizacionActual().setObjetoPresente(cambio);
     }
+
+    public void darObjeto(Personaje personaje) {
+        if(personaje.getLocalizacionActual().getNombre().equals(this.getObjetoActual().getNombre())) {
+            if(personaje.getNombre().equals(this.quienPide)) {
+                personaje.setObjetoActual(this.getObjetoActual());
+                this.setObjetoActual(null);
+            }
+        }
+    }
+
     public void setNombreLocalizacionInicial(String nombreLocalizacion){
         this.localizacionActual.setNombre(nombreLocalizacion);
     }
-    public void inicializarCreencias(ArrayList<Objeto> objeto, ArrayList<String> string, ArrayList<Personaje> personaje){
+    public void inicializarCreencias(ArrayList<Objeto> objeto, ArrayList<Localizacion> localizacion, ArrayList<Personaje> personaje){
         this.creencias.setObjetosConocidos(objeto);
         this.creencias.setPersonajesConocidos(personaje);
-        this.creencias.setLocalizacionesConocidas(string);
+        this.creencias.setLocalizacionesConocidas(localizacion);
     }
     public void buscarObjetoEnLocalizacion(){
         try {
@@ -123,15 +144,65 @@ public class Personaje {
             //o no hay nadie mas en sala
         }
     }
-    public void moverseHaciaObjeto(){
+    public String  moverseHaciaLocalizacion(Localizacion[] arrayLocalizaciones){
+        for (int i = 0; i < localizacionActual.getNumConexiones(); i++) {
+            if (localizacionObjetivo.equals(localizacionActual.getConexiones(i))){
+                System.out.println("Me muevo a " + localizacionActual.getConexiones(i));
+                return localizacionActual.getConexiones(i);
+            }
+
+        }
+        for (int i = 0; i < localizacionActual.getNumConexiones(); i++) {
+            for (int j = 0; j < arrayLocalizaciones.length; j++) {
+                if (localizacionObjetivo.equals(arrayLocalizaciones[j].getNombre())){
+                    System.out.println("Me muevo a " + localizacionActual.getConexiones(i));
+                    return localizacionActual.getConexiones(i);
+                }
+            }
+        }
+        return null;
+    }
+
+
+    public String moverseHaciaObjeto(){
+        int contador;
         int creenciasActuales = this.getCreencias().getLocalizacionesConocidas().size();
-        outer:
+
         for (int i = 0; i < this.localizacionActual.getNumConexiones(); i++) {
+            contador = 0;
             for (int j = 0; j < creenciasActuales; j++) {
-                if (!this.getCreencias().getLocalizacionesConocidas().get(j).equals(this.localizacionActual.getConexiones(i))){
-                    //moverse a esa localizacion
-                    System.out.println("me quiero mover a " + this.localizacionActual.getConexiones(i));
-                    break outer;
+                System.out.println("Es " + this.getCreencias().getLocalizacionesConocidas().get(j).getNombre() + " diferente de " + this.localizacionActual.getConexiones(i));
+                if (!this.getCreencias().getLocalizacionesConocidas().get(j).getNombre().equals(this.localizacionActual.getConexiones(i))){
+                    contador++;
+                }
+                if (contador == creenciasActuales){
+                    System.out.println("Me quiero mover hacia " + this.localizacionActual.getConexiones(i));
+                    return this.localizacionActual.getConexiones(i);
+                }
+            }
+        }
+        int random = new Random().nextInt(localizacionActual.getNumConexiones());
+        System.out.println("Me quiero mover 2 hacia " + this.localizacionActual.getConexiones(random));
+
+        return this.localizacionActual.getConexiones(random);
+    }
+
+    public void mover(Localizacion localizacionMover) {
+    outer:
+        for(int i = 0; i < localizacionActual.contarConexiones(); i++) {
+            System.out.println("if " + localizacionMover.getNombre() + " igual a " + localizacionActual.getConexiones(i));
+            if(localizacionMover.getNombre().equals(localizacionActual.getConexiones(i))) {
+                for(int c = 0; c < localizacionActual.getPersonajesPresentes().size(); c++) {
+                    System.out.println("if " + localizacionActual.getPersonajesPresentes().get(c).getNombre() + " igual a " + this.getNombre());
+                    if(localizacionActual.getPersonajesPresentes().get(c).getNombre().equals(this.getNombre())) {
+                        System.out.println("Vengo de " + localizacionActual.getNombre());
+                        localizacionActual.removePersonajePresente(c);
+                        this.localizacionActual = localizacionMover;
+                        localizacionActual.addPersonajePresente(this);
+                        actualizarLocalizacionesConocidas();
+                        System.out.println("Estoy en " + localizacionActual.getNombre());
+                        break outer;
+                    }
                 }
             }
         }
@@ -147,7 +218,7 @@ public class Personaje {
                 this.creencias.addObjeto(this.objetoActual);
             }else if (this.localizacionActual.getObjetoPresente()!=null){//comprueba el objeto presente
                 this.creencias.addObjeto(this.localizacionActual.getObjetoPresente());
-            }else if (!this.localizacionActual.getPersonajesPresentes().isEmpty()){//comprueba los objetos de los jugadores presentes
+            }else if (this.localizacionActual.getNumPersonajePresente() > 1){//comprueba los objetos de los jugadores presentes
                 for (int i = 0; i < this.localizacionActual.getPersonajesPresentes().size(); i++) {
                     comprobador1=0;
                     for (int j = 0; j < creenciasActuales; j++) {
@@ -164,7 +235,7 @@ public class Personaje {
         }else {
             for (int i = 0; i < creenciasActuales; i++) {
                 if (this.objetoActual!=null){
-                    if (this.creencias.getObjetosConocidos().get(i).equals(this.objetoActual)){
+                    if (!this.creencias.getObjetosConocidos().get(i).getNombre().equals(this.objetoActual.getNombre())){
                         comprobador2++;
                     }
                     if (comprobador2 == creenciasActuales){
@@ -173,7 +244,7 @@ public class Personaje {
                 }
 
                 if (this.localizacionActual.getObjetoPresente()!=null){
-                    if ((this.creencias.getObjetosConocidos().get(i).equals(this.localizacionActual.getObjetoPresente()))){
+                    if ((!this.creencias.getObjetosConocidos().get(i).getNombre().equals(this.localizacionActual.getObjetoPresente().getNombre()))){
                         comprobador3++;
                     }
                     if (comprobador3 == creenciasActuales){
@@ -181,7 +252,7 @@ public class Personaje {
                     }
                 }
 
-                if (!this.localizacionActual.getPersonajesPresentes().isEmpty()){//comprueba los objetos de los jugadores presentes
+                if (this.localizacionActual.getNumPersonajePresente() > 1){//comprueba los objetos de los jugadores presentes
                     for (int p = 0; p < this.localizacionActual.getPersonajesPresentes().size(); p++) {
                         comprobador1=0;
                         for (int j = 0; j < creenciasActuales; j++) {
@@ -200,18 +271,19 @@ public class Personaje {
         }
     }
 
-    public void actualizarLocalizacionesConocidas(){//colocar en movimiento para que se actualice al cambiar de sala
+    public void actualizarLocalizacionesConocidas(){//colocar en movimiento para que se actualice al cambiar de sala y resetear cuando se llegue al maximo
         int comprobador = 0;
         int creenciasActuales = this.getCreencias().getLocalizacionesConocidas().size();
+
         if (this.getCreencias().getLocalizacionesConocidas().isEmpty()){
-            this.creencias.addLocalizacion(this.localizacionActual.getNombre());
+            this.creencias.addLocalizacion(this.localizacionActual);//hacer copia de la localizacion
         }else {
             for (int i = 0; i < creenciasActuales; i++) {
-                if (!this.getCreencias().getLocalizacionesConocidas().get(i).equals(this.localizacionActual.getNombre())){
+                if (!this.getCreencias().getLocalizacionesConocidas().get(i).getNombre().equals(this.localizacionActual.getNombre())){
                     comprobador++;
                 }
                 if (comprobador == creenciasActuales){
-                    this.creencias.addLocalizacion(this.localizacionActual.getNombre());
+                    this.creencias.addLocalizacion(this.localizacionActual);
                 }
             }
         }

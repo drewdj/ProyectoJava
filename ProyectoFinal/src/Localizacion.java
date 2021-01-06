@@ -45,6 +45,21 @@ public class Localizacion {
     	this.conexiones = conexionesString;
     }
 
+    public void setPersonajesPresentes(Personaje[] personajes) {
+        int numPj;
+        numPj=personajes.length;
+        for(int i = 0; i < numPj; i++) {
+            if(personajes[i].getLocalizacionActual().getNombre().equals(this.nombre)) {
+                personajesPresentes.add(personajes[i]);
+            }
+        }
+    }
+    public void addPersonajePresente(Personaje personaje) {
+        personajesPresentes.add(personaje);
+    }
+    public void removePersonajePresente(int i) {
+        personajesPresentes.remove(i);
+    }
     public void setPersonajesPresentes(ArrayList<Personaje> personajesPresentes) {
         this.personajesPresentes = personajesPresentes;
     }
@@ -61,10 +76,20 @@ public class Localizacion {
         return conexiones[i];
     }
 
+
+
+    public int getNumPersonajePresente() {
+        int numPersonajePresente = personajesPresentes.size();
+        return numPersonajePresente;
+    }
     public ArrayList<Personaje> getPersonajesPresentes() {
         return personajesPresentes;
     }
     public int getNumConexiones(){
         return conexiones.length;
+    }
+
+    public int contarConexiones(){
+        return this.conexiones.length;
     }
 }

@@ -1,8 +1,8 @@
 <Localizaciones> 
-Jardín(Comedor, Dormitorio)
-Comedor(Jardín, Cocina, Dormitorio)
+Jardín(Comedor,Dormitorio)
+Comedor(Jardín,Cocina,Dormitorio)
 Cocina(Comedor)
-Dormitorio(Comedor, Jardín)
+Dormitorio(Comedor,Jardín)
 <Personajes> 
 Jorge(Comedor)
 Esther(Dormitorio)
@@ -10,6 +10,6 @@ María(Jardín)
 Jugador(Cocina)
 <Objetos> 
 Llave(Cocina)
-Ordenador(Jardin)
+Ordenador(Jardín)
 Cartera(Comedor)
 Pan(Jorge)
