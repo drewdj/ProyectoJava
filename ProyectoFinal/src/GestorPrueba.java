@@ -296,6 +296,7 @@ public class GestorPrueba {
 
  		for (; turno < numPersonajes; turno++) {
 			System.out.println("Turno de " + arrayPersonajesOrdenado[turno].getNombre());
+			arrayPersonajesOrdenado[turno].setAccion(0);
  			//FALTA ACTIALIZAR LOCALIZACIONES
 
 			//actualizacion de creencias(objetos)  MOVER A ENTRADA EN SALA

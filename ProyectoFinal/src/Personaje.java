@@ -130,10 +130,12 @@ public class Personaje {
     public void buscarObjetoEnPersonajes(){
         try {
             for (int i = 0; i < this.getLocalizacionActual().getPersonajesPresentes().size(); i++) {
+                System.out.println(this.getObjetoObjetivo().getNombre() + this.getLocalizacionActual().getPersonajesPresentes().get(i).getObjetoActual().getNombre());
                 if (this.getObjetoObjetivo().getNombre().equals(this.getLocalizacionActual().getPersonajesPresentes().get(i).getObjetoActual().getNombre())){
                     //coger objeto de personaje
-                    System.out.println("cogiendo el objeto de " + this.getLocalizacionActual().getPersonajesPresentes().get(i).getObjetoActual().getNombre());
+                    System.out.println("quiero el objeto de " + this.getLocalizacionActual().getPersonajesPresentes().get(i).getNombre() + " que es " + this.getLocalizacionActual().getPersonajesPresentes().get(i).getObjetoActual().getNombre());
                     this.accion++;
+                    break;
                 }else {
                     System.out.println(this.getLocalizacionActual().getPersonajesPresentes().get(i).getNombre() + " no tiene ningun objeto interesante");
                 }
