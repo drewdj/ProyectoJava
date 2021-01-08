@@ -22,7 +22,7 @@ public class LeerFichero {
 
     try {
 
-      File myObj = new File(".\\src\\configuracion.txt");
+      File myObj = new File("E:\\ProyectoJava\\ProyectoFinal\\src\\configuracion.txt");
       Scanner myReader = new Scanner(myObj);
 
       while (myReader.hasNextLine()) {
@@ -147,7 +147,7 @@ public class LeerFichero {
     datas="";
     try {
 
-      File myObj = new File(".\\src\\objetivos.txt");
+      File myObj = new File("E:\\ProyectoJava\\ProyectoFinal\\src\\objetivos.txt");
       Scanner myReader = new Scanner(myObj);
 
       while (myReader.hasNextLine()) {

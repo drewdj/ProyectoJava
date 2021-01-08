@@ -35,7 +35,9 @@ public class Localizacion {
         for(int c = 0; c < conexiones.length(); c++) {
         	if(conexiones.charAt(c) == ',') {
         		i++;
-        	}
+        	}else if(conexiones.charAt(c)==' '){
+        	    continue;
+            }
         	else {
         		conexionesString[i] = conexionesString[i] + conexiones.charAt(c);
         	}
