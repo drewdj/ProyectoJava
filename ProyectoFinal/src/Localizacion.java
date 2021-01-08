@@ -18,16 +18,16 @@ public class Localizacion {
 
     public void setConexiones(String conexiones) {
         int numConexiones = 1;
-    	
+
         //Contar numero de conexiones
         for(int i = 0; i < conexiones.length(); i++) {
         	if(conexiones.charAt(i) == ',') {
         		numConexiones++;
         	}
         }
-        
+
         String[] conexionesString = new String[numConexiones];
-        
+
         for(int i = 0; i < numConexiones; i++) {
         	conexionesString[i] = "";
         }
@@ -35,15 +35,16 @@ public class Localizacion {
         for(int c = 0; c < conexiones.length(); c++) {
         	if(conexiones.charAt(c) == ',') {
         		i++;
-        	}else if(conexiones.charAt(c)==' '){
-        	    continue;
-            }
+        	}
+        	else if(conexiones.charAt(c) == ' ') {
+        		continue;
+        	}
         	else {
         		conexionesString[i] = conexionesString[i] + conexiones.charAt(c);
         	}
         }
-    	
-    	
+
+
     	this.conexiones = conexionesString;
     }
 
