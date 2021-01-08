@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
-public class GestorPrueba {
+
+public class GestorPrueba{
     public static void main(String[] args) {
 	int turno = 0;
 	Jugador jugador = new Jugador();
@@ -379,13 +379,13 @@ public class GestorPrueba {
 			if (contadorFinal==numPersonajes)
 				return;
 
-			if (turno == numPersonajes-1){                                                     //empieza el turno del jugador
-
+			if (turno == numPersonajes-1){      //empieza el turno del jugador     
+				GUI interfaz = new GUI();
+				do {}while(interfaz.getFlag() == 0);
 			}
 			if (turno == numPersonajes-1)
 				turno=-1;
 		}
     }
-
 
 }
