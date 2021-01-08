@@ -66,12 +66,6 @@ public class Personaje {
         return objetoActual;
     }
 
-    public void pedirObjeto(Personaje personaje) {
-    	if(personaje.getLocalizacionActual().getNombre().equals(this.getLocalizacionActual().getNombre())) {
-    		personaje.quienPide = this.getNombre();
-    	}
-    }
-
     public String getLocalizacionObjetivo() {
         return localizacionObjetivo;
     }

@@ -36,6 +36,9 @@ public class Localizacion {
         	if(conexiones.charAt(c) == ',') {
         		i++;
         	}
+        	else if(conexiones.charAt(c) == ' ') {
+        		continue;
+        	}
         	else {
         		conexionesString[i] = conexionesString[i] + conexiones.charAt(c);
         	}
