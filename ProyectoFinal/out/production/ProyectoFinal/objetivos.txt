@@ -1,10 +1,10 @@
 <Localización Personajes>
 Jorge(Jardín)
 Esther(Comedor)
-María(Comedor)
+Maria(Dormitorio)
 Jugador(Cocina)
 <Posesión Objetos>
 Llave(Esther)
 Cartera(Jorge)
-Pan(María)
+Pan(Maria)
 Ordenador(Jugador)

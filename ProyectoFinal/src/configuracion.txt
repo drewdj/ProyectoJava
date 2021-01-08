@@ -1,15 +1,15 @@
 <Localizaciones> 
-Jardín(Comedor,Dormitorio)
-Comedor(Jardín,Cocina,Dormitorio)
+Jardín(Comedor, Dormitorio)
+Comedor(Jardín, Cocina, Dormitorio)
 Cocina(Comedor)
-Dormitorio(Comedor,Jardín)
+Dormitorio(Comedor, Jardín)
 <Personajes> 
 Jorge(Comedor)
-Esther(Comedor)
-María(Jardín)
+Esther(Dormitorio)
+Maria(Jardín)
 Jugador(Cocina)
 <Objetos> 
-Llave(Jorge)
+Llave(Cocina)
 Ordenador(Comedor)
-Cartera(Esther)
-Pan(Cocina)
+Cartera(Jardín)
+Pan(Jorge)
