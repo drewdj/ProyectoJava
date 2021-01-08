@@ -38,4 +38,7 @@ public class Creencias {
     public void addLocalizacion(Localizacion localizacion){
         this.localizacionesConocidas.add(localizacion);
     }
+    public void borrarLocalizaciones(){
+        localizacionesConocidas.removeAll(localizacionesConocidas);
+    }
 }
