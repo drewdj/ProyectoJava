@@ -7,7 +7,7 @@ public class Personaje {
     private Objeto objetoActual;
     private Objeto objetoObjetivo;
     private String localizacionObjetivo;
-    private Localizacion localizacionActual;
+    protected Localizacion localizacionActual;
     private String quienPide;  //Se activa para saber quien te esta pidiendo un objeto
     private Creencias creencias;
     private int fin;
@@ -219,7 +219,7 @@ public class Personaje {
                         this.localizacionActual = localizacionMover;
                         localizacionActual.addPersonajePresente(this);
                         actualizarLocalizacionesConocidas();
-                        System.out.println("Estoy en " + localizacionActual.getNombre());
+                        System.out.println("\n*\nSoy " + this.getNombre() + " y "+ "Estoy en " + localizacionActual.getNombre());
                         break outer;
                     }
                 }
