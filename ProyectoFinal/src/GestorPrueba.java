@@ -1,15 +1,11 @@
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class GestorPrueba{
-
-
     public static void main(String[] args) {
-
-    	GUI panel = new GUI();
-
 	int turno = 0;
+	int k = 0;
 	Jugador jugador = new Jugador();
 
     //Dentro de la función de Leer fichero sacar atributo tamaño
@@ -74,7 +70,7 @@ public class GestorPrueba{
     	int flag = 0;
 
     	//Inicializacion de jugador
-		if (i  == numPersonajes){
+		/*if (i  == numPersonajes){
 
 			for(int c = 0; c < personajesString[i].length(); c++) {
 				if(personajesString[i].charAt(c) != '(' && flag == 0) {
@@ -98,7 +94,8 @@ public class GestorPrueba{
 			}
 			continue;
 
-		}
+		}*/
+
     	for(int c = 0; c < personajesString[i].length(); c++) {
     		if(personajesString[i].charAt(c) != '(' && flag == 0) {
     			name = name + personajesString[i].charAt(c);
@@ -113,18 +110,38 @@ public class GestorPrueba{
     			localizActual = localizActual + personajesString[i].charAt(c);
     		}
     	}
-		personajeFill.setNombre(name);
-		for (int j = 0; j < numLocalizaciones; j++) {//bucle de busqueda y asignacion de localizacion
-			if (arrayLocalizaciones[j].getNombre().equals(localizActual)){
-				personajeFill.setLocalizacionActual(arrayLocalizaciones[j]);
+    	if (name.equals("Jugador")){
+			jugador.setNombre(name);
+			for (int j = 0; j < numLocalizaciones; j++) {
+				if (arrayLocalizaciones[j].getNombre().equals(localizActual)){
+					jugador.setLocalizacionActual(arrayLocalizaciones[j]);
+				}
 			}
+
+		}else {
+			personajeFill.setNombre(name);
+			for (int j = 0; j < numLocalizaciones; j++) {//bucle de busqueda y asignacion de localizacion
+				if (arrayLocalizaciones[j].getNombre().equals(localizActual)){
+					personajeFill.setLocalizacionActual(arrayLocalizaciones[j]);
+				}
+			}
+			arrayPersonajes[k] = personajeFill;
+			arrayPersonajes[k].setCreencias(new Creencias());
+			arrayPersonajes[k].setFin(0);
+			arrayPersonajes[k].inicializarCreencias(new ArrayList<Objeto>(),new ArrayList<Localizacion>(),new ArrayList<Personaje>());
+			k++;
 		}
-		arrayPersonajes[i] = personajeFill;
-		arrayPersonajes[i].setCreencias(new Creencias());
-		arrayPersonajes[i].setFin(0);
-		arrayPersonajes[i].inicializarCreencias(new ArrayList<Objeto>(),new ArrayList<Localizacion>(),new ArrayList<Personaje>());
 
     }
+		for (int i = 0; i < numLocalizaciones; i++) {//Introduce a los jugadores en sus localizaciones
+			arrayLocalizaciones[i].setPersonajesPresentes(arrayPersonajes);
+		}
+		for (int i = 0; i < numLocalizaciones; i++) {
+			if (jugador.getLocalizacionActual().getNombre().equals(arrayLocalizaciones[i].getNombre())){
+				arrayLocalizaciones[i].addPersonajePresente(jugador);
+			}
+		}
+
 		//Rellenar los objetos objeto
     for(int i = 0; i < numObjetos; i++) {
     	String name = new String();
@@ -173,6 +190,12 @@ public class GestorPrueba{
     			continue;
     		}
     	}
+		for (int j = 0; j < numObjetos; j++) {
+			if(localizObjeto.equals(jugador.getNombre())) {
+				jugador.setObjetoActual(objetoFill);
+			}
+		}
+
     }
     for(int i = 0; i <= numPersonajes; i++) {
     	String name = new String();
@@ -200,7 +223,6 @@ public class GestorPrueba{
 			for(int c = 0; c < numPersonajes; c++) {
 				if(name.equals(arrayPersonajes[c].getNombre())) {
 					arrayPersonajes[c].setLocalizacionObjetivo(localizObjetivo);
-
 				}
 				else {
 					continue;
@@ -288,9 +310,6 @@ public class GestorPrueba{
 
 		}
 
-		for (int i = 0; i < numLocalizaciones; i++) {
-			arrayLocalizaciones[i].setPersonajesPresentes(arrayPersonajes);
-		}
 
 
 
@@ -299,49 +318,52 @@ public class GestorPrueba{
 
 
 
- 		for (; turno < numPersonajes; turno++) { //Bucle principal
+
+ 		for (; turno < numPersonajes; turno++) {
 			System.out.println("Turno de " + arrayPersonajesOrdenado[turno].getNombre());
-			arrayPersonajesOrdenado[turno].setAccion(0); //A cada inicio de turno se pone la accion a 0 para que los personajes puedan realizar su accion
+			arrayPersonajesOrdenado[turno].setAccion(0);
+ 			//FALTA ACTIALIZAR LOCALIZACIONES
 
-			arrayPersonajesOrdenado[turno].actualizarLocalizacionesConocidas();  //Añade la localizacion actual a la lista de localizaciones conocidas
-
-
-				try {// Si tiene un objeto entra en el try y en caso de no tenerlo da un error y salta al catch, ambos bucles son similares
-
-					if (arrayPersonajesOrdenado[turno].getQuienPide()!=null){ //Lo primero es comprobar si alguien nos ha pedido un objeto y entregarselo
+			//actualizacion de creencias(objetos)  MOVER A ENTRADA EN SALA
+			//arrayPersonajesOrdenado[turno].actualizarObjetosConocidos();
+			//actualizador de creencias(personajes) en caso de tener la accion pedir
+			//arrayPersonajesOrdenado[turno].actualizarPersonajesConocidos();
+			//actualizadpr de creencias(localizaciones)
+			arrayPersonajesOrdenado[turno].actualizarLocalizacionesConocidas();
+			//comprobar si se tiene el objeto
+				try {
+					if (arrayPersonajesOrdenado[turno].getQuienPide()!=null){
 						for (int i = 0; i < numPersonajes; i++) {
 							if (arrayPersonajesOrdenado[turno].getQuienPide().equals(arrayPersonajes[i].getNombre())){
 								arrayPersonajesOrdenado[turno].darObjeto(arrayPersonajes[i]);
 							}
 						}
-					}
 
-					if (arrayPersonajesOrdenado[turno].getAccion()==0){ //En caso de que dar objeto cueste una accion
-						if (arrayPersonajesOrdenado[turno].getObjetoObjetivo().getNombre().equals(arrayPersonajesOrdenado[turno].getObjetoActual().getNombre())) { //si tiene su objeto objetivo comprueba su localizacion
+					}
+					if (arrayPersonajesOrdenado[turno].getAccion()==0){
+						if (arrayPersonajesOrdenado[turno].getObjetoObjetivo().getNombre().equals(arrayPersonajesOrdenado[turno].getObjetoActual().getNombre())) {
 							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " tiene su objeto objetivo");//CUANDO TODOS TENGAN SU OBJETO FIN DE LA PARTIDA
 							if (!arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){
-								System.out.println("No estoy en la posicion objetivo"); //Si no esta en su posicion se mueve en base a sus creencias
+								System.out.println("No estoy en la posicion objetivo");
 								for (int i = 0; i < numLocalizaciones; i++) {
-									if (arrayPersonajesOrdenado[turno].moverseHaciaLocalizacion(arrayLocalizaciones).equals(arrayLocalizaciones[i].getNombre())){ //Busca la localizacion adecuada
-										arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]); //Se mueve a ella
+									if (arrayPersonajesOrdenado[turno].moverseHaciaLocalizacion(arrayLocalizaciones).equals(arrayLocalizaciones[i].getNombre())){
+										arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]);
 										break;
 									}
 								}
 							}else if(arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){
 								System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " esta en la posicion objetivo");
-								arrayPersonajesOrdenado[turno].setFin(1);// Si esta en su posicion se activa el estado de Finalizado
+								arrayPersonajesOrdenado[turno].setFin(1);
 							}
-						} else { //Si no tiene su objeto, primero lo busca en la sala, luego en los personajes de la sala y por ultimo, visitando los lugares donde no ha estado
+						} else {
 							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene su objeto objetivo");
 
-							if (arrayPersonajesOrdenado[turno].getAccion()==0) {
-								arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();//busqueda en sala
+							arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();
+							if (arrayPersonajesOrdenado[turno].getAccion()==0){
+								arrayPersonajesOrdenado[turno].buscarObjetoEnPersonajes();
 							}
 							if (arrayPersonajesOrdenado[turno].getAccion()==0){
-								arrayPersonajesOrdenado[turno].buscarObjetoEnPersonajes(); //Busqueda en personajes
-							}
-							if (arrayPersonajesOrdenado[turno].getAccion()==0){
-								System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " se quiere mover"); //Si no encuentra ningun objeto interesante se mueve
+								System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " se quiere mover");
 								for (int i = 0; i < numLocalizaciones; i++) {
 									System.out.println("quiero ir a " + arrayLocalizaciones[i].getNombre() + "?");
 									if (arrayPersonajesOrdenado[turno].moverseHaciaObjeto().equals(arrayLocalizaciones[i].getNombre())){
@@ -352,7 +374,7 @@ public class GestorPrueba{
 							}
 						}
 					}
-				}catch (Exception e){//mismo bucle que el anterior pero sin comprobar si tiene lo deseado ya que no tiene objeto
+				}catch (Exception e){
 					if (arrayPersonajesOrdenado[turno].getAccion()==0){
 						System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene objeto");
 						arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();
@@ -373,24 +395,22 @@ public class GestorPrueba{
 					}
 
 				}
-
 			int contadorFinal=0;
 			for (int i = 0; i < numPersonajes; i++) {
-				if (arrayPersonajesOrdenado[i].getFin()==1){
+				if (arrayPersonajes[i].getFin()==1){
 					contadorFinal++;
 				}
 			}
 			if (contadorFinal==numPersonajes)
 				return;
 
-			if (turno == numPersonajes-1){                                                     //empieza el turno del jugador
-
-
+			if (turno == numPersonajes-1){      //empieza el turno del jugador     
+				GUI interfaz = new GUI(jugador);
+				do {}while(interfaz.getFlag() == 0);
 			}
 			if (turno == numPersonajes-1)
 				turno=-1;
 		}
     }
-
 
 }
