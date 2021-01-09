@@ -5,6 +5,7 @@ import java.util.Random;
 public class GestorPrueba{
     public static void main(String[] args) {
 	int turno = 0;
+	int k = 0;
 	Jugador jugador = new Jugador();
 
     //Dentro de la función de Leer fichero sacar atributo tamaño
@@ -68,32 +69,7 @@ public class GestorPrueba{
     	Personaje personajeFill = new Personaje();
     	int flag = 0;
 
-    	//Inicializacion de jugador
-		if (i  == numPersonajes){
 
-			for(int c = 0; c < personajesString[i].length(); c++) {
-				if(personajesString[i].charAt(c) != '(' && flag == 0) {
-					name = name + personajesString[i].charAt(c);
-				}
-				else if(personajesString[i].charAt(c) == '(' && flag == 0) {
-					flag = 1;
-				}
-				else if(personajesString[i].charAt(c) == ')' && flag == 1) {
-					break;
-				}
-				else if(personajesString[i].charAt(c) != '(' && flag == 1){
-					localizActual = localizActual + personajesString[i].charAt(c);
-				}
-			}
-			jugador.setNombre(name);
-			for (int j = 0; j < numLocalizaciones; j++) {
-				if (arrayLocalizaciones[j].getNombre().equals(localizActual)){
-					jugador.setLocalizacionActual(arrayLocalizaciones[j]);
-				}
-			}
-			continue;
-
-		}
     	for(int c = 0; c < personajesString[i].length(); c++) {
     		if(personajesString[i].charAt(c) != '(' && flag == 0) {
     			name = name + personajesString[i].charAt(c);
@@ -108,18 +84,38 @@ public class GestorPrueba{
     			localizActual = localizActual + personajesString[i].charAt(c);
     		}
     	}
-		personajeFill.setNombre(name);
-		for (int j = 0; j < numLocalizaciones; j++) {//bucle de busqueda y asignacion de localizacion
-			if (arrayLocalizaciones[j].getNombre().equals(localizActual)){
-				personajeFill.setLocalizacionActual(arrayLocalizaciones[j]);
+    	if (name.equals("Jugador")){
+			jugador.setNombre(name);
+			for (int j = 0; j < numLocalizaciones; j++) {
+				if (arrayLocalizaciones[j].getNombre().equals(localizActual)){
+					jugador.setLocalizacionActual(arrayLocalizaciones[j]);
+				}
 			}
+
+		}else {
+			personajeFill.setNombre(name);
+			for (int j = 0; j < numLocalizaciones; j++) {//bucle de busqueda y asignacion de localizacion
+				if (arrayLocalizaciones[j].getNombre().equals(localizActual)){
+					personajeFill.setLocalizacionActual(arrayLocalizaciones[j]);
+				}
+			}
+			arrayPersonajes[k] = personajeFill;
+			arrayPersonajes[k].setCreencias(new Creencias());
+			arrayPersonajes[k].setFin(0);
+			arrayPersonajes[k].inicializarCreencias(new ArrayList<Objeto>(),new ArrayList<Localizacion>(),new ArrayList<Personaje>());
+			k++;
 		}
-		arrayPersonajes[i] = personajeFill;
-		arrayPersonajes[i].setCreencias(new Creencias());
-		arrayPersonajes[i].setFin(0);
-		arrayPersonajes[i].inicializarCreencias(new ArrayList<Objeto>(),new ArrayList<Localizacion>(),new ArrayList<Personaje>());
 
     }
+		for (int i = 0; i < numLocalizaciones; i++) {//Introduce a los jugadores en sus localizaciones
+			arrayLocalizaciones[i].setPersonajesPresentes(arrayPersonajes);
+		}
+		for (int i = 0; i < numLocalizaciones; i++) {
+			if (jugador.getLocalizacionActual().getNombre().equals(arrayLocalizaciones[i].getNombre())){
+				arrayLocalizaciones[i].addPersonajePresente(jugador);
+			}
+		}
+
 		//Rellenar los objetos objeto
     for(int i = 0; i < numObjetos; i++) {
     	String name = new String();
@@ -168,6 +164,12 @@ public class GestorPrueba{
     			continue;
     		}
     	}
+		for (int j = 0; j < numObjetos; j++) {
+			if(localizObjeto.equals(jugador.getNombre())) {
+				jugador.setObjetoActual(objetoFill);
+			}
+		}
+
     }
     for(int i = 0; i <= numPersonajes; i++) {
     	String name = new String();
@@ -195,7 +197,6 @@ public class GestorPrueba{
 			for(int c = 0; c < numPersonajes; c++) {
 				if(name.equals(arrayPersonajes[c].getNombre())) {
 					arrayPersonajes[c].setLocalizacionObjetivo(localizObjetivo);
-
 				}
 				else {
 					continue;
@@ -283,9 +284,7 @@ public class GestorPrueba{
 
 		}
 
-		for (int i = 0; i < numLocalizaciones; i++) {
-			arrayLocalizaciones[i].setPersonajesPresentes(arrayPersonajes);
-		}
+
 
 
 
