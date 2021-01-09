@@ -26,6 +26,10 @@ public class Personaje {
         this.nombre = nombre;
     }
 
+    public void setHistorial(ArrayList<String> historial) {
+        this.historial = historial;
+    }
+
     public void setObjetoActual(Objeto objetoActual) {
 
         this.objetoActual = objetoActual;
@@ -89,6 +93,10 @@ public class Personaje {
 
     public int getFin() {
         return fin;
+    }
+
+    public ArrayList<String> getHistorial() {
+        return historial;
     }
 
     public String getQuienPide() {
