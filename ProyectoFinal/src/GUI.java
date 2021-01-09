@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -29,7 +31,10 @@ public class GUI implements ActionListener{
 		String gente = "<br>Estas con:<br>";
 		String tienes = "<br>Tienes: ";
 		String objetivos = "<br>Objetivos: " + player.getLocalizacionObjetivo() + " - " + player.getObjetoObjetivo().getNombre();
-		String objetosSala = "<br>Objetos sala: " + player.getLocalizacionActual().getObjetoPresente().getNombre();
+		String objetosSala = "<br>Objetos sala: ";
+		try {
+		objetosSala = "<br>Objetos sala: " + player.getLocalizacionActual().getObjetoPresente().getNombre();
+		}catch(Exception e) {}
 		lugarIndex = 0;
 		pedirIndex = 0;
 		
@@ -145,6 +150,8 @@ public class GUI implements ActionListener{
 				frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame2.setTitle("Buscar Objetos");
 				frame2.setSize(600, 600);
+				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+				frame2.setLocation(dim.width/2-frame2.getSize().width/2, dim.height/2-frame2.getSize().height/2);
 				frame2.setVisible(true);
 			}
 			
@@ -239,6 +246,8 @@ public class GUI implements ActionListener{
 				frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame2.setTitle("Buscar Objetos");
 				frame2.setSize(600, 600);
+				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+				frame2.setLocation(dim.width/2-frame2.getSize().width/2, dim.height/2-frame2.getSize().height/2);
 				frame2.setVisible(true);
 			}
 			
@@ -289,6 +298,8 @@ public class GUI implements ActionListener{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Buscar Objetos");
 		frame.setSize(600, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
 		frame.setVisible(true);
 	}
 
