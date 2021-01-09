@@ -260,7 +260,7 @@ public class GestorPrueba{
 		//System.out.println(array[0]);
 
 
-		
+
 		for (int i = 0; i < numPersonajes; i++) {
 			arrayPersonajes[i].setTurno(array[i]);
 		}
@@ -296,15 +296,7 @@ public class GestorPrueba{
  		for (; turno < numPersonajes; turno++) {
 			System.out.println("Turno de " + arrayPersonajesOrdenado[turno].getNombre());
 			arrayPersonajesOrdenado[turno].setAccion(0);
- 			//FALTA ACTIALIZAR LOCALIZACIONES
-
-			//actualizacion de creencias(objetos)  MOVER A ENTRADA EN SALA
-			//arrayPersonajesOrdenado[turno].actualizarObjetosConocidos();
-			//actualizador de creencias(personajes) en caso de tener la accion pedir
-			//arrayPersonajesOrdenado[turno].actualizarPersonajesConocidos();
-			//actualizadpr de creencias(localizaciones)
 			arrayPersonajesOrdenado[turno].actualizarLocalizacionesConocidas();
-			//comprobar si se tiene el objeto
 				try {
 					if (arrayPersonajesOrdenado[turno].getQuienPide()!=null){
 						for (int i = 0; i < numPersonajes; i++) {
@@ -378,7 +370,7 @@ public class GestorPrueba{
 			if (contadorFinal==numPersonajes)
 				return;
 
-			if (turno == numPersonajes-1){      //empieza el turno del jugador     
+			if (turno == numPersonajes-1){      //empieza el turno del jugador
 				GUI interfaz = new GUI(jugador);
 				do {}while(interfaz.getFlag() == 0);
 			}
