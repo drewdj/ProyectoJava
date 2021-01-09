@@ -1,16 +1,16 @@
-<Localizaciones> 
+<Localizaciones>
 Jardín(Comedor, Dormitorio)
 Comedor(Jardín, Cocina, Dormitorio)
 Cocina(Comedor)
 Dormitorio(Comedor, Jardín)
 Baño(Dormitorio)
-<Personajes> 
+<Personajes>
 Jorge(Comedor)
 Esther(Dormitorio)
 Juan(Baño)
 Jugador(Cocina)
 Maria(Jardín)
-<Objetos> 
+<Objetos>
 Llave(Cocina)
 Ordenador(Comedor)
 Cartera(Jardín)
