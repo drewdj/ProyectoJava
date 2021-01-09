@@ -69,32 +69,6 @@ public class GestorPrueba{
     	Personaje personajeFill = new Personaje();
     	int flag = 0;
 
-    	//Inicializacion de jugador
-		/*if (i  == numPersonajes){
-
-			for(int c = 0; c < personajesString[i].length(); c++) {
-				if(personajesString[i].charAt(c) != '(' && flag == 0) {
-					name = name + personajesString[i].charAt(c);
-				}
-				else if(personajesString[i].charAt(c) == '(' && flag == 0) {
-					flag = 1;
-				}
-				else if(personajesString[i].charAt(c) == ')' && flag == 1) {
-					break;
-				}
-				else if(personajesString[i].charAt(c) != '(' && flag == 1){
-					localizActual = localizActual + personajesString[i].charAt(c);
-				}
-			}
-			jugador.setNombre(name);
-			for (int j = 0; j < numLocalizaciones; j++) {
-				if (arrayLocalizaciones[j].getNombre().equals(localizActual)){
-					jugador.setLocalizacionActual(arrayLocalizaciones[j]);
-				}
-			}
-			continue;
-
-		}*/
 
     	for(int c = 0; c < personajesString[i].length(); c++) {
     		if(personajesString[i].charAt(c) != '(' && flag == 0) {
