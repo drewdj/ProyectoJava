@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-public class GestorPrueba{
+abstract class GestorPrueba{
     public static void main(String[] args) {
 	int turno = 0;
 	int k = 0;
@@ -378,21 +378,32 @@ public class GestorPrueba{
 					contadorFinal++;
 				}
 			}
-			if (jugador.getFin()==1)
-				contadorFinal++;
-			if (contadorFinal==numPersonajes+1)
-				return;
 
-			if (turno == numPersonajes-1){      //empieza el turno del jugador 
-				System.out.printf("%s", jugador.getLocalizacionActual().getNombre());
-				GUI interfaz = new GUI(jugador, arrayLocalizaciones);
-				do {}while(interfaz.getFlag() == 0);
-				if (jugador.getObjetoObjetivo().getNombre().equals(jugador.getObjetoActual().getNombre())&&jugador.getLocalizacionActual().getNombre().equals(jugador.getLocalizacionObjetivo()))
-				jugador.setFin(1);
+			if (contadorFinal!=numPersonajes+1){
+				if (turno == numPersonajes-1){      //empieza el turno del jugador
+					System.out.printf("%s", jugador.getLocalizacionActual().getNombre());
+					GUI interfaz = new GUI(jugador, arrayLocalizaciones);
+					do {}while(interfaz.getFlag() == 0);
+					if (jugador.getObjetoObjetivo().getNombre().equals(jugador.getObjetoActual().getNombre())&&jugador.getLocalizacionActual().getNombre().equals(jugador.getLocalizacionObjetivo()))
+						jugador.setFin(1);
+					if (jugador.getFin()==1)
+						contadorFinal++;
+
+					if (contadorFinal==numPersonajes+1){
+						break;
+					}
+				}
 			}
+
+
+
 			if (turno == numPersonajes-1)
 				turno=-1;
 		}
+
+		GUI interfaz = new GUI();
+		do {}while(interfaz.getFlag() == 0);
+		return;
     }
 
 }

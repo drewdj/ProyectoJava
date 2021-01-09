@@ -5,6 +5,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileReader;
+import java.lang.reflect.Array;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -22,8 +24,11 @@ public class GUI implements ActionListener{
 	private int lugarIndex;
 	private int pedirIndex;
 	private int flag;
-	
-	
+
+	public void closeFrame() {
+		this.frame.dispose();
+	}
+
 	public GUI(Jugador player, Localizacion[] location) {
 		frame = new JFrame();
 		String lugar = "Estas en: ";
@@ -69,7 +74,14 @@ public class GUI implements ActionListener{
 			public void actionPerformed(ActionEvent arg0) {
 				frame.setVisible(false);
 				JFrame frame2 = new JFrame();
-				
+				Personaje[] personajesPresentes = new Personaje[player.getLocalizacionActual().getNumPersonajePresente() - 1];
+				int k = 0;
+				for (int i = 0; i < player.getLocalizacionActual().getNumPersonajePresente(); i++) {
+					if (!player.getLocalizacionActual().getPersonajesPresentes().get(i).getNombre().equals("Jugador")){
+						personajesPresentes[k]=player.getLocalizacionActual().getPersonajesPresentes().get(i);
+						k++;
+					}
+				}
 				JButton b = new JButton(new AbstractAction("Volver") {
 					private static final long serialVersionUID = 1L;
 					@Override
@@ -87,46 +99,51 @@ public class GUI implements ActionListener{
 						if(pedirIndex > 0) {
 							pedirIndex = pedirIndex - 1;
 						}
-						if(!player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex).getNombre().equals("Jugador"))
-							label.setText(player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex).getNombre());
-						else
-							pedirIndex = pedirIndex + 1;
+						label.setText(personajesPresentes[pedirIndex].getNombre());
+
 					}
 				});
 				JButton b2 = new JButton(new AbstractAction(">") {
 					private static final long serialVersionUID = 1L;
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						if(pedirIndex < player.getLocalizacionActual().getPersonajesPresentes().size() - 1) {
+						if(pedirIndex < personajesPresentes.length-1) {
 							pedirIndex = pedirIndex + 1;
 						}
-						if(!player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex).getNombre().equals("Jugador"))
-							label.setText(player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex).getNombre());
-						else
-							pedirIndex = pedirIndex - 1;
+							label.setText(personajesPresentes[pedirIndex].getNombre());
+
+
 					}
 				});
 				JButton b3 = new JButton(new AbstractAction("Pedir") {
 					private static final long serialVersionUID = 1L;
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						player.pedirObjeto(player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex));
-						flag = 1;
-						frame2.dispose();
-						frame.dispose();
+
+							if (personajesPresentes[pedirIndex].getObjetoActual()!=null){
+								if (!personajesPresentes[pedirIndex].getObjetoObjetivo().getNombre().equals(personajesPresentes[pedirIndex].getObjetoActual().getNombre())){
+									player.pedirObjeto(personajesPresentes[pedirIndex]);
+									flag = 1;
+									frame2.dispose();
+									frame.dispose();
+								}else {
+									label.setText(personajesPresentes[pedirIndex].getNombre() + " - No te pienso dar mi objeto.");
+								}
+							}else
+								label.setText(personajesPresentes[pedirIndex].getNombre() + " - No tengo ningun objeto.");
+
+
 					}
 				});
 				b1.setFocusable(false);
 				b2.setFocusable(false);
 				b3.setFocusable(false);
 				
-				
-				if(!player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex).getNombre().equals("Jugador"))
-					label = new JLabel(player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex).getNombre());
-				else if(player.getLocalizacionActual().getNumPersonajePresente() > 1)
-					label = new JLabel(player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex + 1).getNombre());
-				else
-					label = new JLabel("");
+
+
+
+				label = new JLabel(personajesPresentes[pedirIndex].getNombre());
+
 				
 				Font font = new Font("",Font.PLAIN,17);
 				label.setFont(font);
@@ -301,6 +318,34 @@ public class GUI implements ActionListener{
 		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
 		frame.setVisible(true);
 	}
+
+	public GUI(){
+		frame = new JFrame();
+		label = new JLabel("GAME OVER");
+		panel = new JPanel();
+		JButton botonFinal = new JButton(new AbstractAction("EXIT") {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				flag = 1;
+				frame.dispose();
+			}
+		});
+
+
+		panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+		frame.add(panel, BorderLayout.CENTER);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setTitle("PANTALLA FINAL");
+		frame.setSize(600, 600);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
+		panel.add(label);
+		panel.add(botonFinal);
+		frame.setVisible(true);
+
+	}
+
+
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {

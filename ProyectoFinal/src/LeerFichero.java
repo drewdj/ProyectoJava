@@ -69,7 +69,7 @@ public class LeerFichero {
 
     //se rellena cada string con un for propio
     //for para Localizaciones
-    for (int i=1; count<numelementos[0]; ++i){
+    for (int i=0; count<numelementos[0]; ++i){
       if (partes[1].charAt(i)==')'){
         localizacionesString[count]="";
         cambio=cambio+partes[1].charAt(i);
@@ -85,7 +85,7 @@ public class LeerFichero {
     count=0;
 
     //for para Personajes
-    for (int i=1; count<numelementos[1]; ++i){
+    for (int i=0; count<numelementos[1]; ++i){
       if (partes[2].charAt(i)==')'){
         personajesString[count]="";
         cambio=cambio+partes[2].charAt(i);
@@ -100,7 +100,7 @@ public class LeerFichero {
     count=0;
 
     //for para Objetos
-    for (int i=1; count<numelementos[2]; ++i){
+    for (int i=0; count<numelementos[2]; ++i){
       if (partes[3].charAt(i)==')'){
         objetosString[count]="";
         cambio=cambio+partes[3].charAt(i);

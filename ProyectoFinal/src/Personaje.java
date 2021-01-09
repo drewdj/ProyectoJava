@@ -103,22 +103,27 @@ public class Personaje {
 
     public void darObjeto(Personaje personaje) { //Despues de que alguien pida un objeto se usa darObjeto para intercambiar ambos
         Objeto temp;
-        if(personaje.getLocalizacionActual().getNombre().equals(this.localizacionActual.getNombre())) {
-            if(personaje.getNombre().equals(this.quienPide)) {
-                System.out.println("Le voy a dar "+ this.getObjetoActual().getNombre() + " a " + personaje.getNombre());
-                temp = personaje.objetoActual;
-                personaje.setObjetoActual(this.getObjetoActual());
-                this.setObjetoActual(temp);
-                //this.setAccion(1);  //Si dar un objeto cuenta como una accion descomentar
-                this.setQuienPide(null);
+
+            if(personaje.getLocalizacionActual().getNombre().equals(this.localizacionActual.getNombre())) {
+                if(personaje.getNombre().equals(this.quienPide)) {
+                    System.out.println("Le voy a dar "+ this.getObjetoActual().getNombre() + " a " + personaje.getNombre());
+                    temp = personaje.objetoActual;
+                    personaje.setObjetoActual(this.getObjetoActual());
+                    this.setObjetoActual(temp);
+                    //this.setAccion(1);  //Si dar un objeto cuenta como una accion descomentar
+                    this.setQuienPide(null);
+                }
             }
-        }
     }
 
     public void pedirObjeto(Personaje personaje) {
-        if(personaje.getLocalizacionActual().getNombre().equals(this.getLocalizacionActual().getNombre())) {
+
+
+        if (personaje.getLocalizacionActual().getNombre().equals(this.getLocalizacionActual().getNombre())) {
             personaje.quienPide = this.getNombre();
         }
+
+
     }
 
     public void inicializarCreencias(ArrayList<Objeto> objeto, ArrayList<Localizacion> localizacion, ArrayList<Personaje> personaje){
