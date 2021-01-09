@@ -1,6 +1,6 @@
 import java.io.File;  
-import java.io.FileNotFoundException; 
-import java.util.Scanner; 
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 /*Esta clase lee los ficheros configuracion.txt y objetivo.txt
   Para que esto funcione se debe ejecutar el main en el GestorPrueba (o GestorFinal(el gestor cambia mas rapido de nombre que un rapero))*/
@@ -13,14 +13,14 @@ public class LeerFichero {
   private String localizacionesObjetivoString[];
   private String objetosObjetivoString[];
 
-  public void main(String[] args) {       
+  public void main(String[] args) {
 
     //leer fichero de configuracion
     String datas="";
 
     try {
 
-      File myObj = new File("ProyectoFinal/src/configuracion.txt");
+      File myObj = new File("configuracion.txt");
       Scanner myReader = new Scanner(myObj);
 
       while (myReader.hasNextLine()) {
@@ -80,7 +80,7 @@ public class LeerFichero {
       }
       cambio=cambio+partes[1].charAt(i);
     }
-    
+
 
     count=0;
 
@@ -96,7 +96,7 @@ public class LeerFichero {
       }
       cambio=cambio+partes[2].charAt(i);
     }
-   
+
     count=0;
 
     //for para Objetos
@@ -111,14 +111,14 @@ public class LeerFichero {
       }
       cambio=cambio+partes[3].charAt(i);
     }
-  
 
-    
+
+
     //leer fichero de objetivos(funciona igual que el de configuracion.txt)
 
     datas="";
     try {
-      File myObj = new File("ProyectoFinal/src/objetivos.txt");
+      File myObj = new File("objetivos.txt");
       Scanner myReader = new Scanner(myObj);
       while (myReader.hasNextLine()) {
         String data = myReader.nextLine();
