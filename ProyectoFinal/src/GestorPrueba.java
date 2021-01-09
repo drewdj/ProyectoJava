@@ -378,13 +378,17 @@ public class GestorPrueba{
 					contadorFinal++;
 				}
 			}
-			if (contadorFinal==numPersonajes)
+			if (jugador.getFin()==1)
+				contadorFinal++;
+			if (contadorFinal==numPersonajes+1)
 				return;
 
 			if (turno == numPersonajes-1){      //empieza el turno del jugador 
 				System.out.printf("%s", jugador.getLocalizacionActual().getNombre());
 				GUI interfaz = new GUI(jugador, arrayLocalizaciones);
 				do {}while(interfaz.getFlag() == 0);
+				if (jugador.getObjetoObjetivo().getNombre().equals(jugador.getObjetoActual().getNombre())&&jugador.getLocalizacionActual().getNombre().equals(jugador.getLocalizacionObjetivo()))
+				jugador.setFin(1);
 			}
 			if (turno == numPersonajes-1)
 				turno=-1;

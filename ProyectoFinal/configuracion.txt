@@ -10,7 +10,7 @@ Esther(Dormitorio)
 Juan(Baño)
 Jugador(Cocina)
 Maria(Jardín)
-<Objetos>
+<Objetos> 
 Llave(Cocina)
 Ordenador(Comedor)
 Cartera(Jardín)
