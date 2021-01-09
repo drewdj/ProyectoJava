@@ -7,6 +7,7 @@ public class Personaje {
     private Objeto objetoActual;
     private Objeto objetoObjetivo;
     private String localizacionObjetivo;
+    private ArrayList<String> historial;
     protected Localizacion localizacionActual;
     private String quienPide;  //Se activa para saber quien te esta pidiendo un objeto
     private Creencias creencias;
