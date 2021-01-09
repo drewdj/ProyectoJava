@@ -312,10 +312,9 @@ public class GestorPrueba{
 								arrayPersonajesOrdenado[turno].darObjeto(arrayPersonajes[i]);
 							}
 							if (arrayPersonajesOrdenado[turno].getQuienPide().equals(jugador.getNombre())){
-								arrayPersonajesOrdenado[turno].darObjeto(jugador);
-							}
+                                arrayPersonajesOrdenado[turno].darObjeto(jugador);
+                            }
 						}
-
 
 					}
 					if (arrayPersonajesOrdenado[turno].getAccion()==0){

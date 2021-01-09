@@ -26,9 +26,10 @@ public class GUI implements ActionListener{
 		frame = new JFrame();
 		String lugar = "Estas en: ";
 		String conexiones = "<br>Conectado con: ";
-		String gente = "<br>Estas con: ";
+		String gente = "<br>Estas con:<br>";
 		String tienes = "<br>Tienes: ";
 		String objetivos = "<br>Objetivos: " + player.getLocalizacionObjetivo() + " - " + player.getObjetoObjetivo().getNombre();
+		String objetosSala = "<br>Objetos sala: " + player.getLocalizacionActual().getObjetoPresente().getNombre();
 		lugarIndex = 0;
 		pedirIndex = 0;
 		
@@ -46,11 +47,14 @@ public class GUI implements ActionListener{
 			for(int i = 0; i < player.getLocalizacionActual().getNumPersonajePresente(); i++) {
 				if (player.getLocalizacionActual().getPersonajesPresentes().get(i).getNombre().equals("Jugador"))
                     continue;
-				gente = gente + " " + player.getLocalizacionActual().getPersonajesPresentes().get(i).getNombre();	
+				if(player.getLocalizacionActual().getPersonajesPresentes().get(i).getObjetoActual() != null)
+					gente = gente + " " + player.getLocalizacionActual().getPersonajesPresentes().get(i).getNombre() + " - " + player.getLocalizacionActual().getPersonajesPresentes().get(i).getObjetoActual().getNombre() + "<br>";	
+				else
+					gente = gente + " " + player.getLocalizacionActual().getPersonajesPresentes().get(i).getNombre() + "<br>";
 			}
 		}
 		
-		String full ="<html><body>" + lugar + conexiones + gente + tienes + objetivos + "</body></html>";
+		String full ="<html><body>" + lugar + conexiones + gente + tienes + objetivos + objetosSala +"</body></html>";
 		
 		//Incompleto prepararlo para que sea modular
 		JButton button2 = new JButton(new AbstractAction("Pedir") {
@@ -240,6 +244,17 @@ public class GUI implements ActionListener{
 			
 		});
 		
+		JButton button4 = new JButton(new AbstractAction("Coger") {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				player.CogerObjeto();
+				frame.dispose();
+				flag = 1;
+			}
+			
+		});
+		
 		JButton button = new JButton(new AbstractAction("Skip") {
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -253,7 +268,7 @@ public class GUI implements ActionListener{
 		button.setFocusable(false);
 		label = new JLabel(full);
 		
-		Font font = new Font("",Font.PLAIN,30);
+		Font font = new Font("",Font.PLAIN,17);
 		label.setFont(font);
 		
 		panel1 = new JPanel();
@@ -267,6 +282,7 @@ public class GUI implements ActionListener{
 		panel.add(button);
 		panel.add(button2);
 		panel.add(button3);
+		panel.add(button4);
 		
 		frame.add(panel1, BorderLayout.PAGE_START);
 		frame.add(panel, BorderLayout.CENTER);
