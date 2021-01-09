@@ -69,7 +69,6 @@ public class GUI implements ActionListener{
 			public void actionPerformed(ActionEvent arg0) {
 				frame.setVisible(false);
 				JFrame frame2 = new JFrame();
-				String[] name = new String[player.getLocalizacionActual().getNumConexiones()];
 				
 				JButton b = new JButton(new AbstractAction("Volver") {
 					private static final long serialVersionUID = 1L;
