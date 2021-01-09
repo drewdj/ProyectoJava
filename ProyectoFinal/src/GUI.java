@@ -18,6 +18,7 @@ public class GUI implements ActionListener{
 	private JPanel panel;
 	private JPanel panel1;
 	private int lugarIndex;
+	private int pedirIndex;
 	private int flag;
 	
 	
@@ -29,11 +30,12 @@ public class GUI implements ActionListener{
 		String tienes = "<br>Tienes: ";
 		String objetivos = "<br>Objetivos: " + player.getLocalizacionObjetivo() + " - " + player.getObjetoObjetivo().getNombre();
 		lugarIndex = 0;
+		pedirIndex = 0;
 		
 		lugar = lugar + player.getLocalizacionActual().getNombre();
 		
 		if(player.getObjetoActual() != null) {
-			tienes = player.getObjetoActual().getNombre();
+			tienes = tienes + player.getObjetoActual().getNombre();
 		}
 		
 		for(int i = 0; i < player.getLocalizacionActual().getNumConexiones(); i++) {
@@ -42,6 +44,8 @@ public class GUI implements ActionListener{
 		
 		if(player.getLocalizacionActual().getNumPersonajePresente() != 0) {
 			for(int i = 0; i < player.getLocalizacionActual().getNumPersonajePresente(); i++) {
+				if (player.getLocalizacionActual().getPersonajesPresentes().get(i).getNombre().equals("Jugador"))
+                    continue;
 				gente = gente + " " + player.getLocalizacionActual().getPersonajesPresentes().get(i).getNombre();	
 			}
 		}
@@ -56,12 +60,7 @@ public class GUI implements ActionListener{
 			public void actionPerformed(ActionEvent arg0) {
 				frame.setVisible(false);
 				JFrame frame2 = new JFrame();
-				
-				String[] name = new String[player.getLocalizacionActual().getNumPersonajePresente()];
-				
-				for(int c = 0; c < player.getLocalizacionActual().getNumPersonajePresente(); c++) {
-					name[c] = player.getLocalizacionActual().getPersonajesPresentes().get(c).getNombre();
-				}
+				String[] name = new String[player.getLocalizacionActual().getNumConexiones()];
 				
 				JButton b = new JButton(new AbstractAction("Volver") {
 					private static final long serialVersionUID = 1L;
@@ -73,41 +72,55 @@ public class GUI implements ActionListener{
 					
 				});
 					
-				//poner trycatch si es necesario
-				JButton b1 = new JButton(new AbstractAction("") {
+				JButton b1 = new JButton(new AbstractAction("<") {
 					private static final long serialVersionUID = 1L;
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						player.pedirObjeto(player.getLocalizacionActual().getPersonajesPresentes().get(0));
-						flag = 1;
-						frame2.dispose();
+						if(pedirIndex > 0) {
+							pedirIndex = pedirIndex - 1;
+						}
+						if(!player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex).getNombre().equals("Jugador"))
+							label.setText(player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex).getNombre());
+						else
+							pedirIndex = pedirIndex + 1;
 					}
 				});
-				JButton b2 = new JButton(new AbstractAction("") {
+				JButton b2 = new JButton(new AbstractAction(">") {
 					private static final long serialVersionUID = 1L;
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						player.pedirObjeto(player.getLocalizacionActual().getPersonajesPresentes().get(1));
-						flag = 1;
-						frame2.dispose();
+						if(pedirIndex < player.getLocalizacionActual().getPersonajesPresentes().size() - 1) {
+							pedirIndex = pedirIndex + 1;
+						}
+						if(!player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex).getNombre().equals("Jugador"))
+							label.setText(player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex).getNombre());
+						else
+							pedirIndex = pedirIndex - 1;
 					}
 				});
-				JButton b3 = new JButton(new AbstractAction("") {
+				JButton b3 = new JButton(new AbstractAction("Pedir") {
 					private static final long serialVersionUID = 1L;
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						player.pedirObjeto(player.getLocalizacionActual().getPersonajesPresentes().get(2));
+						player.pedirObjeto(player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex));
 						flag = 1;
 						frame2.dispose();
+						frame.dispose();
 					}
 				});
 				b1.setFocusable(false);
 				b2.setFocusable(false);
 				b3.setFocusable(false);
 				
-				label = new JLabel(full);
 				
-				Font font = new Font("",Font.PLAIN,30);
+				if(!player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex).getNombre().equals("Jugador"))
+					label = new JLabel(player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex).getNombre());
+				else if(player.getLocalizacionActual().getNumPersonajePresente() > 1)
+					label = new JLabel(player.getLocalizacionActual().getPersonajesPresentes().get(pedirIndex + 1).getNombre());
+				else
+					label = new JLabel("");
+				
+				Font font = new Font("",Font.PLAIN,17);
 				label.setFont(font);
 				
 				panel1 = new JPanel();
@@ -118,28 +131,11 @@ public class GUI implements ActionListener{
 				panel = new JPanel();
 				panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 				panel.setLayout(new GridLayout(2, 2));
+				panel.add(b1);
+				panel.add(b2);	
 				panel.add(b);
-				try {
-					if(name[0] != null) {
-						b1.setText(name[0]);
-						panel.add(b1);
-					}
-				}catch(Exception e) {}
-				
-				try {
-					if(name[1] != null) {
-						b2.setText(name[1]);
-						panel.add(b2);
-					}
-				}catch(Exception e) {}
-				
-				try {
-					if(name[2] != null) {
-						b3.setText(name[2]);
-						panel.add(b3);
-					}
-				}catch(Exception e) {}
-				
+				panel.add(b3);
+
 				frame2.add(panel1, BorderLayout.PAGE_START);
 				frame2.add(panel, BorderLayout.CENTER);
 				frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -199,8 +195,7 @@ public class GUI implements ActionListener{
 					private static final long serialVersionUID = 1L;
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
-						player.mover(location[1]);
-						System.out.printf("\n\ninside %s\n", player.getLocalizacionActual().getNombre());
+						player.moverJugador(connectedLocations[lugarIndex]);
 						flag = 1;
 						frame2.dispose();
 						frame.dispose();
