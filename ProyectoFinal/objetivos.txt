@@ -1,7 +1,7 @@
 <Localización Personajes>
 Jorge(Jardín)
-Esther(Comedor)
-Maria(Dormitorio)
+Esther(Dormitorio)
+Maria(Comedor)
 Jugador(Cocina)
 <Posesión Objetos>
 Llave(Esther)

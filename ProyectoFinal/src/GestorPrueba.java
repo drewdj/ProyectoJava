@@ -1,9 +1,14 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+public class GestorPrueba{
 
-public class GestorPrueba {
+
     public static void main(String[] args) {
+
+    	GUI panel = new GUI();
+
 	int turno = 0;
 	Jugador jugador = new Jugador();
 
@@ -294,51 +299,49 @@ public class GestorPrueba {
 
 
 
- 		for (; turno < numPersonajes; turno++) {
+ 		for (; turno < numPersonajes; turno++) { //Bucle principal
 			System.out.println("Turno de " + arrayPersonajesOrdenado[turno].getNombre());
-			arrayPersonajesOrdenado[turno].setAccion(0);
- 			//FALTA ACTIALIZAR LOCALIZACIONES
+			arrayPersonajesOrdenado[turno].setAccion(0); //A cada inicio de turno se pone la accion a 0 para que los personajes puedan realizar su accion
 
-			//actualizacion de creencias(objetos)  MOVER A ENTRADA EN SALA
-			//arrayPersonajesOrdenado[turno].actualizarObjetosConocidos();
-			//actualizador de creencias(personajes) en caso de tener la accion pedir
-			//arrayPersonajesOrdenado[turno].actualizarPersonajesConocidos();
-			//actualizadpr de creencias(localizaciones)
-			arrayPersonajesOrdenado[turno].actualizarLocalizacionesConocidas();
-			//comprobar si se tiene el objeto
-				try {
-					if (arrayPersonajesOrdenado[turno].getQuienPide()!=null){
+			arrayPersonajesOrdenado[turno].actualizarLocalizacionesConocidas();  //Añade la localizacion actual a la lista de localizaciones conocidas
+
+
+				try {// Si tiene un objeto entra en el try y en caso de no tenerlo da un error y salta al catch, ambos bucles son similares
+
+					if (arrayPersonajesOrdenado[turno].getQuienPide()!=null){ //Lo primero es comprobar si alguien nos ha pedido un objeto y entregarselo
 						for (int i = 0; i < numPersonajes; i++) {
 							if (arrayPersonajesOrdenado[turno].getQuienPide().equals(arrayPersonajes[i].getNombre())){
 								arrayPersonajesOrdenado[turno].darObjeto(arrayPersonajes[i]);
 							}
 						}
-
 					}
-					if (arrayPersonajesOrdenado[turno].getAccion()==0){
-						if (arrayPersonajesOrdenado[turno].getObjetoObjetivo().getNombre().equals(arrayPersonajesOrdenado[turno].getObjetoActual().getNombre())) {
+
+					if (arrayPersonajesOrdenado[turno].getAccion()==0){ //En caso de que dar objeto cueste una accion
+						if (arrayPersonajesOrdenado[turno].getObjetoObjetivo().getNombre().equals(arrayPersonajesOrdenado[turno].getObjetoActual().getNombre())) { //si tiene su objeto objetivo comprueba su localizacion
 							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " tiene su objeto objetivo");//CUANDO TODOS TENGAN SU OBJETO FIN DE LA PARTIDA
 							if (!arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){
-								System.out.println("No estoy en la posicion objetivo");
+								System.out.println("No estoy en la posicion objetivo"); //Si no esta en su posicion se mueve en base a sus creencias
 								for (int i = 0; i < numLocalizaciones; i++) {
-									if (arrayPersonajesOrdenado[turno].moverseHaciaLocalizacion(arrayLocalizaciones).equals(arrayLocalizaciones[i].getNombre())){
-										arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]);
+									if (arrayPersonajesOrdenado[turno].moverseHaciaLocalizacion(arrayLocalizaciones).equals(arrayLocalizaciones[i].getNombre())){ //Busca la localizacion adecuada
+										arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]); //Se mueve a ella
 										break;
 									}
 								}
 							}else if(arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){
 								System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " esta en la posicion objetivo");
-								arrayPersonajesOrdenado[turno].setFin(1);
+								arrayPersonajesOrdenado[turno].setFin(1);// Si esta en su posicion se activa el estado de Finalizado
 							}
-						} else {
+						} else { //Si no tiene su objeto, primero lo busca en la sala, luego en los personajes de la sala y por ultimo, visitando los lugares donde no ha estado
 							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene su objeto objetivo");
 
-							arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();
-							if (arrayPersonajesOrdenado[turno].getAccion()==0){
-								arrayPersonajesOrdenado[turno].buscarObjetoEnPersonajes();
+							if (arrayPersonajesOrdenado[turno].getAccion()==0) {
+								arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();//busqueda en sala
 							}
 							if (arrayPersonajesOrdenado[turno].getAccion()==0){
-								System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " se quiere mover");
+								arrayPersonajesOrdenado[turno].buscarObjetoEnPersonajes(); //Busqueda en personajes
+							}
+							if (arrayPersonajesOrdenado[turno].getAccion()==0){
+								System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " se quiere mover"); //Si no encuentra ningun objeto interesante se mueve
 								for (int i = 0; i < numLocalizaciones; i++) {
 									System.out.println("quiero ir a " + arrayLocalizaciones[i].getNombre() + "?");
 									if (arrayPersonajesOrdenado[turno].moverseHaciaObjeto().equals(arrayLocalizaciones[i].getNombre())){
@@ -349,7 +352,7 @@ public class GestorPrueba {
 							}
 						}
 					}
-				}catch (Exception e){
+				}catch (Exception e){//mismo bucle que el anterior pero sin comprobar si tiene lo deseado ya que no tiene objeto
 					if (arrayPersonajesOrdenado[turno].getAccion()==0){
 						System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene objeto");
 						arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();
@@ -370,9 +373,10 @@ public class GestorPrueba {
 					}
 
 				}
+
 			int contadorFinal=0;
 			for (int i = 0; i < numPersonajes; i++) {
-				if (arrayPersonajes[i].getFin()==1){
+				if (arrayPersonajesOrdenado[i].getFin()==1){
 					contadorFinal++;
 				}
 			}
@@ -380,6 +384,7 @@ public class GestorPrueba {
 				return;
 
 			if (turno == numPersonajes-1){                                                     //empieza el turno del jugador
+
 
 			}
 			if (turno == numPersonajes-1)

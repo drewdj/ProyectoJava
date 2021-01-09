@@ -1,7 +1,6 @@
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.util.Scanner; // Import the Scanner class to read text files
-import java.util.ArrayList;
 
 
 public class LeerFichero {
@@ -22,7 +21,7 @@ public class LeerFichero {
 
     try {
 
-      File myObj = new File("E:\\ProyectoJava\\ProyectoFinal\\src\\configuracion.txt");
+      File myObj = new File("configuracion.txt");
       Scanner myReader = new Scanner(myObj);
 
       while (myReader.hasNextLine()) {
@@ -147,7 +146,7 @@ public class LeerFichero {
     datas="";
     try {
 
-      File myObj = new File("E:\\ProyectoJava\\ProyectoFinal\\src\\objetivos.txt");
+      File myObj = new File("objetivos.txt");
       Scanner myReader = new Scanner(myObj);
 
       while (myReader.hasNextLine()) {
