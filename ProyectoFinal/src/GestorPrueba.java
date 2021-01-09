@@ -380,7 +380,7 @@ public class GestorPrueba{
 				return;
 
 			if (turno == numPersonajes-1){      //empieza el turno del jugador     
-				GUI interfaz = new GUI(jugador, arrayLocalizaciones);
+				GUI interfaz = new GUI(jugador);
 				do {}while(interfaz.getFlag() == 0);
 			}
 			if (turno == numPersonajes-1)
