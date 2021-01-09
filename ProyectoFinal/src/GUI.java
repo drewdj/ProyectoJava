@@ -115,7 +115,7 @@ public class GUI implements ActionListener{
 				panel.add(b);
 				try {
 					if(name[0] != null) {
-						b1.setName(name[0]);
+						b1.setText(name[0]);
 						panel.add(b1);
 					}
 				}catch(Exception e) {}
