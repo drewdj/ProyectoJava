@@ -379,8 +379,9 @@ public class GestorPrueba{
 			if (contadorFinal==numPersonajes)
 				return;
 
-			if (turno == numPersonajes-1){      //empieza el turno del jugador     
-				GUI interfaz = new GUI(jugador);
+			if (turno == numPersonajes-1){      //empieza el turno del jugador 
+				System.out.printf("%s", jugador.getLocalizacionActual().getNombre());
+				GUI interfaz = new GUI(jugador, arrayLocalizaciones);
 				do {}while(interfaz.getFlag() == 0);
 			}
 			if (turno == numPersonajes-1)

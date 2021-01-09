@@ -20,7 +20,7 @@ public class LeerFichero {
 
     try {
 
-      File myObj = new File("ProyectoFinal/src/configuracion.txt");
+      File myObj = new File("./src/configuracion.txt");
       Scanner myReader = new Scanner(myObj);
 
       while (myReader.hasNextLine()) {
@@ -118,7 +118,7 @@ public class LeerFichero {
 
     datas="";
     try {
-      File myObj = new File("ProyectoFinal/src/objetivos.txt");
+      File myObj = new File("./src/objetivos.txt");
       Scanner myReader = new Scanner(myObj);
       while (myReader.hasNextLine()) {
         String data = myReader.nextLine();

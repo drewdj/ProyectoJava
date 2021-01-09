@@ -222,7 +222,7 @@ public class Personaje {
                         this.localizacionActual = localizacionMover;
                         localizacionActual.addPersonajePresente(this);
                         actualizarLocalizacionesConocidas();
-                        System.out.println("Estoy en " + localizacionActual.getNombre());
+                        System.out.println("\n*\nSoy " + this.getNombre() + " y "+ "Estoy en " + localizacionActual.getNombre());
                         break outer;
                     }
                 }
