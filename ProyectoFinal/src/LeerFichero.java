@@ -5,18 +5,16 @@ import java.util.Scanner;
 /*Esta clase lee los ficheros configuracion.txt y objetivo.txt
   Para que esto funcione se debe ejecutar el main en el GestorPrueba */
 public class LeerFichero {
-
+	private String localizacionesString[];
+	private String personajesString[];
+	private String objetosString[];
+	private String localizacionesObjetivoString[];
+	private String objetosObjetivoString[];
+	private int flag1=0,flag2=0;
 
   
 
-  public static void main(String[] args) {       
-   String localizacionesString[];
-   String personajesString[];
-   String objetosString[];
-   String localizacionesObjetivoString[];
-   String objetosObjetivoString[];
-   int flag1=0,flag2=0;
-
+  public void main(String[] args) {       
     //leer fichero de configuracion
     String datas="";
     try {
