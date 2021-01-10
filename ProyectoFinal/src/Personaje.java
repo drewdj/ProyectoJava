@@ -111,7 +111,7 @@ public class Personaje {
         this.historial.add("He cogido " + getObjetoActual().getNombre() + " de " + getLocalizacionActual().getNombre());
     }
 
-    public void darObjeto(Personaje personaje) { //Despues de que alguien pida un objeto se usa darObjeto para intercambiar ambos
+    public void darObjeto(Personaje personaje) { //Despues de que alguien pida un objeto se usa darObjeto para intercambiar ambos, en caso de que el propietario no lo quiera
         Objeto temp;
 
             if(personaje.getLocalizacionActual().getNombre().equals(this.localizacionActual.getNombre())) {
@@ -127,7 +127,7 @@ public class Personaje {
             }
     }
 
-    public void pedirObjeto(Personaje personaje) {
+    public void pedirObjeto(Personaje personaje) {//Activa un flag en el personaje objetivo para que te de su objeto en el turno siguiente
 
 
         if (personaje.getLocalizacionActual().getNombre().equals(this.getLocalizacionActual().getNombre())) {
@@ -143,7 +143,7 @@ public class Personaje {
         this.creencias.setPersonajesConocidos(personaje);
         this.creencias.setLocalizacionesConocidas(localizacion);
     }
-    public void buscarObjetoEnLocalizacion(){
+    public void buscarObjetoEnLocalizacion(){//Compara el objeto de la localizacion con el objetivo y lo coge
         try {
             if (this.getObjetoObjetivo().getNombre().equals(this.getLocalizacionActual().getObjetoPresente().getNombre())){
                 //coger objeto
@@ -160,7 +160,7 @@ public class Personaje {
         }
 
     }
-    public void buscarObjetoEnPersonajes(){
+    public void buscarObjetoEnPersonajes(){//Compara el objeto de los personajes presentes con el objetivo y se lo pide
         try {
             for (int i = 0; i < this.getLocalizacionActual().getPersonajesPresentes().size(); i++) {
                 System.out.println(this.getObjetoObjetivo().getNombre() + this.getLocalizacionActual().getPersonajesPresentes().get(i).getObjetoActual().getNombre());
@@ -180,7 +180,7 @@ public class Personaje {
             //o no hay nadie mas en sala
         }
     }
-    public String  moverseHaciaLocalizacion(Localizacion[] arrayLocalizaciones){
+    public String  moverseHaciaLocalizacion(Localizacion[] arrayLocalizaciones){//Busca en sus localizaciones conocidas para encontrar su posicion objetivo y en caso de no encontrarla se mueve al azar
         for (int i = 0; i < this.creencias.getLocalizacionesConocidas().size(); i++) {
             if (this.getLocalizacionActual().getNombre().equals(this.creencias.getLocalizacionesConocidas().get(i).getNombre())){
                 for (int j = 0; j < this.creencias.getLocalizacionesConocidas().size(); j++) {
@@ -222,7 +222,7 @@ public class Personaje {
     }
 
 
-    public String moverseHaciaObjeto(){
+    public String moverseHaciaObjeto(){//Se mueve priorizando las salas en las que no ha estado para encontrar nuevos objetos
         int contador;
         int creenciasActuales = this.getCreencias().getLocalizacionesConocidas().size();
 
@@ -243,7 +243,7 @@ public class Personaje {
         return this.localizacionActual.getConexiones(random);
     }
 
-    public void mover(Localizacion localizacionMover) {
+    public void mover(Localizacion localizacionMover) {//Se borra a si mismo de la localizacion actual y se añade en la objetivo
     outer:
         for(int i = 0; i < localizacionActual.contarConexiones(); i++) {
             //System.out.println("if " + localizacionMover.getNombre() + " igual a " + localizacionActual.getConexiones(i));

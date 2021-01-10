@@ -294,21 +294,14 @@ abstract class GestorPrueba{
 
 
 
-
- 		for (; turno < numPersonajes; turno++) {
+		//BUCLE PRINCIPAL DE GESTION DE TURNO
+ 		for (; turno < numPersonajes; turno++) {//Reseteo de accion y actualizar creencias
 			System.out.println("Turno de " + arrayPersonajesOrdenado[turno].getNombre());
 			arrayPersonajesOrdenado[turno].setAccion(0);
- 			//FALTA ACTIALIZAR LOCALIZACIONES
-
-			//actualizacion de creencias(objetos)  MOVER A ENTRADA EN SALA
-			//arrayPersonajesOrdenado[turno].actualizarObjetosConocidos();
-			//actualizador de creencias(personajes) en caso de tener la accion pedir
-			//arrayPersonajesOrdenado[turno].actualizarPersonajesConocidos();
-			//actualizadpr de creencias(localizaciones)
 			arrayPersonajesOrdenado[turno].actualizarLocalizacionesConocidas();
-			//comprobar si se tiene el objeto
-				try {
-					if (arrayPersonajesOrdenado[turno].getQuienPide()!=null){
+
+				try {//El catch salta en caso de que el personaje no tenga objeto
+					if (arrayPersonajesOrdenado[turno].getQuienPide()!=null){//Comprueba si alguien te ha pedido un objeto y se lo da(dentro de dar se decide si se quiere dar o no)
 						for (int i = 0; i < numPersonajes; i++) {
 							if (arrayPersonajesOrdenado[turno].getQuienPide().equals(arrayPersonajes[i].getNombre())){
 								arrayPersonajesOrdenado[turno].darObjeto(arrayPersonajes[i]);
@@ -320,28 +313,29 @@ abstract class GestorPrueba{
 
 					}
 					if (arrayPersonajesOrdenado[turno].getAccion()==0){
-						if (arrayPersonajesOrdenado[turno].getObjetoObjetivo().getNombre().equals(arrayPersonajesOrdenado[turno].getObjetoActual().getNombre())) {
+						if (arrayPersonajesOrdenado[turno].getObjetoObjetivo().getNombre().equals(arrayPersonajesOrdenado[turno].getObjetoActual().getNombre())) {//Primero se comprueba si se tiene el objeto deseado
 							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " tiene su objeto objetivo");//CUANDO TODOS TENGAN SU OBJETO FIN DE LA PARTIDA
-							if (!arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){
+							//En caso de tenerlo si se esta en la posicion deseada
+							if (!arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){//Si no esta, se mueve
 								System.out.println("No estoy en la posicion objetivo");
-								for (int i = 0; i < numLocalizaciones; i++) {
+								for (int i = 0; i < numLocalizaciones; i++) {//
 									if (arrayPersonajesOrdenado[turno].moverseHaciaLocalizacion(arrayLocalizaciones).equals(arrayLocalizaciones[i].getNombre())){
 										arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]);
 										break;
 									}
 								}
-							}else if(arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){
+							}else if(arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){//Si esta se queda en la posiciona y activa el estado de finalizado
 								System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " esta en la posicion objetivo");
 								arrayPersonajesOrdenado[turno].setFin(1);
 							}
-						} else {
+						} else {//Si no se tiene el objeto
 							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene su objeto objetivo");
 
-							arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();
-							if (arrayPersonajesOrdenado[turno].getAccion()==0){
+							arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();//Primero lo busca en la localizacion
+							if (arrayPersonajesOrdenado[turno].getAccion()==0){//Despues en los personajes
 								arrayPersonajesOrdenado[turno].buscarObjetoEnPersonajes();
 							}
-							if (arrayPersonajesOrdenado[turno].getAccion()==0){
+							if (arrayPersonajesOrdenado[turno].getAccion()==0){//Y por ultimo si no ha encontrado nada se mueve priorizando aquellos sitios donde no ha estado
 								System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " se quiere mover");
 								for (int i = 0; i < numLocalizaciones; i++) {
 									System.out.println("quiero ir a " + arrayLocalizaciones[i].getNombre() + "?");
@@ -353,7 +347,7 @@ abstract class GestorPrueba{
 							}
 						}
 					}
-				}catch (Exception e){
+				}catch (Exception e){//Si el personaje no tiene objeto se utiliza el mismo protocolo de busqueda anterior
 					if (arrayPersonajesOrdenado[turno].getAccion()==0){
 						System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene objeto");
 						arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();
@@ -374,7 +368,7 @@ abstract class GestorPrueba{
 					}
 
 				}
-			int contadorFinal=0;
+			int contadorFinal=0;//Contar el numero de personajes en estado de fin para pasar a la pantalla final
 			for (int i = 0; i < numPersonajes; i++) {
 				if (arrayPersonajes[i].getFin()==1){
 					contadorFinal++;
@@ -382,7 +376,7 @@ abstract class GestorPrueba{
 			}
 
 			if (contadorFinal!=numPersonajes+1){
-				if (turno == numPersonajes-1){      //empieza el turno del jugador
+				if (turno == numPersonajes-1){      //Empieza el turno del jugador
 					System.out.printf("%s", jugador.getLocalizacionActual().getNombre());
 					GUI interfaz = new GUI(jugador, arrayLocalizaciones);
 					do {}while(interfaz.getFlag() == 0);
@@ -403,7 +397,7 @@ abstract class GestorPrueba{
 				turno=-1;
 		}
 
-		GUI interfaz = new GUI(arrayPersonajes);
+		GUI interfaz = new GUI(arrayPersonajes);//Pantalla final
 		do {}while(interfaz.getFlag() == 0);
 		return;
     }
