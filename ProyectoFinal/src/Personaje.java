@@ -108,6 +108,7 @@ public class Personaje {
         cambio=this.getObjetoActual();
         this.setObjetoActual(this.getLocalizacionActual().getObjetoPresente());
         this.getLocalizacionActual().setObjetoPresente(cambio);
+        this.historial.add("He cogido " + getObjetoActual().getNombre() + " de " + getLocalizacionActual().getNombre());
     }
 
     public void darObjeto(Personaje personaje) { //Despues de que alguien pida un objeto se usa darObjeto para intercambiar ambos
@@ -121,6 +122,7 @@ public class Personaje {
                     this.setObjetoActual(temp);
                     //this.setAccion(1);  //Si dar un objeto cuenta como una accion descomentar
                     this.setQuienPide(null);
+                    this.historial.add("Le he dado " + personaje.getObjetoActual().getNombre() + " a " + personaje.getNombre());
                 }
             }
     }
@@ -130,6 +132,7 @@ public class Personaje {
 
         if (personaje.getLocalizacionActual().getNombre().equals(this.getLocalizacionActual().getNombre())) {
             personaje.quienPide = this.getNombre();
+            this.historial.add("Le he pedido " + personaje.getObjetoActual().getNombre() + " a " + personaje.getNombre());
         }
 
 
@@ -178,9 +181,18 @@ public class Personaje {
         }
     }
     public String  moverseHaciaLocalizacion(Localizacion[] arrayLocalizaciones){
+        /*for (int i = 0; i < this.creencias.getLocalizacionesConocidas().size(); i++) {
+            if (this.getLocalizacionActual().getNombre().equals(this.creencias.getLocalizacionesConocidas().get(i).getNombre())){
+                for (int j = 0; j < this.creencias.getLocalizacionesConocidas().size(); j++) {
+                    if (this.localizacionObjetivo.equals(this.creencias.getLocalizacionesConocidas().get(j).getNombre()))
+                        return this.creencias.getLocalizacionesConocidas().get(j).getNombre();
+                }
+            }
+        }*/
+        
+        
         for (int i = 0; i < localizacionActual.getNumConexiones(); i++) {
             if (localizacionObjetivo.equals(localizacionActual.getConexiones(i))){
-                System.out.println("Me muevo a " + localizacionActual.getConexiones(i));
                 return localizacionActual.getConexiones(i);
             }
 
@@ -188,7 +200,6 @@ public class Personaje {
         for (int i = 0; i < localizacionActual.getNumConexiones(); i++) {
             for (int j = 0; j < arrayLocalizaciones.length; j++) {
                 if (localizacionObjetivo.equals(arrayLocalizaciones[j].getNombre())){
-                    System.out.println("Me muevo a " + localizacionActual.getConexiones(i));
                     return localizacionActual.getConexiones(i);
                 }
             }
@@ -209,14 +220,12 @@ public class Personaje {
                     contador++;
                 }
                 if (contador == creenciasActuales){
-                    System.out.println("Me quiero mover hacia " + this.localizacionActual.getConexiones(i));
+
                     return this.localizacionActual.getConexiones(i);
                 }
             }
         }
         int random = new Random().nextInt(localizacionActual.getNumConexiones());
-        System.out.println("Me quiero mover 2 hacia " + this.localizacionActual.getConexiones(random));
-
         return this.localizacionActual.getConexiones(random);
     }
 
@@ -228,12 +237,11 @@ public class Personaje {
                 for(int c = 0; c < localizacionActual.getPersonajesPresentes().size(); c++) {
                     //System.out.println("if " + localizacionActual.getPersonajesPresentes().get(c).getNombre() + " igual a " + this.getNombre());
                     if(localizacionActual.getPersonajesPresentes().get(c).getNombre().equals(this.getNombre())) {
-                        System.out.println("Vengo de " + localizacionActual.getNombre());
                         localizacionActual.removePersonajePresente(c);
                         this.localizacionActual = localizacionMover;
                         localizacionActual.addPersonajePresente(this);
                         actualizarLocalizacionesConocidas();
-                        System.out.println("\n*\nSoy " + this.getNombre() + " y "+ "Estoy en " + localizacionActual.getNombre());
+                        this.historial.add("Me he movido a " + localizacionActual.getNombre());
                         break outer;
                     }
                 }

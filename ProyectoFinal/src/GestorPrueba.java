@@ -86,6 +86,7 @@ abstract class GestorPrueba{
     	}
     	if (name.equals("Jugador")){
 			jugador.setNombre(name);
+			jugador.setHistorial(new ArrayList<String>());
 			for (int j = 0; j < numLocalizaciones; j++) {
 				if (arrayLocalizaciones[j].getNombre().equals(localizActual)){
 					jugador.setLocalizacionActual(arrayLocalizaciones[j]);
@@ -102,6 +103,7 @@ abstract class GestorPrueba{
 			arrayPersonajes[k] = personajeFill;
 			arrayPersonajes[k].setCreencias(new Creencias());
 			arrayPersonajes[k].setFin(0);
+			arrayPersonajes[k].setHistorial(new ArrayList<String>());
 			arrayPersonajes[k].inicializarCreencias(new ArrayList<Objeto>(),new ArrayList<Localizacion>(),new ArrayList<Personaje>());
 			k++;
 		}

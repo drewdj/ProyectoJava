@@ -8,6 +8,7 @@ public class Jugador extends Personaje{
 		                        localizacionActual.removePersonajePresente(c);
 		                        this.localizacionActual = localizacionMover;
 		                        localizacionActual.addPersonajePresente(this);
+								this.getHistorial().add("Me he movido a " + localizacionActual.getNombre());
 		                        break outer;
 		                    }
 		                }
