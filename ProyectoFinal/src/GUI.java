@@ -23,6 +23,8 @@ public class GUI implements ActionListener{
 	private JPanel panel1;
 	private int lugarIndex;
 	private int pedirIndex;
+	private int historialIndex;
+	private int historialIndex2;
 	private int flag;
 
 	public void closeFrame() {
@@ -319,15 +321,158 @@ public class GUI implements ActionListener{
 		frame.setVisible(true);
 	}
 
-	public GUI(){
+	public GUI(Personaje[] character){
 		frame = new JFrame();
 		label = new JLabel("GAME OVER");
 		panel = new JPanel();
+		historialIndex = 0;
 		JButton botonFinal = new JButton(new AbstractAction("EXIT") {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				flag = 1;
 				frame.dispose();
+			}
+		});
+		
+		JButton botonHistorial = new JButton(new AbstractAction("Historial") {
+			private static final long serialVersionUID = 1L;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+				JFrame frame2 = new JFrame();
+				
+				JButton b = new JButton(new AbstractAction("Volver") {
+					private static final long serialVersionUID = 1L;
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						frame2.dispose();
+						frame.setVisible(true);
+					}
+					
+				});
+				
+				JButton b1 = new JButton(new AbstractAction("<") {
+					private static final long serialVersionUID = 1L;
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						if(historialIndex > 0) {
+							historialIndex = historialIndex - 1;
+						}
+						label.setText(character[historialIndex].getNombre());
+
+					}
+				});
+				JButton b2 = new JButton(new AbstractAction(">") {
+					private static final long serialVersionUID = 1L;
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						if(historialIndex < character.length-1) {
+							historialIndex = historialIndex + 1;
+						}
+							label.setText(character[historialIndex].getNombre());
+
+
+					}
+				});
+				
+				JButton b3 = new JButton(new AbstractAction("Select") {
+					private static final long serialVersionUID = 1L;
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						frame2.setVisible(false);
+						JFrame frame3 = new JFrame();
+						historialIndex2 = 0;
+						JButton b = new JButton(new AbstractAction("Volver") {
+							private static final long serialVersionUID = 1L;
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								frame3.dispose();
+								historialIndex = 0;
+								frame2.setVisible(true);
+							}
+							
+						});
+						
+						JButton b1 = new JButton(new AbstractAction("<") {
+							private static final long serialVersionUID = 1L;
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								if(historialIndex2 > 0) {
+									historialIndex2 = historialIndex2 - 1;
+								}
+								label.setText(character[historialIndex].getHistorial().get(historialIndex2));
+
+							}
+						});
+						
+						JButton b2 = new JButton(new AbstractAction(">") {
+							private static final long serialVersionUID = 1L;
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								if(character[historialIndex].getHistorial().size() - 1 > historialIndex2) {
+									historialIndex2 = historialIndex2 + 1;
+								}
+								label.setText(character[historialIndex].getHistorial().get(historialIndex2));
+
+							}
+						});
+						
+						label = new JLabel(character[historialIndex].getHistorial().get(historialIndex2));
+						
+						Font font = new Font("",Font.PLAIN,17);
+						label.setFont(font);
+						
+						panel1 = new JPanel();
+						panel1.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+						panel1.setLayout(new GridLayout(0, 1));
+						panel1.add(label);
+						
+						panel = new JPanel();
+						panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+						panel.setLayout(new GridLayout(2, 2));
+						panel.add(b1);
+						panel.add(b2);
+						panel.add(b);
+						
+						frame3.add(panel1, BorderLayout.PAGE_START);
+						frame3.add(panel, BorderLayout.CENTER);
+						frame3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						frame3.setTitle("Historial");
+						frame3.setSize(600, 600);
+						Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+						frame3.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
+						frame3.setVisible(true);
+					}
+				});
+				
+				label = new JLabel(character[historialIndex].getNombre());
+				
+				Font font = new Font("",Font.PLAIN,17);
+				label.setFont(font);
+				
+				panel1 = new JPanel();
+				panel1.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+				panel1.setLayout(new GridLayout(0, 1));
+				panel1.add(label);
+				
+				panel = new JPanel();
+				panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+				panel.setLayout(new GridLayout(2, 2));
+				panel.add(b1);
+				panel.add(b2);
+				panel.add(b);
+				panel.add(b3);
+				
+				frame2.add(panel1, BorderLayout.PAGE_START);
+				frame2.add(panel, BorderLayout.CENTER);
+				frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame2.setTitle("Historial");
+				frame2.setSize(600, 600);
+				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+				frame2.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
+				frame2.setVisible(true);
 			}
 		});
 
@@ -340,6 +485,7 @@ public class GUI implements ActionListener{
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
 		panel.add(label);
+		panel.add(botonHistorial);
 		panel.add(botonFinal);
 		frame.setVisible(true);
 

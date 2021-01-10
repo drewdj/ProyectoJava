@@ -403,7 +403,7 @@ abstract class GestorPrueba{
 				turno=-1;
 		}
 
-		GUI interfaz = new GUI();
+		GUI interfaz = new GUI(arrayPersonajes);
 		do {}while(interfaz.getFlag() == 0);
 		return;
     }
