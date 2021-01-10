@@ -12,7 +12,7 @@ abstract class GestorPrueba{
     LeerFichero f = new LeerFichero();
     f.main(args);
     String[] personajesString = f.getPersonajesString();
-    String[] localizacionesString = f.getLocalizaString();
+    String[] localizacionesString = f.getLocalizacionesString();
     String[] objetosString = f.getObjetosString();
     String[] localizObjetivoString = f.getLocalizacionesObjetivoString();
     String[] objetosObjetivoString = f.getObjetosObjetivoString();

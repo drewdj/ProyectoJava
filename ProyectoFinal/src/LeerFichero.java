@@ -12,9 +12,35 @@ public class LeerFichero {
 	private String objetosObjetivoString[];
 	private int flag1=0,flag2=0;
 
-  
+  public int getFlag1() {
+    return flag1;
+  }
 
-  public void main(String[] args) {       
+  public int getFlag2() {
+    return flag2;
+  }
+
+  public String[] getLocalizacionesObjetivoString() {
+    return localizacionesObjetivoString;
+  }
+
+  public String[] getObjetosObjetivoString() {
+    return objetosObjetivoString;
+  }
+
+  public String[] getObjetosString() {
+    return objetosString;
+  }
+
+  public String[] getPersonajesString() {
+    return personajesString;
+  }
+
+  public String[] getLocalizacionesString() {
+    return localizacionesString;
+  }
+
+  public void main(String[] args) {
     //leer fichero de configuracion
     String datas="";
     try {
