@@ -390,7 +390,8 @@ public class GUI implements ActionListener{
 							public void actionPerformed(ActionEvent arg0) {
 								frame3.dispose();
 								historialIndex = 0;
-								frame2.setVisible(true);
+								frame2.dispose();
+								frame.setVisible(true);
 							}
 							
 						});
