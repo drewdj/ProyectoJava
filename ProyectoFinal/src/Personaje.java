@@ -181,17 +181,32 @@ public class Personaje {
         }
     }
     public String  moverseHaciaLocalizacion(Localizacion[] arrayLocalizaciones){
-        /*for (int i = 0; i < this.creencias.getLocalizacionesConocidas().size(); i++) {
+        for (int i = 0; i < this.creencias.getLocalizacionesConocidas().size(); i++) {
             if (this.getLocalizacionActual().getNombre().equals(this.creencias.getLocalizacionesConocidas().get(i).getNombre())){
                 for (int j = 0; j < this.creencias.getLocalizacionesConocidas().size(); j++) {
-                    if (this.localizacionObjetivo.equals(this.creencias.getLocalizacionesConocidas().get(j).getNombre()))
-                        return this.creencias.getLocalizacionesConocidas().get(j).getNombre();
+                    if (this.localizacionObjetivo.equals(this.creencias.getLocalizacionesConocidas().get(i).getConexiones(j)))
+                        return this.creencias.getLocalizacionesConocidas().get(i).getConexiones(j);
                 }
             }
-        }*/
-        
-        
-        for (int i = 0; i < localizacionActual.getNumConexiones(); i++) {
+        }
+        for (int i = 0; i < this.creencias.getLocalizacionesConocidas().size(); i++) {
+            for (int j = 0; j < this.getLocalizacionActual().getNumConexiones(); j++) {
+                if (this.getLocalizacionActual().getConexiones(i).equals(this.creencias.getLocalizacionesConocidas().get(j).getNombre())){
+                    for (int k = 0; k < this.creencias.getLocalizacionesConocidas().get(j).contarConexiones(); k++) {
+                        if (this.creencias.getLocalizacionesConocidas().get(j).getConexiones(k).equals(this.localizacionObjetivo))
+                            return this.creencias.getLocalizacionesConocidas().get(j).getConexiones(k);
+                    }
+
+                }
+            }
+
+        }
+
+        int random = new Random().nextInt(localizacionActual.getNumConexiones());
+        return this.localizacionActual.getConexiones(random);
+
+        //movimiento sin creencias
+        /*for (int i = 0; i < localizacionActual.getNumConexiones(); i++) {
             if (localizacionObjetivo.equals(localizacionActual.getConexiones(i))){
                 return localizacionActual.getConexiones(i);
             }
@@ -203,8 +218,7 @@ public class Personaje {
                     return localizacionActual.getConexiones(i);
                 }
             }
-        }
-        return null;
+        }*/
     }
 
 
