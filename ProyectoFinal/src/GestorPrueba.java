@@ -10,8 +10,8 @@ abstract class GestorPrueba{
 
     //Dentro de la función de Leer fichero sacar atributo tamaño
     LeerFichero f = new LeerFichero();
-    f.main(args);
-    String[] personajesString = f.getPersonajesString();
+    f.main(args);													//Se ejecuta el main de leerfichero para que se asignen los valores a los strings
+    String[] personajesString = f.getPersonajesString();          	//y despues se pasan a esta clase      	    
     String[] localizacionesString = f.getLocalizacionesString();
     String[] objetosString = f.getObjetosString();
     String[] localizObjetivoString = f.getLocalizacionesObjetivoString();
@@ -36,9 +36,9 @@ abstract class GestorPrueba{
     	String locationName = "";
     	String conexiones = "";
     	int flag = 0;
-    	Localizacion fillLocation = new Localizacion();
-    	for(int c = 0; c < localizacionesString[i].length(); c++) {
-    		if(localizacionesString[i].charAt(c) != '(' && flag == 0) {
+    	Localizacion fillLocation = new Localizacion();						//Caracter a caracter divide el string de leer fichero 
+    	for(int c = 0; c < localizacionesString[i].length(); c++) {			//en varios objetos diferentes ( en este caso localizaciones)
+    		if(localizacionesString[i].charAt(c) != '(' && flag == 0) {				
     			locationName = locationName + localizacionesString[i].charAt(c);
     		}
     		else if(localizacionesString[i].charAt(c) == '(' && flag == 0) {
@@ -53,7 +53,7 @@ abstract class GestorPrueba{
     	}
 
 
-    	fillLocation.setNombre(locationName);
+    	fillLocation.setNombre(locationName);			//Una vez tenga un nuevo objeto creado se lo pasa al array de objetos
     	fillLocation.setConexiones(conexiones);
     	arrayLocalizaciones[i] = fillLocation;
     	arrayLocalizaciones[i].setPersonajesPresentes(new ArrayList<Personaje>());
@@ -84,7 +84,7 @@ abstract class GestorPrueba{
     			localizActual = localizActual + personajesString[i].charAt(c);
     		}
     	}
-    	if (name.equals("Jugador")){
+    	if (name.equals("Jugador")){								//Aqui asigna los datos al jugador 
 			jugador.setNombre(name);
 			jugador.setHistorial(new ArrayList<String>());
 			for (int j = 0; j < numLocalizaciones; j++) {
@@ -95,7 +95,7 @@ abstract class GestorPrueba{
 
 		}else {
 			personajeFill.setNombre(name);
-			for (int j = 0; j < numLocalizaciones; j++) {//bucle de busqueda y asignacion de localizacion
+			for (int j = 0; j < numLocalizaciones; j++) {   		//Bucle de busqueda y asignacion de localizacion
 				if (arrayLocalizaciones[j].getNombre().equals(localizActual)){
 					personajeFill.setLocalizacionActual(arrayLocalizaciones[j]);
 				}
@@ -109,17 +109,17 @@ abstract class GestorPrueba{
 		}
 
     }
-		for (int i = 0; i < numLocalizaciones; i++) {//Introduce a los jugadores en sus localizaciones
+		for (int i = 0; i < numLocalizaciones; i++) {				//Introduce a los personajes en sus localizaciones
 			arrayLocalizaciones[i].setPersonajesPresentes(arrayPersonajes);
 		}
-		for (int i = 0; i < numLocalizaciones; i++) {
+		for (int i = 0; i < numLocalizaciones; i++) {				//Añade al jugador al arraylist de personajes presentes en la localizacion
 			if (jugador.getLocalizacionActual().getNombre().equals(arrayLocalizaciones[i].getNombre())){
 				arrayLocalizaciones[i].addPersonajePresente(jugador);
 			}
 		}
 
 		//Rellenar los objetos objeto
-    for(int i = 0; i < numObjetos; i++) {
+    	for(int i = 0; i < numObjetos; i++) {
     	String name = new String();
     	name = "";
     	String localizObjeto = new String();
@@ -143,9 +143,9 @@ abstract class GestorPrueba{
     	objetoFill.setNombre(name);
     	arrayObjetos[i] = objetoFill;
 
-    	//meter el objeto en su localizacion
+    	//Meter el objeto en su localizacion(la localizacion inicial puede ser un personaje o el jugador)
 		for (int j = 0; j < numLocalizaciones; j++) {
-			if (arrayLocalizaciones[j].getNombre()==localizObjeto){//
+			if (arrayLocalizaciones[j].getNombre()==localizObjeto){
 				arrayLocalizaciones[j].setObjetoPresente(arrayObjetos[i]);
 			}
 		}
@@ -158,7 +158,7 @@ abstract class GestorPrueba{
     			continue;
     		}
     	}
-    	for(int c = 0; c < numPersonajes; c++) {
+    	for(int c = 0; c < numPersonajes; c++) {		//Para los objetos con posicion inicial en un personaje
     		if(localizObjeto.equals(arrayPersonajes[c].getNombre())) {
     			arrayPersonajes[c].setObjetoActual(objetoFill);
     		}
@@ -166,14 +166,14 @@ abstract class GestorPrueba{
     			continue;
     		}
     	}
-		for (int j = 0; j < numObjetos; j++) {
+		for (int j = 0; j < numObjetos; j++) {					  //Para los objetos con posicion inicial en el jugador
 			if(localizObjeto.equals(jugador.getNombre())) {
 				jugador.setObjetoActual(objetoFill);
 			}
 		}
 
-    }
-    for(int i = 0; i <= numPersonajes; i++) {
+	}
+    for(int i = 0; i <= numPersonajes; i++) {					//Asignar las localizaciones objetivo a los personajes y al jugador
     	String name = new String();
     	name = "";
     	String localizObjetivo = new String();
@@ -193,9 +193,9 @@ abstract class GestorPrueba{
     			localizObjetivo = localizObjetivo + localizObjetivoString[i].charAt(c);
     		}
     	}
-		if(name.equals(jugador.getNombre())){
-			jugador.setLocalizacionObjetivo(localizObjetivo);                     //primero comprueba si es la localizacion objetivo de jugador
-		}else {
+		if(name.equals(jugador.getNombre())){						//Primero comprueba si es la localizacion objetivo de jugador
+			jugador.setLocalizacionObjetivo(localizObjetivo);       
+		}else {														//y si no se lo pasa al personaje correspondiente
 			for(int c = 0; c < numPersonajes; c++) {
 				if(name.equals(arrayPersonajes[c].getNombre())) {
 					arrayPersonajes[c].setLocalizacionObjetivo(localizObjetivo);
@@ -206,8 +206,8 @@ abstract class GestorPrueba{
 			}
 		}
 
-    }
-    for(int i = 0; i <= numPersonajes; i++) {
+	}
+    for(int i = 0; i <= numPersonajes; i++) {     			//Asignar los objetos objetivo a los personajes y al jugador
     	String name = new String();
     	name = "";
     	String objetoObjetivo = new String();
@@ -229,7 +229,7 @@ abstract class GestorPrueba{
     		}
     	}
     	objetoFill.setNombre(objetoObjetivo);
-		if(name.equals(jugador.getNombre())){                //igual para objeto objetivo
+		if(name.equals(jugador.getNombre())){                //Comprueba primero si el objeto objetivo es de jugador
 			jugador.setObjetoObjetivo(objetoFill);
 		}else {
 			for(int c = 0; c < numPersonajes; c++) {
@@ -245,14 +245,14 @@ abstract class GestorPrueba{
 
     }
 		//ORDENACION DE TURNOS
-		int[] array = new int [numPersonajes];
+		int[] array = new int [numPersonajes];				
 		for (int i = 0; i < numPersonajes; i++) {
 			array[i]= i;
 		}
 
-		Random rand = new Random();
+		Random rand = new Random();						
 
-		for (int i = 0; i < array.length; i++) {
+		for (int i = 0; i < array.length; i++) {				//Esto genera un array de numeros aleatorios(del 0 al numpersonajes) de tamaño=numpersonajes
 			int randomIndexToSwap = rand.nextInt(array.length);
 			int temp = array[randomIndexToSwap];
 			array[randomIndexToSwap] = array[i];
@@ -263,14 +263,14 @@ abstract class GestorPrueba{
 
 
 		
-		for (int i = 0; i < numPersonajes; i++) {
+		for (int i = 0; i < numPersonajes; i++) {				//Se otorga cada uno de los valores de ese array a cada uno de los personajes
 			arrayPersonajes[i].setTurno(array[i]);
 		}
 
 		//System.out.println(arrayPersonajes[0].getTurno());
 
 
-		Personaje[] arrayPersonajesOrdenado = new Personaje[numPersonajes];
+		Personaje[] arrayPersonajesOrdenado = new Personaje[numPersonajes]; //Se crea un nuevo array de personajes que va a estar ordenado segun los turnos 
 
 		for (int i = 0; i < numPersonajes; i++) {
 
