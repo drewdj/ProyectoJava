@@ -116,7 +116,6 @@ public class Personaje {
 
             if(personaje.getLocalizacionActual().getNombre().equals(this.localizacionActual.getNombre())) {
                 if(personaje.getNombre().equals(this.quienPide)) {
-                    System.out.println("Le voy a dar "+ this.getObjetoActual().getNombre() + " a " + personaje.getNombre());
                     temp = personaje.objetoActual;
                     personaje.setObjetoActual(this.getObjetoActual());
                     this.setObjetoActual(temp);
@@ -138,9 +137,7 @@ public class Personaje {
 
     }
 
-    public void inicializarCreencias(ArrayList<Objeto> objeto, ArrayList<Localizacion> localizacion, ArrayList<Personaje> personaje){
-        this.creencias.setObjetosConocidos(objeto);
-        this.creencias.setPersonajesConocidos(personaje);
+    public void inicializarCreencias(ArrayList<Localizacion> localizacion){
         this.creencias.setLocalizacionesConocidas(localizacion);
     }
     public void buscarObjetoEnLocalizacion(){//Compara el objeto de la localizacion con el objetivo y lo coge
@@ -148,34 +145,26 @@ public class Personaje {
             if (this.getObjetoObjetivo().getNombre().equals(this.getLocalizacionActual().getObjetoPresente().getNombre())){
                 //coger objeto
 
-                System.out.println("cogiendo el objeto de " + this.getLocalizacionActual().getNombre());
                 CogerObjeto();
                 this.accion++;
-            }else {
-                System.out.println("No hay ningun objeto interesante en " + this.getLocalizacionActual().getNombre());
             }
         }catch (Exception e){
             //no hay objeto en la localizacion
-            System.out.println("No hay ningun objeto interesante en " + this.getLocalizacionActual().getNombre());
         }
 
     }
     public void buscarObjetoEnPersonajes(){//Compara el objeto de los personajes presentes con el objetivo y se lo pide
         try {
             for (int i = 0; i < this.getLocalizacionActual().getPersonajesPresentes().size(); i++) {
-                System.out.println(this.getObjetoObjetivo().getNombre() + this.getLocalizacionActual().getPersonajesPresentes().get(i).getObjetoActual().getNombre());
                 if (this.getObjetoObjetivo().getNombre().equals(this.getLocalizacionActual().getPersonajesPresentes().get(i).getObjetoActual().getNombre())){
                     //coger objeto de personaje
-                    System.out.println("Le he pedido " + this.getLocalizacionActual().getPersonajesPresentes().get(i).getNombre() + " a " + this.getLocalizacionActual().getPersonajesPresentes().get(i).getObjetoActual().getNombre());
                     this.pedirObjeto(this.getLocalizacionActual().getPersonajesPresentes().get(i));
                     this.accion++;
                     break;
                 }else {
-                    System.out.println(this.getLocalizacionActual().getPersonajesPresentes().get(i).getNombre() + " no tiene ningun objeto interesante");
                 }
             }
         }catch (Exception e){
-            System.out.println("Nada interesante en los personajes de " + this.getLocalizacionActual().getNombre());
             //no hay objeto en el personaje
             //o no hay nadie mas en sala
         }
@@ -204,21 +193,6 @@ public class Personaje {
 
         int random = new Random().nextInt(localizacionActual.getNumConexiones());
         return this.localizacionActual.getConexiones(random);
-
-        //movimiento sin creencias
-        /*for (int i = 0; i < localizacionActual.getNumConexiones(); i++) {
-            if (localizacionObjetivo.equals(localizacionActual.getConexiones(i))){
-                return localizacionActual.getConexiones(i);
-            }
-
-        }
-        for (int i = 0; i < localizacionActual.getNumConexiones(); i++) {
-            for (int j = 0; j < arrayLocalizaciones.length; j++) {
-                if (localizacionObjetivo.equals(arrayLocalizaciones[j].getNombre())){
-                    return localizacionActual.getConexiones(i);
-                }
-            }
-        }*/
     }
 
 
@@ -229,7 +203,6 @@ public class Personaje {
         for (int i = 0; i < this.localizacionActual.getNumConexiones(); i++) {
             contador = 0;
             for (int j = 0; j < creenciasActuales; j++) {
-                //System.out.println("Es " + this.getCreencias().getLocalizacionesConocidas().get(j).getNombre() + " diferente de " + this.localizacionActual.getConexiones(i));
                 if (!this.getCreencias().getLocalizacionesConocidas().get(j).getNombre().equals(this.localizacionActual.getConexiones(i))){
                     contador++;
                 }
@@ -246,10 +219,8 @@ public class Personaje {
     public void mover(Localizacion localizacionMover) {//Se borra a si mismo de la localizacion actual y se añade en la objetivo
     outer:
         for(int i = 0; i < localizacionActual.contarConexiones(); i++) {
-            //System.out.println("if " + localizacionMover.getNombre() + " igual a " + localizacionActual.getConexiones(i));
             if(localizacionMover.getNombre().equals(localizacionActual.getConexiones(i))) {
                 for(int c = 0; c < localizacionActual.getPersonajesPresentes().size(); c++) {
-                    //System.out.println("if " + localizacionActual.getPersonajesPresentes().get(c).getNombre() + " igual a " + this.getNombre());
                     if(localizacionActual.getPersonajesPresentes().get(c).getNombre().equals(this.getNombre())) {
                         localizacionActual.removePersonajePresente(c);
                         this.localizacionActual = localizacionMover;
