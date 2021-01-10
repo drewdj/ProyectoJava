@@ -25,13 +25,15 @@ public class GUI implements ActionListener{
 	private int pedirIndex;
 	private int historialIndex;
 	private int historialIndex2;
-	private int flag;
+	private int flag; //Este atributo es importante para mantener el bucle principal parado, 
+					  //ya que mantiene el bucle principal en un while infinito hasta que el valor no cambie
 
 	public void closeFrame() {
 		this.frame.dispose();
 	}
 
 	public GUI(Jugador player, Localizacion[] location) {
+		//Inicialización de la primera ventana y del texto que va a ir dentro de la ventana
 		frame = new JFrame();
 		String lugar = "Estas en: ";
 		String conexiones = "<br>Conectado con: ";
@@ -39,6 +41,7 @@ public class GUI implements ActionListener{
 		String tienes = "<br>Tienes: ";
 		String objetivos = "<br>Objetivos: " + player.getLocalizacionObjetivo() + " - " + player.getObjetoObjetivo().getNombre();
 		String objetosSala = "<br>Objetos sala: ";
+		//Comprobar si hay objetos en sala, en el caso de no haber no poner nada
 		try {
 		objetosSala = "<br>Objetos sala: " + player.getLocalizacionActual().getObjetoPresente().getNombre();
 		}catch(Exception e) {}
@@ -46,15 +49,15 @@ public class GUI implements ActionListener{
 		pedirIndex = 0;
 		
 		lugar = lugar + player.getLocalizacionActual().getNombre();
-		
+		//Igual aquí, en el caso de no haber nada no imprimir nada
 		if(player.getObjetoActual() != null) {
 			tienes = tienes + player.getObjetoActual().getNombre();
 		}
-		
+		//repetir por cada conexion
 		for(int i = 0; i < player.getLocalizacionActual().getNumConexiones(); i++) {
 			conexiones = conexiones + " " + player.getLocalizacionActual().getConexiones(i);
 		} 
-		
+		//En leer personajes presentes y ponerlo en la ventana siempre y cuano no sea "Jugador"
 		if(player.getLocalizacionActual().getNumPersonajePresente() != 0) {
 			for(int i = 0; i < player.getLocalizacionActual().getNumPersonajePresente(); i++) {
 				if (player.getLocalizacionActual().getPersonajesPresentes().get(i).getNombre().equals("Jugador"))
@@ -66,14 +69,21 @@ public class GUI implements ActionListener{
 			}
 		}
 		
+		//Poner el texto que va a ir en la ventana en un unico String
+		
 		String full ="<html><body>" + lugar + conexiones + gente + tienes + objetivos + objetosSala +"</body></html>";
 		
-		//Incompleto prepararlo para que sea modular
+		//Crear primer Boton
+		
 		JButton button2 = new JButton(new AbstractAction("Pedir") {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				
+				//Al pulsar el boton, hacer que se oculte la ventana inicial y crear otra ventana con selecionables
+				//Preparar un array para leer los personajes presentes sin contar al jugador
+				
 				frame.setVisible(false);
 				JFrame frame2 = new JFrame();
 				Personaje[] personajesPresentes = new Personaje[player.getLocalizacionActual().getNumPersonajePresente() - 1];
@@ -84,6 +94,9 @@ public class GUI implements ActionListener{
 						k++;
 					}
 				}
+				
+				//Boton para cerrar esta ventana y volver a hacer visibles la ventana anterior
+				
 				JButton b = new JButton(new AbstractAction("Volver") {
 					private static final long serialVersionUID = 1L;
 					@Override
@@ -94,6 +107,8 @@ public class GUI implements ActionListener{
 					
 				});
 					
+				//Boton que disminuye el indice para acceder a los personajes presentes
+				
 				JButton b1 = new JButton(new AbstractAction("<") {
 					private static final long serialVersionUID = 1L;
 					@Override
@@ -105,6 +120,9 @@ public class GUI implements ActionListener{
 
 					}
 				});
+				
+				//Boton que aumenta el indice para acceder a los personajes presentes
+				
 				JButton b2 = new JButton(new AbstractAction(">") {
 					private static final long serialVersionUID = 1L;
 					@Override
@@ -117,6 +135,9 @@ public class GUI implements ActionListener{
 
 					}
 				});
+				
+				//Boton que invoca el método pedirObjeto del jugador al personaje del indice selecionado con los botones anteriores
+				
 				JButton b3 = new JButton(new AbstractAction("Pedir") {
 					private static final long serialVersionUID = 1L;
 					@Override
@@ -137,18 +158,22 @@ public class GUI implements ActionListener{
 
 					}
 				});
+				
+				//Hacer que los botones no tengan un marco al clicarlos
+				
 				b1.setFocusable(false);
 				b2.setFocusable(false);
 				b3.setFocusable(false);
 				
-
-
-
+				//Llenar el del panel texto por primera vez y configurar su fuente, en los botones se refresca el texto del panel
+				
 				label = new JLabel(personajesPresentes[pedirIndex].getNombre());
 
 				
 				Font font = new Font("",Font.PLAIN,17);
 				label.setFont(font);
+				
+				//Separar la ventana en dos con los paneles y llenarlo con el texto y los botones
 				
 				panel1 = new JPanel();
 				panel1.setBorder(BorderFactory.createEmptyBorder(100, 100, 100, 100));
@@ -163,11 +188,14 @@ public class GUI implements ActionListener{
 				panel.add(b);
 				panel.add(b3);
 
+				//Tocar los parametros de la centana y hacerlo visible (Añadirle los paneles preparados anteriormente)
+				
 				frame2.add(panel1, BorderLayout.PAGE_START);
 				frame2.add(panel, BorderLayout.CENTER);
 				frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame2.setTitle("Buscar Objetos");
 				frame2.setSize(600, 600);
+				//Las dos lineas que estan abajo son para que la ventana se abra en el centro, se usa en todos los frames que aparecen posteriores
 				Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 				frame2.setLocation(dim.width/2-frame2.getSize().width/2, dim.height/2-frame2.getSize().height/2);
 				frame2.setVisible(true);
@@ -175,12 +203,20 @@ public class GUI implements ActionListener{
 			
 		});
 		
+		//Nuevo boton para mover al Jugador
+		
 		JButton button3 = new JButton(new AbstractAction("Moverse") {
 			private static final long serialVersionUID = 1L;
 			public void actionPerformed(ActionEvent arg0) {
+				
+				//Hacer invisible la ventana anterior para sacar otra ventana para elegir la localizacion a la que se quiere mover el jugador
+				
 				frame.setVisible(false);
 				JFrame frame2 = new JFrame();
 				String[] name = new String[player.getLocalizacionActual().getNumConexiones()];
+				
+				//Preparar un array de localizaciones ya que conexiones es un array de strings
+				//Compara los nombres con las localizaciones y los añade
 				
 				Localizacion[] connectedLocations = new Localizacion[player.getLocalizacionActual().getNumConexiones()];
 				
@@ -196,6 +232,9 @@ public class GUI implements ActionListener{
 					name[c] = player.getLocalizacionActual().getConexiones(c);
 				}
 				
+				//Boton que aumenta el indice de selecion de lugares, para poder selecionarlo despues, 
+				//refresca el label cada vez que se pulsa con el nombre del lugar presente en el indice
+				
 				JButton b1 = new JButton(new AbstractAction(">") {
 					private static final long serialVersionUID = 1L;
 					@Override
@@ -207,6 +246,9 @@ public class GUI implements ActionListener{
 					}
 					
 				});
+				
+				//Boton que disminuye el indice de selecion de lugares, para poder selecionarlo despues, 
+				//refresca el label cada vez que se pulsa con el nombre del lugar presente en el indice
 				
 				JButton b2 = new JButton(new AbstractAction("<") {
 					private static final long serialVersionUID = 1L;
@@ -220,6 +262,10 @@ public class GUI implements ActionListener{
 					
 				});
 				
+				//boton que llama al metodo moverJugador para moverse a la habitacion presente en el indice
+				//importante distinguir que el metodo mover difiere del metodoMover jugador debido a que el jugador no tiene creencias
+				//Al accionar este boton, se cierran las dos ventanas para regresar al gestor
+				
 				JButton b3 = new JButton(new AbstractAction("Mover") {
 					private static final long serialVersionUID = 1L;
 					@Override
@@ -232,6 +278,8 @@ public class GUI implements ActionListener{
 					
 				});
 				
+				//Al accionar este boton, se cierra esta ventana y se vuelve a hacer visible la anterior
+				
 				JButton b = new JButton(new AbstractAction("Volver") {
 					private static final long serialVersionUID = 1L;
 					@Override
@@ -241,10 +289,15 @@ public class GUI implements ActionListener{
 					}
 					
 				});
+				
+				//Llena el texto por primera vez y estabecemos su 
+				
 				label = new JLabel(connectedLocations[lugarIndex].getNombre());
 				
 				Font font = new Font("",Font.PLAIN,30);
 				label.setFont(font);
+				
+				//Estacer y añadir los botones a los paneles que van a ir en la ventana 
 				
 				panel1 = new JPanel();
 				panel1.setBorder(BorderFactory.createEmptyBorder(100, 100, 100, 100));
@@ -259,6 +312,8 @@ public class GUI implements ActionListener{
 				panel.add(b);
 				panel.add(b3);
 				
+				//Preparar la ventana y añadirle los botones
+				
 				frame2.add(panel1, BorderLayout.PAGE_START);
 				frame2.add(panel, BorderLayout.CENTER);
 				frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -271,6 +326,8 @@ public class GUI implements ActionListener{
 			
 		});
 		
+		//Boton para coger el objeto que hay en la sala que invoca el metodo Coger Objeto
+		
 		JButton button4 = new JButton(new AbstractAction("Coger") {
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -282,6 +339,8 @@ public class GUI implements ActionListener{
 			
 		});
 		
+		//boton para omitir el turno, cierra esta ventana y vuelve al bucle del gestor
+		
 		JButton button = new JButton(new AbstractAction("Skip") {
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -291,6 +350,8 @@ public class GUI implements ActionListener{
 				}
 			
 		});
+		
+		//Se hace lo mismo que en los paneles anteriores, preparar los paneles añadir los botones
 		
 		button.setFocusable(false);
 		label = new JLabel(full);
@@ -326,6 +387,9 @@ public class GUI implements ActionListener{
 		label = new JLabel("GAME OVER");
 		panel = new JPanel();
 		historialIndex = 0;
+		
+		//Boton que sale que cambia el flag para terminar el gestor
+		
 		JButton botonFinal = new JButton(new AbstractAction("EXIT") {
 			private static final long serialVersionUID = 1L;
 
@@ -336,12 +400,16 @@ public class GUI implements ActionListener{
 			}
 		});
 		
+		//boton para acceder a los historiales de los Personajes, funciona de la misma forma que los botones anteriores
+		
 		JButton botonHistorial = new JButton(new AbstractAction("Historial") {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
 				JFrame frame2 = new JFrame();
+				
+				//Funciona de la misma manera que los botones "Volver" anteriores
 				
 				JButton b = new JButton(new AbstractAction("Volver") {
 					private static final long serialVersionUID = 1L;
@@ -352,6 +420,8 @@ public class GUI implements ActionListener{
 					}
 					
 				});
+				
+				//Mueve el indice de la misma forma que los botoenes anteriores
 				
 				JButton b1 = new JButton(new AbstractAction("<") {
 					private static final long serialVersionUID = 1L;
@@ -376,6 +446,9 @@ public class GUI implements ActionListener{
 
 					}
 				});
+				
+				//Seleciona al personaje al que se quiere acceder a su historial, abre una nueva ventana que funciona de la misma manera que las ventanas
+				//anteriores, se accede al historil de los personajes con el metodo getHistorial
 				
 				JButton b3 = new JButton(new AbstractAction("Select") {
 					private static final long serialVersionUID = 1L;
