@@ -448,7 +448,7 @@ public class GUI implements ActionListener{
 				});
 				
 				//Seleciona al personaje al que se quiere acceder a su historial, abre una nueva ventana que funciona de la misma manera que las ventanas
-				//anteriores, se accede al historil de los personajes con el metodo getHistorial
+				//anteriores, se accede al historial de los personajes con el metodo getHistorial
 				
 				JButton b3 = new JButton(new AbstractAction("Select") {
 					private static final long serialVersionUID = 1L;
