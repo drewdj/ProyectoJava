@@ -104,7 +104,7 @@ abstract class GestorPrueba{
 			arrayPersonajes[k].setCreencias(new Creencias());
 			arrayPersonajes[k].setFin(0);
 			arrayPersonajes[k].setHistorial(new ArrayList<String>());
-			arrayPersonajes[k].inicializarCreencias(new ArrayList<Objeto>(),new ArrayList<Localizacion>(),new ArrayList<Personaje>());
+			arrayPersonajes[k].inicializarCreencias(new ArrayList<Localizacion>());
 			k++;
 		}
 
@@ -144,13 +144,7 @@ abstract class GestorPrueba{
     	arrayObjetos[i] = objetoFill;
 
     	//Meter el objeto en su localizacion(la localizacion inicial puede ser un personaje o el jugador)
-		for (int j = 0; j < numLocalizaciones; j++) {
-			if (arrayLocalizaciones[j].getNombre()==localizObjeto){
-				arrayLocalizaciones[j].setObjetoPresente(arrayObjetos[i]);
-			}
-		}
-
-    	for(int c = 0; c < numLocalizaciones; c++) {
+	   	for(int c = 0; c < numLocalizaciones; c++) {
     		if(localizObjeto.equals(arrayLocalizaciones[c].getNombre())) {
     			arrayLocalizaciones[c].setObjetoPresente(objetoFill);
     		}
@@ -245,12 +239,12 @@ abstract class GestorPrueba{
 
     }
 		//ORDENACION DE TURNOS
-		int[] array = new int [numPersonajes];				
+		int[] array = new int [numPersonajes];
 		for (int i = 0; i < numPersonajes; i++) {
 			array[i]= i;
 		}
 
-		Random rand = new Random();						
+		Random rand = new Random();
 
 		for (int i = 0; i < array.length; i++) {				//Esto genera un array de numeros aleatorios(del 0 al numpersonajes) de tamaño=numpersonajes
 			int randomIndexToSwap = rand.nextInt(array.length);
@@ -259,18 +253,11 @@ abstract class GestorPrueba{
 			array[i] = temp;
 		}
 
-		//System.out.println(array[0]);
-
-
-		
 		for (int i = 0; i < numPersonajes; i++) {				//Se otorga cada uno de los valores de ese array a cada uno de los personajes
 			arrayPersonajes[i].setTurno(array[i]);
 		}
 
-		//System.out.println(arrayPersonajes[0].getTurno());
-
-
-		Personaje[] arrayPersonajesOrdenado = new Personaje[numPersonajes]; //Se crea un nuevo array de personajes que va a estar ordenado segun los turnos 
+		Personaje[] arrayPersonajesOrdenado = new Personaje[numPersonajes]; //Se crea un nuevo array de personajes que va a estar ordenado segun los turnos
 
 		for (int i = 0; i < numPersonajes; i++) {
 
@@ -285,18 +272,8 @@ abstract class GestorPrueba{
 			}
 
 		}
-
-
-
-
-
-
-
-
-
 		//BUCLE PRINCIPAL DE GESTION DE TURNO
  		for (; turno < numPersonajes; turno++) {//Reseteo de accion y actualizar creencias
-			System.out.println("Turno de " + arrayPersonajesOrdenado[turno].getNombre());
 			arrayPersonajesOrdenado[turno].setAccion(0);
 			arrayPersonajesOrdenado[turno].actualizarLocalizacionesConocidas();
 
@@ -314,10 +291,8 @@ abstract class GestorPrueba{
 					}
 					if (arrayPersonajesOrdenado[turno].getAccion()==0){
 						if (arrayPersonajesOrdenado[turno].getObjetoObjetivo().getNombre().equals(arrayPersonajesOrdenado[turno].getObjetoActual().getNombre())) {//Primero se comprueba si se tiene el objeto deseado
-							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " tiene su objeto objetivo");//CUANDO TODOS TENGAN SU OBJETO FIN DE LA PARTIDA
 							//En caso de tenerlo si se esta en la posicion deseada
 							if (!arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){//Si no esta, se mueve
-								System.out.println("No estoy en la posicion objetivo");
 								for (int i = 0; i < numLocalizaciones; i++) {//
 									if (arrayPersonajesOrdenado[turno].moverseHaciaLocalizacion(arrayLocalizaciones).equals(arrayLocalizaciones[i].getNombre())){
 										arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]);
@@ -325,20 +300,15 @@ abstract class GestorPrueba{
 									}
 								}
 							}else if(arrayPersonajesOrdenado[turno].getLocalizacionObjetivo().equals(arrayPersonajesOrdenado[turno].getLocalizacionActual().getNombre())){//Si esta se queda en la posiciona y activa el estado de finalizado
-								System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " esta en la posicion objetivo");
 								arrayPersonajesOrdenado[turno].setFin(1);
 							}
 						} else {//Si no se tiene el objeto
-							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene su objeto objetivo");
-
 							arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();//Primero lo busca en la localizacion
 							if (arrayPersonajesOrdenado[turno].getAccion()==0){//Despues en los personajes
 								arrayPersonajesOrdenado[turno].buscarObjetoEnPersonajes();
 							}
 							if (arrayPersonajesOrdenado[turno].getAccion()==0){//Y por ultimo si no ha encontrado nada se mueve priorizando aquellos sitios donde no ha estado
-								System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " se quiere mover");
 								for (int i = 0; i < numLocalizaciones; i++) {
-									System.out.println("quiero ir a " + arrayLocalizaciones[i].getNombre() + "?");
 									if (arrayPersonajesOrdenado[turno].moverseHaciaObjeto().equals(arrayLocalizaciones[i].getNombre())){
 										arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]);
 										break;
@@ -349,16 +319,12 @@ abstract class GestorPrueba{
 					}
 				}catch (Exception e){//Si el personaje no tiene objeto se utiliza el mismo protocolo de busqueda anterior
 					if (arrayPersonajesOrdenado[turno].getAccion()==0){
-						System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " no tiene objeto");
 						arrayPersonajesOrdenado[turno].buscarObjetoEnLocalizacion();
 						if (arrayPersonajesOrdenado[turno].getAccion()==0){
 							arrayPersonajesOrdenado[turno].buscarObjetoEnPersonajes();
 						}
 						if (arrayPersonajesOrdenado[turno].getAccion()==0){
-							System.out.println(arrayPersonajesOrdenado[turno].getNombre() + " se quiere mover");
-
 							for (int i = 0; i < numLocalizaciones; i++) {
-								System.out.println("quiero ir a " + arrayLocalizaciones[i].getNombre() + "?");
 								if (arrayPersonajesOrdenado[turno].moverseHaciaObjeto().equals(arrayLocalizaciones[i].getNombre())) {
 									arrayPersonajesOrdenado[turno].mover(arrayLocalizaciones[i]);
 									break;
@@ -377,7 +343,6 @@ abstract class GestorPrueba{
 
 			if (contadorFinal!=numPersonajes+1){
 				if (turno == numPersonajes-1){      //Empieza el turno del jugador
-					System.out.printf("%s", jugador.getLocalizacionActual().getNombre());
 					GUI interfaz = new GUI(jugador, arrayLocalizaciones);
 					do {}while(interfaz.getFlag() == 0);
 					if (jugador.getObjetoObjetivo().getNombre().equals(jugador.getObjetoActual().getNombre())&&jugador.getLocalizacionActual().getNombre().equals(jugador.getLocalizacionObjetivo()))
